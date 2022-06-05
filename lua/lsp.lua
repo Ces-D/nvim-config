@@ -1,39 +1,22 @@
-local function setup_signs()
-  local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
-  for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-  end
-end
-
-setup_signs()
-
-local function setup_diagnostics() vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = {
-          update_in_insert = false,
-          virtual_text = true,
-          underline = false,
-          signs = true,
-          prefix = '|', -- Could be '●', '▎', 'x'
-          spacing = 4,
-        }
-      }
-    )
-end
-
 local lspconfig = require'lspconfig'
+local lspinstaller = require'nvim-lsp-installer'
+
 local function custom_on_attach(client)
-  vim.notify('Attaching to ' .. client.name)
-  setup_diagnostics()
+	vim.notify('Attaching to '.. client.name)
 end
 
-local default_config = {
-  on_attach = custom_on_attach,
-}
+local default_config = { on_attach = custom_on_attach }
 
+lspinstaller.setup{}
 lspconfig.pyright.setup(default_config)
 lspconfig.tsserver.setup(default_config)
+lspconfig.sumneko_lua.setup({
+  on_attach = custom_on_attach,
+  diagnostics = {
+     -- Get the language server to recognize the `vim` global
+    globals = {'vim'},
+  }
+})
 
 lspconfig.eslint.setup{
   cmd = { "vscode-eslint-language-server", "--stdio" },
