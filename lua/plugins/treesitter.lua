@@ -6,22 +6,21 @@ end
 treesitter.setup({
    highlight = {
     enable = true,
+    additional_vim_regex_highlighting = false
   },
-
-  indent = {
-    enabled = false,
-  },
-
-  textobjects = {
-    enabled = true
-  },
-  incremental_selection = {
+  context_commentstring = {
     enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
+    enable_autocmd = false,
   },
+  rainbow = {
+    enable = true,
+    disable = { "html" },
+    extended_mode = false,
+    max_file_lines = nil
+  },
+  autopairs = { enable = true },
+  autotag = { enable = true },
+  indent = { enable = false },
+  incremental_selection = { enable = true },
+  textobjects = { enable = true },
 })

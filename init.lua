@@ -1,5 +1,14 @@
-require "options"
-require "plugins"
-require "colorscheme"
-require "keybindings"
-require "lsp"
+for _, source in ipairs {
+  "options",
+  "plugins",
+  "colorscheme",
+  "keybindings",
+  "lsp"
+} do
+  local status_ok, fault = pcall(require, source)
+  if not status_ok then
+    vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault)
+  end
+end
+
+
