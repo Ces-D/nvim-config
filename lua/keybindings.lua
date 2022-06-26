@@ -11,6 +11,20 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 map("n", "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 map("n", "<C-q>", "<cmd>q!<cr>", { desc = "Force quit" })
 
+-- Moving Text
+map('', '<C-k>', ':m .-2<CR>==')
+map('', '<C-j>', ':m .+1<CR>==')
+map('v', '<C-j>', ":m '>+1<CR>gv=gv")
+map('v', '<C-k>', ":m '<-2<CR>gv=gv")
+
+-- Manage your windows like a boss
+map('n', '<leader>sv', ':vsplit<CR>')
+map('n', '<leader>sh', ':split<CR>')
+map('n', '<up>', ':resize +2<CR>')
+map('n', '<down>', ':resize -2<CR>')
+map('n', '<left>', ':vertical resize -2<CR>')
+map('n', '<right>', ':vertical resize +2<CR>')
+
 -- Packer
 map("n", "<leader>pc", "<cmd>PackerCompile<cr>", { desc = "Packer Compile" })
 map("n", "<leader>pi", "<cmd>PackerInstall<cr>", { desc = "Packer Install" })
@@ -38,7 +52,6 @@ map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
 map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
 map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<cr>", { desc = "Format Buffer" })
-
 
 -- Telescope
 map("n", "<leader>fw", function()
