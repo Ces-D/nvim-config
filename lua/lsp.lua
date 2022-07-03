@@ -33,12 +33,6 @@ lspconfig.sumneko_lua.setup({
 lspconfig.eslint.setup {
 	cmd = { "vscode-eslint-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
-	on_new_config = function(config, new_root_dir)
-		config.settings.workspaceFolder = {
-			uri = new_root_dir,
-			name = vim.fn.fnamemodify(new_root_dir, ':t'),
-		}
-	end,
 	settings = {
 		codeAction = {
 			disableRuleComment = {
@@ -53,7 +47,7 @@ lspconfig.eslint.setup {
 			enable = true,
 			mode = "all"
 		},
-		format = false,
+		format = true,
 		nodePath = "",
 		onIgnoredFiles = "off",
 		packageManager = "npm",
@@ -63,7 +57,7 @@ lspconfig.eslint.setup {
 		useESLintClass = false,
 		validate = "on",
 		workingDirectory = {
-			mode = "auto"
+			mode = "location"
 		}
 	}
 }
