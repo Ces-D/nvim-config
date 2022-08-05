@@ -1,8 +1,7 @@
-local catpuccin = require("catppuccin")
+local theme = require("onedark")
 
-catpuccin.setup({
-  transparent_background = true
+theme.setup({
+  style = 'darker'
 })
 
-vim.g.catppuccin_flavour = "macchiato" -- latte, frappe, macchiato, mocha
-vim.cmd[[colorscheme catppuccin]]
+theme.load()

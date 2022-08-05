@@ -6,7 +6,7 @@ packer.startup(function(use)
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-lua/plenary.nvim'
   -- use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-  -- use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'nvim-telescope/telescope-file-browser.nvim'
 
   -- LSP
   use 'neovim/nvim-lspconfig'
@@ -41,9 +41,10 @@ packer.startup(function(use)
     }
   }
   use { 'kyazdani42/nvim-tree.lua', tag = 'nightly' }
+  use { 'akinsho/bufferline.nvim', tag = "v2.*" }
 
   -- THEME
-  use({ 'catppuccin/nvim', as = 'catppuccin' })
+  use({ 'navarasu/onedark.nvim' })
 
 end
 )
@@ -57,3 +58,4 @@ require 'plugins.null-ls'
 require 'plugins.neogit'
 require 'plugins.n-tree'
 require 'plugins.cmp'
+require 'plugins.bufferline'
