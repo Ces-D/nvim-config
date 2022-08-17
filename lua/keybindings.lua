@@ -12,9 +12,9 @@ map("n", "<C-s>", "<cmd>w!<cr>", { desc = "Force write" })
 map("n", "<C-q>", "<cmd>q!<cr>", { desc = "Force quit" })
 
 -- Other Helpful
-map("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Unload Current Buffer"  })
-map("n", "<leader>bn", "<cmd>bn<CR>", { desc = "Go To Next Buffer" })
-map("n", "<leader>bp", "<cmd>bp<CR>", {desc = "Go To Previous Buffer" })
+map("n", "<leader>bd", "<cmd>bd<CR>", { desc = "Unload Current Buffer" })
+map("n", "L", "<cmd>bn<CR>", { desc = "Go To Next Buffer" })
+map("n", "H", "<cmd>bp<CR>", { desc = "Go To Previous Buffer" })
 
 -- Moving Text
 map('n', '<C-k>', ':m .-2<CR>==')

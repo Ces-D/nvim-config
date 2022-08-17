@@ -5,7 +5,8 @@ packer.startup(function(use)
   use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-lua/plenary.nvim'
-  -- use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use 'BurntSushi/ripgrep'
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   use 'nvim-telescope/telescope-file-browser.nvim'
 
   -- LSP
@@ -14,6 +15,7 @@ packer.startup(function(use)
 
   -- FORMATTING AND LINTING
   use 'jose-elias-alvarez/null-ls.nvim'
+  use 'Darazaki/indent-o-matic'
 
   -- AUTOCOMPLETE
   use { 'hrsh7th/nvim-cmp',
@@ -59,3 +61,4 @@ require 'plugins.neogit'
 require 'plugins.n-tree'
 require 'plugins.cmp'
 require 'plugins.bufferline'
+require 'plugins.indent-o-matic'
