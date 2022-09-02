@@ -1,6 +1,6 @@
-for _, source in ipairs{
-  "options",
+for _, source in ipairs {
   "plugins",
+  "options",
   "colorscheme",
   "keybindings",
   "lsp"

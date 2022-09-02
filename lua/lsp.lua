@@ -5,20 +5,22 @@ local function custom_on_attach(client)
   vim.notify('Attaching to ' .. client.name)
 end
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 local default_config = { on_attach = custom_on_attach }
 
 -- INSTALLER SETUP
 lspinstaller.setup {}
 
 -- PYTHON SETUP
-lspconfig.pyright.setup({
-  on_attach = function(client)
-    vim.notify('Attaching to ' .. client.name)
-  end
-})
+lspconfig.pyright.setup(default_config)
 
 -- TS AND JS SETUP
-lspconfig.tsserver.setup(default_config)
+lspconfig.tsserver.setup({
+  on_attach = custom_on_attach,
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+  capabilities = capabilities
+})
 
 -- LUA SETUP
 lspconfig.sumneko_lua.setup({
@@ -32,7 +34,8 @@ lspconfig.sumneko_lua.setup({
 -- ESLINT SETUP
 lspconfig.eslint.setup {
   cmd = { "vscode-eslint-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx",
+    "vue" },
   settings = {
     codeAction = {
       disableRuleComment = {
@@ -62,7 +65,6 @@ lspconfig.eslint.setup {
   }
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.jsonls.setup {
   capabilities = capabilities
@@ -70,7 +72,6 @@ lspconfig.jsonls.setup {
 
 vim.g.completion_matching_strategy_list = { 'substring', 'exact', 'fuzzy', 'all' }
 vim.g.diagnostic_enable_virtual_text = 1
-vim.g.diagnostic_insert_delay = 1
 vim.g.completion_chain_complete_list = {
   { complete_items = { 'lsp', 'snippet' } },
   { mode = '<c-p>' },

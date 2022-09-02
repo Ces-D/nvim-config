@@ -1,7 +1,7 @@
 local theme = require("onedark")
 
 theme.setup({
-  style = 'darker'
+  style = 'deep'
 })
 
 theme.load()

@@ -6,7 +6,8 @@ packer.startup(function(use)
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'BurntSushi/ripgrep'
-  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
+  use { 'nvim-telescope/telescope-fzf-native.nvim',
+    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
   use 'nvim-telescope/telescope-file-browser.nvim'
 
   -- LSP
@@ -44,21 +45,26 @@ packer.startup(function(use)
   }
   use { 'kyazdani42/nvim-tree.lua', tag = 'nightly' }
   use { 'akinsho/bufferline.nvim', tag = "v2.*" }
+  use { 'akinsho/toggleterm.nvim', tag = 'v2.*' }
 
   -- THEME
-  use({ 'navarasu/onedark.nvim' })
+  use { 'navarasu/onedark.nvim' }
+
+  use { 'lewis6991/impatient.nvim' }
 
 end
 )
 
 -- require plugin setups
-require 'plugins.autopairs'
-require 'plugins.lualine'
-require 'plugins.treesitter'
+require 'plugins.impatient'
 require 'plugins.telescope'
+require 'plugins.treesitter'
+require 'plugins.cmp'
+require 'plugins.lualine'
+require 'plugins.autopairs'
 require 'plugins.null-ls'
 require 'plugins.neogit'
 require 'plugins.n-tree'
-require 'plugins.cmp'
 require 'plugins.bufferline'
 require 'plugins.indent-o-matic'
+require 'plugins.toggleterm'
