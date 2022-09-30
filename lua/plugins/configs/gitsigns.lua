@@ -1,5 +1,6 @@
 local present, gitsigns = pcall(require, "gitsigns")
 
-if present then
-  gitsigns.setup()
+if not present then
+  return 
 end
+  gitsigns.setup()

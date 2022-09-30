@@ -1,7 +1,9 @@
 local present, lspconfig = pcall(require, "lspconfig")
 local installPresent, lspinstaller = pcall(require, "nvim-lsp-installer")
 
-if (present and installPresent) then
+if not (present and installPresent) then
+return 
+end
 
   local function custom_on_attach(client)
     vim.notify('Attaching to ' .. client.name)
@@ -79,5 +81,3 @@ if (present and installPresent) then
     { mode = '<c-p>' },
     { mode = '<c-n>' },
   }
-
-end

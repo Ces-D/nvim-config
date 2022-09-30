@@ -3,29 +3,30 @@ local M = {}
 M.devicons = function()
   local present, devicons = pcall(require, "nvim-web-devicons")
 
-  if present then
-    devicons.setup {}
+  if not present then
+    return
   end
+
+  devicons.setup {}
 end
 
 M.indent_blankline = function()
   local present, blankline = pcall(require, "indent_blankline")
 
-  if present then
-    blankline.setup {
-      show_end_of_line = true
-    }
+  if not present then
+    return
   end
+
+  blankline.setup { show_end_of_line = true }
 end
 
 M.theme = function()
   local present, theme = pcall(require, "tokyonight")
 
-  if present then
-    theme.setup {
-      style = "storm"
-    }
+  if not present then
+    return
   end
+  theme.setup { style = "night" }
 end
 
 M.luasnip = function()
@@ -41,7 +42,6 @@ M.luasnip = function()
   }
 
   luasnip.config.set_config(options)
- 
   vim.api.nvim_create_autocmd("InsertLeave", {
     callback = function()
       if require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]

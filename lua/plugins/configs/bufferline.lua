@@ -1,7 +1,10 @@
 local present, bufferline = pcall(require, "bufferline")
 
-if present then
-  bufferline.setup {
+if not present then
+  return
+end
+
+bufferline.setup {
     options = {
       numbers = "ordinal",
       diagnostics = "nvim_lsp",
@@ -9,4 +12,3 @@ if present then
       seperator_style = "slant",
     }
   }
-end

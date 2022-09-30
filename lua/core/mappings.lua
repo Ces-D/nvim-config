@@ -21,12 +21,6 @@ M.general = {
     ["<down>"] = { "<C-w>j", "window down" },
     ["<up>"] = { "<C-w>k", "window up" },
 
-    -- manage windows
-    ["w"] = { "<cmd>resize +2<cr>", "resize up" },
-    ["s"] = { "<cmd>resize -2<cr>", "resize down" },
-    ["a"] = { "<cmd>vertical resize -2<cr>", "resize left" },
-    ["d"] = { "<cmd>vertical resize +2<cr>", "resize right" },
-
     -- move text
     ["<C-k>"] = { ":m .-2<CR>==", "move text up" },
     ["<C-j>"] = { ":m .+1<CR>==", "move text down" },
@@ -70,7 +64,7 @@ M.gitsigns = {
 M.comment = {
     n = {
     ["<leader>/"] = {
-      "<cmd>lua require('Comment.api').toggle.linewise.current()",
+      "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>",
       "toggle comment",
     },
   },

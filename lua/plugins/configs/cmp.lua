@@ -1,7 +1,9 @@
 local present, cmp = pcall(require, "nvim-cmp")
 local snipPresent, luasnip = pcall(require, "luasnip")
 
-if present and snipPresent then
+if not (present and snipPresent) then
+  return
+end
 
   cmp.setup {
     window = {
@@ -61,4 +63,3 @@ if present and snipPresent then
       { name = "path" },
     },
   }
-end

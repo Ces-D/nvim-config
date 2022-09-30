@@ -1,6 +1,8 @@
 local present, telescope = pcall(require, "telescope")
 
-if present then
+if not present then
+  return 
+end
   telescope.setup {
     defaults = {
       vimgrep_arguments = {
@@ -59,5 +61,3 @@ if present then
       }
     }
   }
-
-end
