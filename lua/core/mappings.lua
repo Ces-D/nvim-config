@@ -88,37 +88,37 @@ M.lspconfig = {
 
   n = {
     ["gD"] = {
-      "<cmd>lua vim.lsp.buf.declaration()",
+      "<cmd>lua vim.lsp.buf.declaration()<cr>",
       "lsp declaration",
     },
 
     ["gd"] = {
-      "<cmd>lua vim.lsp.buf.definition()",
+      "<cmd>lua vim.lsp.buf.definition()<cr>",
       "lsp definition",
     },
 
     ["K"] = {
-      "<cmd>lua vim.lsp.buf.hover()",
+      "<cmd>lua vim.lsp.buf.hover()<cr>",
       "lsp hover",
     },
 
     ["gi"] = {
-      "<cmd>lua vim.lsp.buf.implementation()",
+      "<cmd>lua vim.lsp.buf.implementation()<cr>",
       "lsp implementation",
     },
 
     ["<leader>ls"] = {
-      "<cmd>lua vim.lsp.buf.signature_help()",
+      "<cmd>lua vim.lsp.buf.signature_help()<cr>",
       "lsp signature_help",
     },
 
     ["<leader>D"] = {
-      "<cmd>lua vim.lsp.buf.type_definition()",
+      "<cmd>lua vim.lsp.buf.type_definition()<cr>",
       "lsp definition type",
     },
 
     ["<leader>ca"] = {
-      "<cmd>lua vim.lsp.buf.code_action()",
+      "<cmd>lua vim.lsp.buf.code_action()<cr>",
       "lsp code_action",
     },
 

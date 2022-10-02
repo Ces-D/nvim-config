@@ -67,29 +67,35 @@ local plugins = {
   },
 
   ------------------- lsp stuff -------------------
-  { "neovim/nvim-lspconfig" },
+  { "williamboman/mason.nvim" },
 
-  { "williamboman/nvim-lsp-installer" },
+  { "neovim/nvim-lspconfig",
+    config = function()
+      require("plugins.configs.lspconfig")
+    end
+  },
 
   ------------------- load luasnips + cmp related in insert mode only -------------------
+  { "L3MON4D3/LuaSnip",
+    tag = "v<CurrentMajor>.*",
+    config = function()
+      require("plugins.configs.others").luasnip()
+    end
+  },
+
+  { "rafamadriz/friendly-snippets" },
+
   { "hrsh7th/nvim-cmp",
     config = function()
       require("plugins.configs.cmp")
     end
   },
 
-  { "L3MON4D3/LuaSnip",
-    after = "nvim-cmp",
-    config = function()
-      require("plugins.configs.others").luasnip()
-    end
-  },
-
-  { "saadparwaiz1/cmp_luasnip" },
-  { "hrsh7th/cmp-nvim-lua" },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-path" },
+  { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" },
+  { "hrsh7th/cmp-nvim-lua", after = "cmp_luasnip" },
+  { "hrsh7th/cmp-nvim-lsp", after = "cmp-nvim-lua" },
+  { "hrsh7th/cmp-buffer", after = "cmp-nvim-lsp" },
+  { "hrsh7th/cmp-path", after = "cmp-buffer" },
 
   ------------------- misc plugins -------------------
   { "windwp/nvim-autopairs",
@@ -140,5 +146,3 @@ if present then
 else
   vim.api.nvim_err_writeln("packer missing")
 end
-
-require("plugins.configs.lspconfig")
