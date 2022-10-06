@@ -21,12 +21,20 @@ M.indent_blankline = function()
 end
 
 M.theme = function()
-  local present, theme = pcall(require, "tokyonight")
+  local present, theme = pcall(require, "nightfox")
 
   if not present then
     return
   end
-  theme.setup { style = "night" }
+
+  theme.setup {
+    options = {
+      styles = {
+        comments = 'italic',
+        keywords = 'bold'
+      }
+    }
+  }
 end
 
 M.luasnip = function()
@@ -62,6 +70,15 @@ M.autopairs = function()
 
   local cmp_autopairs = require "nvim-autopairs.completion.cmp"
   cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end
+
+M.autotag = function()
+  local present, autotag = pcall(require, 'nvim-ts-autotag')
+  if not present then
+    return
+  end
+
+  autotag.setup()
 end
 
 M.comment = function()

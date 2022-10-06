@@ -52,10 +52,10 @@ local plugins = {
     end
   },
 
-  { "folke/tokyonight.nvim",
+  { "EdenEast/nightfox.nvim",
     config = function()
       require("plugins.configs.others").theme()
-      vim.cmd [[colorscheme tokyonight]]
+      vim.cmd [[colorscheme nordfox]]
     end
   },
 
@@ -103,7 +103,11 @@ local plugins = {
       require("plugins.configs.others").autopairs()
     end
   },
-
+  { "windwp/nvim-ts-autotag",
+    config = function()
+      require("plugins.configs.others").autotag()
+    end
+  },
   { "numToStr/Comment.nvim",
     module = "Comment",
     keys = { "gc", "gb" },
