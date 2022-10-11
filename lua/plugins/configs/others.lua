@@ -53,6 +53,22 @@ M.luasnip = function()
   require("luasnip.loaders.from_vscode").lazy_load()
 end
 
+M.null = function()
+  local present, null = pcall(require, "null-ls")
+
+  if not present then
+    return
+  end
+
+  null.setup {
+    sources = {
+      null.builtins.diagnostics.tsc,
+      null.builtins.formatting.black,
+      null.builtins.completion.spell,
+    }
+  }
+end
+
 M.autopairs = function()
   local present1, autopairs = pcall(require, "nvim-autopairs")
   local present2, cmp = pcall(require, "cmp")

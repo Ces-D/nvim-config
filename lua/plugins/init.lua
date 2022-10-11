@@ -75,6 +75,12 @@ local plugins = {
     end
   },
 
+  { "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("plugins.configs.others").null()
+    end
+  },
+
   ------------------- load luasnips + cmp related in insert mode only -------------------
   { "L3MON4D3/LuaSnip",
     tag = "v<CurrentMajor>.*",
