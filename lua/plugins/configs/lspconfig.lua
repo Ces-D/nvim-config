@@ -13,13 +13,21 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 -- vim.lsp.set_log_level("debug")
 -- INSTALLER SETUP
-masoninstaller.setup {}
+masoninstaller.setup {
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  }
+}
 
 -- PYTHON SETUP
---lspconfig.pyright.setup({
---  on_attach = custom_on_attach,
---  capabilites = capabilites
--- })
+lspconfig.pyright.setup({
+  on_attach = custom_on_attach,
+  capabilites = capabilites
+})
 
 -- TS AND JS SETUP
 lspconfig.tsserver.setup({
@@ -38,40 +46,6 @@ lspconfig.sumneko_lua.setup({
   }
 })
 
--- ESLINT SETUP
--- lspconfig.eslint.setup {
---   cmd = { "vscode-eslint-language-server", "--stdio" },
---   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx",
---     "vue" },
---   settings = {
---     codeAction = {
---       disableRuleComment = {
---         enable = true,
---         location = "separateLine"
---       },
---       showDocumentation = {
---         enable = true
---       }
---     },
---     codeActionOnSave = {
---       enable = true,
---       mode = "all"
---     },
---     format = true,
---     nodePath = "",
---     onIgnoredFiles = "off",
---     packageManager = "npm",
---     quiet = false,
---     rulesCustomizations = {},
---     run = "onType",
---     useESLintClass = false,
---     validate = "on",
---     workingDirectory = {
---       mode = "location"
---     }
---   }
--- }
---
 --  capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.jsonls.setup {
   --   capabilities = capabilities
