@@ -148,7 +148,7 @@ M.lspconfig = {
     },
 
     ["<leader>fm"] = {
-      "<cmd>lua vim.lsp.buf.formatting()<cr>",
+      "<cmd>lua vim.lsp.buf.format()<cr>",
       "lsp formatting",
     },
 
