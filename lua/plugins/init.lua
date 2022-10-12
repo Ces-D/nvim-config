@@ -3,11 +3,7 @@ local plugins = {
 
   { "lewis6991/impatient.nvim" },
 
-  { "wbthomason/packer.nvim",
-    config = function()
-      require("plugins")
-    end
-  },
+  { "wbthomason/packer.nvim" },
 
   { "kyazdani42/nvim-web-devicons",
     module = "nvim-web-devicons",
