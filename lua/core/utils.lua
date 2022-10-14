@@ -8,4 +8,11 @@ M.load_mappings = function(mapping_opts)
   end
 end
 
+M.determine_OS = function()
+  if package.config:sub(1, 1) == "\\"
+  then return "Windows"
+  else return "Unix"
+  end
+end
+
 return M
