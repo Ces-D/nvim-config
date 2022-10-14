@@ -126,14 +126,14 @@ local plugins = {
     end
   },
 
+  { "BurntSushi/ripgrep" },
+
   { "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     config = function()
       require("plugins.configs.telescope")
     end,
   },
-
-  { "BurntSushi/ripgrep" },
 
   { "nvim-telescope/telescope-fzf-native.nvim" }
 }
