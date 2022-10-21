@@ -51,7 +51,7 @@ local plugins = {
   { "EdenEast/nightfox.nvim",
     config = function()
       require("plugins.configs.others").theme()
-      vim.cmd [[colorscheme nordfox]]
+      vim.cmd [[colorscheme nightfox]]
     end
   },
 
@@ -128,18 +128,15 @@ local plugins = {
 
   { "BurntSushi/ripgrep" },
 
+  { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+
   { "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     config = function()
       require("plugins.configs.telescope")
     end,
-  },
-
-  { "BurntSushi/ripgrep" },
-
-  { "nvim-telescope/telescope-fzf-native.nvim",
-    run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
   }
+
 }
 
 -- load the plugins

@@ -26,7 +26,7 @@ masoninstaller.setup {
 -- PYTHON SETUP
 lspconfig.pyright.setup({
   on_attach = custom_on_attach,
-  capabilites = capabilites
+  capabilites = capabilities
 })
 
 -- TS AND JS SETUP
@@ -46,9 +46,14 @@ lspconfig.sumneko_lua.setup({
   }
 })
 
+-- RUST SETUP
+lspconfig.rust_analyzer.setup({
+  on_attach = custom_on_attach
+})
+
 --  capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.jsonls.setup {
-  --   capabilities = capabilities
+  capabilities = capabilities
 }
 
 vim.g.completion_matching_strategy_list = { 'substring', 'exact', 'fuzzy', 'all' }
