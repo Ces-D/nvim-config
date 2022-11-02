@@ -32,7 +32,7 @@ lspconfig.pyright.setup({
 -- TS AND JS SETUP
 lspconfig.tsserver.setup({
   on_attach = custom_on_attach,
-  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+  filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript' },
   capabilities = capabilities
 })
 

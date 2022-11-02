@@ -7,7 +7,7 @@ opt.laststatus = 3
 opt.showmode = false
 
 opt.title = true
-opt.clipboard ="unnamedplus"
+opt.clipboard = "unnamedplus"
 opt.cursorline = true
 opt.fileencoding = "utf-8"
 opt.wrap = true

@@ -15,6 +15,10 @@ M.general = {
 
   ----------------------- NORMAL MODE -------------------------
   n = {
+    -- common function
+    ["<leader>d"] = { "_d", "delete without yanking" },
+    ["<leader>p"] = { "_dP", "paste without yarnking" },
+
     -- switch between windows
     ["<left>"] = { "<C-w>h", "window left" },
     ["<right>"] = { "<C-w>l", "window right" },
@@ -36,6 +40,10 @@ M.general = {
 
   ----------------------- VISUAL MODE -------------------------
   v = {
+    -- common functions
+    ["<leader>d"] = { "_d", "delete without yanking" },
+    ["<leader>p"] = { "_dP", "paste without yarnking" },
+
     -- move text
     ["<C-j>"] = { ":m '>+1<CR>gv=gv", "move text up" },
     ["<C-k>"] = { ":m '<-2<CR>gv=gv", "move text down" },
@@ -62,7 +70,7 @@ M.gitsigns = {
 }
 
 M.comment = {
-    n = {
+  n = {
     ["<leader>/"] = {
       "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>",
       "toggle comment",

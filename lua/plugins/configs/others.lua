@@ -29,6 +29,7 @@ M.theme = function()
 
   theme.setup {
     options = {
+      transparent = true,
       styles = {
         comments = 'italic',
         keywords = 'bold'
