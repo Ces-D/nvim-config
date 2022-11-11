@@ -32,7 +32,7 @@ M.general = {
     -- basic buffer handling
     ["<leader>w"] = { "<cmd>w<cr>", "save file" },
     ["<leader>q"] = { "<cmd>q<cr>", "quit file" },
-    ["<leader>fn"] = { "<cmd>enew<cr>", "new file" },
+    ["<leader>bd"] = { "<cmd>bd<cr>", "close buffer" },
 
     -- highlight
     ["<leader>h"] = { "<cmd>nohlsearch<cr>", "no highlight" },
