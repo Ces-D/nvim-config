@@ -32,7 +32,8 @@ M.general = {
     -- basic buffer handling
     ["<leader>w"] = { "<cmd>w<cr>", "save file" },
     ["<leader>q"] = { "<cmd>q<cr>", "quit file" },
-    ["<leader>bd"] = { "<cmd>bd<cr>", "close buffer" },
+    ["<leader>wq"] = { "<cmd>wq<cr>", "save then quit file" },
+    ["<leader>bd"] = { "<cmd>bd<cr>", "delete buffer" },
 
     -- highlight
     ["<leader>h"] = { "<cmd>nohlsearch<cr>", "no highlight" },
@@ -194,9 +195,6 @@ M.telescope = {
 
     -- pick a hidden term
     ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "pick hidden term" },
-
-    -- theme switcher
-    ["<leader>th"] = { "<cmd> Telescope themes <CR>", "themes" },
   },
 }
 
