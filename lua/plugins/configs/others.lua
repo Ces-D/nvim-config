@@ -29,7 +29,7 @@ M.theme = function()
 
   theme.setup {
     options = {
-      transparent = true,
+      transparent = false,
       styles = {
         comments = 'italic',
         keywords = 'bold'
