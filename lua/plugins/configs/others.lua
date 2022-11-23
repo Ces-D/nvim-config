@@ -66,6 +66,8 @@ M.null = function()
       null.builtins.diagnostics.tsc,
       null.builtins.formatting.black,
       null.builtins.completion.spell,
+      null.builtins.formatting.prettierd,
+      null.builtins.formatting.markdownlint
     }
   }
 end

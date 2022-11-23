@@ -10,6 +10,7 @@ local function custom_on_attach(client)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- vim.lsp.set_log_level("debug")
 -- INSTALLER SETUP
@@ -47,16 +48,24 @@ lspconfig.sumneko_lua.setup({
 })
 
 -- RUST SETUP
-lspconfig.rust_analyzer.setup({
-  on_attach = custom_on_attach
-})
-
---  capabilities.textDocument.completion.completionItem.snippetSupport = true
-lspconfig.jsonls.setup {
+lspconfig.rust_analyzer.setup {
+  on_attach = custom_on_attach,
   capabilities = capabilities
 }
 
-vim.g.completion_matching_strategy_list = { 'substring', 'exact', 'fuzzy', 'all' }
+-- JSON SETUP
+lspconfig.jsonls.setup {
+  on_attach = custom_on_attach,
+  capabilities = capabilities
+}
+
+-- CSS SETUP
+lspconfig.cssls.setup {
+  on_attach = custom_on_attach,
+  capabilities = capabilities
+}
+
+vim.g.completion_matching_strategy_list = { 'substring', 'exact', 'fuzzy' }
 vim.g.diagnostic_enable_virtual_text = 1
 vim.g.completion_chain_complete_list = {
   { complete_items = { 'lsp', 'snippet' } },
