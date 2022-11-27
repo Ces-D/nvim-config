@@ -64,10 +64,10 @@ M.null = function()
   null.setup {
     sources = {
       null.builtins.diagnostics.tsc,
-      null.builtins.formatting.black,
-      null.builtins.completion.spell,
       null.builtins.formatting.prettierd,
-      null.builtins.formatting.markdownlint
+      null.builtins.formatting.markdownlint,
+      null.builtins.formatting.black,
+      null.builtins.formatting.rustfmt
     }
   }
 end
