@@ -2,4 +2,4 @@
 
 Add this repos files in your `nvim` folder.
 
-I program primarily in typescript.
+The `cesd` is the latest iteration of my nvim config. `first` is the old version and should still work except that the requires are pointing to old directories.
