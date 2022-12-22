@@ -1,0 +1,493 @@
+local M = {}
+
+M.lspconfig = function()
+  local lsp_present, lsp = pcall(require, "lspconfig")
+  local mason_present, mason = pcall(require, "mason")
+  local mason_lsp_present, mason_lsp = pcall(require, "mason-lspconfig")
+
+  if not (lsp_present and mason_present and mason_lsp_present) then
+    vim.notify("Lsp servers not installed")
+    return
+  end
+
+  local function on_attach(client)
+    vim.notify('Attaching to ' .. client.name)
+  end
+
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  local servers = {
+    pyright = {},
+    tsserver = {},
+    sumneko_lua = {},
+    rust_analyzer = {},
+    cssls = {},
+    html = {}
+  }
+
+  mason.setup {
+    ui = {
+      icons = {
+        package_installed = "✓",
+        package_pending = "➜",
+        package_uninstalled = "✗"
+      }
+    }
+  }
+
+  mason_lsp.setup {
+    ensure_installed = vim.tbl_keys(servers)
+  }
+
+  mason_lsp.setup_handlers {
+    function(server_name)
+      lsp[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+      }
+    end,
+  }
+
+end
+
+M.cmp = function()
+  local cmp_present, cmp = pcall(require, "cmp")
+  local snip_present, snip = pcall(require, "luasnip")
+
+  if not (cmp_present and snip_present) then
+    vim.notify("Completions not installed")
+    return
+  end
+
+  local function border(hl_name)
+    return {
+      { "╭", hl_name },
+      { "─", hl_name },
+      { "╮", hl_name },
+      { "│", hl_name },
+      { "╯", hl_name },
+      { "─", hl_name },
+      { "╰", hl_name },
+      { "│", hl_name },
+    }
+  end
+
+  local cmp_window = require "cmp.utils.window"
+
+  cmp_window.info_ = cmp_window.info
+  cmp_window.info = function(self)
+    local info = self:info_()
+    info.scrollable = false
+    return info
+  end
+
+  cmp.setup {
+    window = {
+      completion = {
+        border = border "CmpBorder",
+        winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      },
+      documentation = {
+        border = border "CmpDocBorder",
+      },
+    },
+    snippet = {
+      expand = function(args)
+        snip.lsp_expand(args.body)
+      end,
+    },
+    sources = cmp.config.sources({
+      { name = "nvim_lsp" },
+      { name = "luasnip" },
+      { name = "buffer" },
+      { name = "nvim_lua" },
+      { name = "path" },
+    }),
+  }
+
+end
+
+M.treesitter = function()
+  local tree_present, tree = pcall(require, "nvim-treesitter.configs")
+
+  if not tree_present then
+    vim.notify("Tree sitter not installed")
+    return
+  end
+
+  tree.setup {
+    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust" },
+    highlight = {
+      enable = true,
+      use_languagetree = true,
+    },
+    indent = {
+      enable = true
+    }, incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = '<c-space>',
+        node_incremental = '<c-space>',
+        scope_incremental = '<c-s>',
+        node_decremental = '<c-backspace>',
+      },
+    },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
+        },
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<leader>A'] = '@parameter.inner',
+        },
+      },
+    },
+  }
+
+end
+
+M.telescope = function()
+  local telescope_present, telescope = pcall(require, "telescope")
+
+  if not telescope_present then
+    vim.notify("Telescope not installed")
+    return
+  end
+
+  telescope.setup {
+    defaults = {
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+      },
+      prompt_prefix = "   ",
+      selection_caret = "  ",
+      entry_prefix = "  ",
+      initial_mode = "insert",
+      selection_strategy = "reset",
+      sorting_strategy = "ascending",
+      layout_strategy = "horizontal",
+      layout_config = {
+        horizontal = {
+          prompt_position = "top",
+          preview_width = 0.55,
+          results_width = 0.8,
+        },
+        vertical = {
+          mirror = false,
+        },
+        width = 0.87,
+        height = 0.80,
+        preview_cutoff = 120,
+      },
+      file_sorter = require("telescope.sorters").get_fuzzy_file,
+      file_ignore_patterns = { "node_modules" },
+      generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+      path_display = { "truncate" },
+      winblend = 0,
+      border = {},
+      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      color_devicons = true,
+      set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+      file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+      grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+      qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+      mappings = {
+        n = { ["q"] = require("telescope.actions").close },
+      },
+    },
+    extensions = {
+      fzf = {
+        fuzzy = true, -- false will only do exact matching
+        override_generic_sorter = true, -- override the generic sorter
+        override_file_sorter = true, -- override the file sorter
+        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      }
+    }
+  }
+
+end
+
+M.gitsigns = function()
+  local gitsigns_present, gitsigns = pcall(require, "gitsigns")
+  if not gitsigns_present then
+    vim.notify("Git signs not installed")
+    return
+  end
+
+  gitsigns.setup {
+    signs = {
+      add = { text = '+' },
+      change = { text = '~' },
+      delete = { text = '_' },
+      topdelete = { text = '‾' },
+      changedelete = { text = '~' },
+    },
+  }
+
+end
+
+M.barbar = function()
+  local barbar_present, barbar = pcall(require, "bufferline")
+  if not barbar_present then
+    vim.notify("Barbar is not installed")
+    return
+  end
+
+  barbar.setup()
+
+end
+
+M.lualine = function()
+  local lualine_present, lualine = pcall(require, "lualine")
+  if not lualine_present then
+    vim.notify("lualine is not installed")
+    return
+  end
+
+  lualine.setup {
+    options = {
+      component_separators = '|',
+      section_separators = '',
+    },
+  }
+
+end
+
+M.toggleterm = function()
+  local toggleterm_present, toggleterm = pcall(require, "toggleterm")
+  if not toggleterm_present then
+    vim.notify("toggleterm is not installed")
+    return
+  end
+
+  toggleterm.setup {
+    open_mapping = [[<c-\>]],
+    hide_numbers = true,
+    shading_factor = 2,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = "float",
+    close_on_exit = true,
+    shell = vim.o.shell,
+    float_opts = {
+      border = "curved",
+    },
+  }
+
+end
+
+M.nvimtree = function()
+  local nvimtree_present, nvimtree = pcall(require, "nvim-tree")
+  if not nvimtree_present then
+    vim.notify("nvimtree is not installed")
+    return
+  end
+
+  nvimtree.setup {
+    filters = {
+      dotfiles = false,
+    },
+    disable_netrw = true,
+    hijack_netrw = true,
+    open_on_setup = false,
+    ignore_ft_on_setup = { "alpha" },
+    hijack_cursor = true,
+    hijack_unnamed_buffer_when_opening = false,
+    update_cwd = true,
+    update_focused_file = {
+      enable = true,
+      update_cwd = false,
+    },
+    view = {
+      adaptive_size = true,
+      side = "left",
+      width = 40,
+      hide_root_folder = true,
+    },
+    git = {
+      enable = false,
+      ignore = true,
+    },
+    filesystem_watchers = {
+      enable = true,
+    },
+    actions = {
+      open_file = {
+        resize_window = true,
+      },
+    },
+    renderer = {
+      highlight_git = false,
+      highlight_opened_files = "none",
+
+      indent_markers = {
+        enable = true,
+      },
+
+      icons = {
+        show = {
+          file = true,
+          folder = true,
+          folder_arrow = true,
+          git = false,
+        },
+
+        glyphs = {
+          default = "",
+          symlink = "",
+          folder = {
+            default = "",
+            empty = "",
+            empty_open = "",
+            open = "",
+            symlink = "",
+            symlink_open = "",
+            arrow_open = "",
+            arrow_closed = "",
+          },
+          git = {
+            unstaged = "✗",
+            staged = "✓",
+            unmerged = "",
+            renamed = "➜",
+            untracked = "★",
+            deleted = "",
+            ignored = "◌",
+          }
+        },
+      },
+    },
+  }
+
+  local nvim_tree_events = require('nvim-tree.events')
+  local bufferline_api = require('bufferline.api')
+
+  local function get_tree_size()
+    return require 'nvim-tree.view'.View.width
+  end
+
+  nvim_tree_events.subscribe('TreeOpen', function()
+    bufferline_api.set_offset(get_tree_size())
+  end)
+
+  nvim_tree_events.subscribe('Resize', function()
+    bufferline_api.set_offset(get_tree_size())
+  end)
+
+  nvim_tree_events.subscribe('TreeClose', function()
+    bufferline_api.set_offset(0)
+  end)
+
+end
+
+M.indentblankline = function()
+  local indent_present, indent = pcall(require, "indent-blankline")
+  if not indent_present then
+    vim.notify("indent-blankline is not installed")
+    return
+  end
+
+  indent.setup {
+    char = '┊',
+    show_trailing_blankline_indent = false,
+  }
+
+end
+
+M.theme = function()
+  local theme_present, theme = pcall(require, "nightfox")
+  if not theme_present then
+    vim.notify("Theme not present")
+    return
+  end
+
+  theme.setup {
+    options = {
+      transparent = false,
+      styles = {
+        comments = 'italic',
+        keywords = 'bold'
+      }
+    }
+  }
+
+end
+
+M.autopairs = function()
+  local present1, autopairs = pcall(require, "nvim-autopairs")
+  local present2, cmp = pcall(require, "cmp")
+  if not (present1 and present2) then
+    return
+  end
+
+  autopairs.setup({
+    fast_wrap = {},
+    disable_filetype = { "TelescopePrompt", "vim" },
+  })
+
+  local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end
+
+M.ts_autotag = function()
+  local present, autotag = pcall(require, 'nvim-ts-autotag')
+  if not present then
+    return
+  end
+
+  autotag.setup()
+end
+
+M.comment = function()
+  local present, nvim_comment = pcall(require, "Comment")
+  if not present then
+    return
+  end
+
+  nvim_comment.setup()
+end
+
+return M
