@@ -8,6 +8,7 @@ local plugins = {
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
   { "folke/neodev.nvim" },
+  { "jose-elias-alvarez/null-ls.nvim" },
 
   --- Auto Completion
   { "hrsh7th/nvim-cmp" },

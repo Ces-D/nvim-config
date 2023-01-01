@@ -145,6 +145,21 @@ M.cmp = function()
 
 end
 
+M.null_ls = function()
+  local null_present, null = pcall(require, "null-ls")
+  if not null_present then
+    vim.notify("Null LS not installed")
+  end
+
+  null.setup({
+    sources = {
+      null.builtins.formatting.prettierd,
+      null.builtins.formatting.rustfmt,
+      null.builtins.completion.spell,
+    },
+  })
+end
+
 M.treesitter = function()
   local tree_present, tree = pcall(require, "nvim-treesitter.configs")
 
