@@ -24,8 +24,6 @@ for _, mapping in pairs(require("cesd.mappings")) do
   utils.load_mappings(mapping)
 end
 
-vim.cmd [[colorscheme Nightfox]]
-
 -- When we are bootstrapping a configuration, it doesn't
 -- make sense to execute the rest of the init.lua.
 --

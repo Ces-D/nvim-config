@@ -32,7 +32,7 @@ local plugins = {
   { "kyazdani42/nvim-tree.lua" },
   { "kyazdani42/nvim-web-devicons" },
   { "lukas-reineke/indent-blankline.nvim" },
-  { "EdenEast/nightfox.nvim" },
+  { "projekt0n/github-nvim-theme" },
   { "windwp/nvim-autopairs" },
   { "windwp/nvim-ts-autotag" },
   { "numToStr/Comment.nvim" },

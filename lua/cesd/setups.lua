@@ -23,6 +23,7 @@ M.lspconfig = function()
     sumneko_lua = {},
     rust_analyzer = {},
     cssls = {},
+    cssmodules_ls = {},
     html = {}
   }
 
@@ -411,7 +412,7 @@ M.nvimtree = function()
       },
     },
     renderer = {
-      highlight_git = false,
+      highlight_git = true,
       highlight_opened_files = "none",
 
       indent_markers = {
@@ -423,7 +424,7 @@ M.nvimtree = function()
           file = true,
           folder = true,
           folder_arrow = true,
-          git = false,
+          git = true,
         },
 
         glyphs = {
@@ -489,20 +490,15 @@ M.indentblankline = function()
 end
 
 M.theme = function()
-  local theme_present, theme = pcall(require, "nightfox")
+  local theme_present, theme = pcall(require, "github-theme")
   if not theme_present then
     print("Theme not present")
     return
   end
 
   theme.setup {
-    options = {
-      transparent = true,
-      styles = {
-        comments = 'italic',
-        keywords = 'bold'
-      }
-    }
+    theme_style = "dark",
+    function_style = "italic"
   }
 
 end
