@@ -1,5 +1,18 @@
 local M = {}
 
+local function border(hl_name)
+  return {
+    { "╭", hl_name },
+    { "─", hl_name },
+    { "╮", hl_name },
+    { "│", hl_name },
+    { "╯", hl_name },
+    { "─", hl_name },
+    { "╰", hl_name },
+    { "│", hl_name },
+  }
+end
+
 M.lspconfig = function()
   local lsp_present, lsp = pcall(require, "lspconfig")
   local mason_present, mason = pcall(require, "mason")
@@ -44,6 +57,10 @@ M.lspconfig = function()
   mason_lsp.setup_handlers {
     function(server_name)
       lsp[server_name].setup {
+        handlers = {
+          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
+          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border("FloatBorder") })
+        },
         capabilities = capabilities,
         on_attach = on_attach,
         settings = servers[server_name],
@@ -62,18 +79,6 @@ M.cmp = function()
     return
   end
 
-  local function border(hl_name)
-    return {
-      { "╭", hl_name },
-      { "─", hl_name },
-      { "╮", hl_name },
-      { "│", hl_name },
-      { "╯", hl_name },
-      { "─", hl_name },
-      { "╰", hl_name },
-      { "│", hl_name },
-    }
-  end
 
   local cmp_window = require "cmp.utils.window"
 
