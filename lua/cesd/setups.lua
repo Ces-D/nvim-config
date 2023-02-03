@@ -59,7 +59,10 @@ M.lspconfig = function()
       lsp[server_name].setup {
         handlers = {
           ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = border("FloatBorder") })
+          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
+            {
+              border = "single"
+            })
         },
         capabilities = capabilities,
         on_attach = on_attach,
@@ -68,6 +71,9 @@ M.lspconfig = function()
     end,
   }
 
+  vim.diagnostic.config {
+    float = { border = "single" }
+  }
 end
 
 M.cmp = function()
@@ -143,8 +149,6 @@ M.cmp = function()
     sources = cmp.config.sources({
       { name = "nvim_lsp" },
       { name = "luasnip" },
-      { name = "buffer" },
-      { name = "nvim_lua" },
       { name = "path" },
     }),
   }
@@ -286,7 +290,7 @@ M.telescope = function()
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
-      set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+      -- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
@@ -400,7 +404,7 @@ M.nvimtree = function()
     },
     view = {
       adaptive_size = true,
-      side = "left",
+      side = "right",
       width = 40,
       hide_root_folder = true,
     },
@@ -495,16 +499,45 @@ M.indentblankline = function()
 end
 
 M.theme = function()
-  local theme_present, theme = pcall(require, "github-theme")
+  local theme_present, theme = pcall(require, "catppuccin")
   if not theme_present then
     print("Theme not present")
     return
   end
 
   theme.setup {
-    theme_style = "dark",
-    function_style = "italic"
+    flavour = "mocha",
+    styles = {
+      functions = { "italic" },
+      keywords = { "bold" }
+    },
+    integrations = {
+      barbar = true,
+      gitsigns = true,
+      nvimtree = true,
+      indent_blankline = {
+        enabled = true,
+        colored_indent_levels = false,
+      },
+      native_lsp = {
+        enabled = true,
+        virtual_text = {
+          errors = { "italic" },
+          hints = { "italic" },
+          warnings = { "italic" },
+          information = { "italic" },
+        },
+        underlines = {
+          errors = { "underline" },
+          hints = { "underline" },
+          warnings = { "underline" },
+          information = { "underline" },
+        },
+      },
+    }
   }
+
+  vim.cmd.colorscheme "catppuccin"
 
 end
 
