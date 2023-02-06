@@ -393,7 +393,6 @@ M.nvimtree = function()
     },
     disable_netrw = true,
     hijack_netrw = true,
-    open_on_setup = false,
     ignore_ft_on_setup = { "alpha" },
     hijack_cursor = true,
     hijack_unnamed_buffer_when_opening = false,
@@ -404,12 +403,12 @@ M.nvimtree = function()
     },
     view = {
       adaptive_size = true,
-      side = "right",
+      side = "left",
       width = 40,
       hide_root_folder = true,
     },
     git = {
-      enable = false,
+      enable = true,
       ignore = true,
     },
     filesystem_watchers = {
