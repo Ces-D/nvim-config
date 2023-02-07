@@ -26,13 +26,13 @@ local plugins = {
   { "lewis6991/gitsigns.nvim" },
 
   --- UI
-  -- { "romgrk/barbar.nvim" },
   { "nvim-lualine/lualine.nvim" },
   { "akinsho/toggleterm.nvim" },
   { "kyazdani42/nvim-tree.lua" },
   { "kyazdani42/nvim-web-devicons" },
   { "lukas-reineke/indent-blankline.nvim" },
   { "utilyre/barbecue.nvim", requires = { "SmiteshP/nvim-navic" } },
+  { "AlexvZyl/nordic.nvim" },
   { "windwp/nvim-autopairs" },
   { "windwp/nvim-ts-autotag" },
   { "numToStr/Comment.nvim" },

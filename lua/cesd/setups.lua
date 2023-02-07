@@ -411,7 +411,7 @@ M.nvimtree = function()
     },
     git = {
       enable = true,
-      ignore = true,
+      ignore = true
     },
     filesystem_watchers = {
       enable = true,
@@ -485,7 +485,18 @@ M.indentblankline = function()
 end
 
 M.theme = function()
-  vim.cmd.colorscheme "tempus_classic"
+  local theme_present, theme = pcall(require, "nordic")
+  if not theme_present then
+    vim.notify("theme not present")
+    return
+  end
+
+  theme.setup {
+    telescope = {
+      style = "flat"
+    }
+  }
+  vim.cmd.colorscheme "nordic"
 end
 
 M.autopairs = function()
