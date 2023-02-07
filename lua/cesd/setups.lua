@@ -329,14 +329,16 @@ M.gitsigns = function()
 
 end
 
-M.barbar = function()
-  local barbar_present, barbar = pcall(require, "bufferline")
-  if not barbar_present then
-    vim.notify("Barbar is not installed")
+M.barbecue = function()
+  local barbecue_present, barbecue = pcall(require, "barbecue")
+  if not barbecue_present then
+    vim.notify("Barbecue not installed")
     return
   end
 
-  barbar.setup()
+  barbecue.setup {
+    create_autocmd = true
+  }
 
 end
 
@@ -463,24 +465,9 @@ M.nvimtree = function()
   }
 
   local nvim_tree_events = require('nvim-tree.events')
-  local bufferline_api = require('bufferline.api')
-
   local function get_tree_size()
     return require 'nvim-tree.view'.View.width
   end
-
-  nvim_tree_events.subscribe('TreeOpen', function()
-    bufferline_api.set_offset(get_tree_size())
-  end)
-
-  nvim_tree_events.subscribe('Resize', function()
-    bufferline_api.set_offset(get_tree_size())
-  end)
-
-  nvim_tree_events.subscribe('TreeClose', function()
-    bufferline_api.set_offset(0)
-  end)
-
 end
 
 M.indentblankline = function()
@@ -498,46 +485,7 @@ M.indentblankline = function()
 end
 
 M.theme = function()
-  local theme_present, theme = pcall(require, "catppuccin")
-  if not theme_present then
-    print("Theme not present")
-    return
-  end
-
-  theme.setup {
-    flavour = "mocha",
-    styles = {
-      functions = { "italic" },
-      keywords = { "bold" }
-    },
-    integrations = {
-      barbar = true,
-      gitsigns = true,
-      nvimtree = true,
-      indent_blankline = {
-        enabled = true,
-        colored_indent_levels = false,
-      },
-      native_lsp = {
-        enabled = true,
-        virtual_text = {
-          errors = { "italic" },
-          hints = { "italic" },
-          warnings = { "italic" },
-          information = { "italic" },
-        },
-        underlines = {
-          errors = { "underline" },
-          hints = { "underline" },
-          warnings = { "underline" },
-          information = { "underline" },
-        },
-      },
-    }
-  }
-
-  vim.cmd.colorscheme "catppuccin"
-
+  vim.cmd.colorscheme "tempus_classic"
 end
 
 M.autopairs = function()
