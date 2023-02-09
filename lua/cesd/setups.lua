@@ -2,14 +2,14 @@ local M = {}
 
 local function border(hl_name)
   return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
+      { "╭", hl_name },
+      { "─", hl_name },
+      { "╮", hl_name },
+      { "│", hl_name },
+      { "╯", hl_name },
+      { "─", hl_name },
+      { "╰", hl_name },
+      { "│", hl_name },
   }
 end
 
@@ -31,48 +31,48 @@ M.lspconfig = function()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   local servers = {
-    pyright = {},
-    tsserver = {},
-    sumneko_lua = {},
-    rust_analyzer = {},
-    cssls = {},
-    cssmodules_ls = {},
-    html = {}
+      pyright = {},
+      tsserver = {},
+      sumneko_lua = {},
+      rust_analyzer = {},
+      cssls = {},
+      cssmodules_ls = {},
+      html = {}
   }
 
   mason.setup {
-    ui = {
-      icons = {
-        package_installed = "✓",
-        package_pending = "➜",
-        package_uninstalled = "✗"
+      ui = {
+          icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗"
+          }
       }
-    }
   }
 
   mason_lsp.setup {
-    ensure_installed = vim.tbl_keys(servers)
+      ensure_installed = vim.tbl_keys(servers)
   }
 
   mason_lsp.setup_handlers {
-    function(server_name)
-      lsp[server_name].setup {
-        handlers = {
-          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
-            {
-              border = "single"
-            })
-        },
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-      }
-    end,
+      function(server_name)
+        lsp[server_name].setup {
+            handlers = {
+                ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
+                ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
+                    {
+                        border = "single"
+                    })
+            },
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = servers[server_name],
+        }
+      end,
   }
 
   vim.diagnostic.config {
-    float = { border = "single" }
+      float = { border = "single" }
   }
 end
 
@@ -96,63 +96,62 @@ M.cmp = function()
   end
 
   cmp.setup {
-    window = {
-      completion = {
-        border = border "CmpBorder",
-        winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      window = {
+          completion = {
+              border = border "CmpBorder",
+              winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+          },
+          documentation = {
+              border = border "CmpDocBorder",
+          },
       },
-      documentation = {
-        border = border "CmpDocBorder",
+      snippet = {
+          expand = function(args)
+            snip.lsp_expand(args.body)
+          end,
       },
-    },
-    snippet = {
-      expand = function(args)
-        snip.lsp_expand(args.body)
-      end,
-    },
-    mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-Space>"] = cmp.mapping.complete(),
-      ["<C-e>"] = cmp.mapping.close(),
-      ["<CR>"] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
+      mapping = {
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-d>"] = cmp.mapping.scroll_docs( -4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<CR>"] = cmp.mapping.confirm {
+              behavior = cmp.ConfirmBehavior.Replace,
+              select = false,
+          },
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif require("luasnip").expand_or_jumpable() then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            else
+              fallback()
+            end
+          end, {
+              "i",
+              "s",
+          }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif require("luasnip").jumpable( -1) then
+              vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+            else
+              fallback()
+            end
+          end, {
+              "i",
+              "s",
+          }),
       },
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        else
-          fallback()
-        end
-      end, {
-        "i",
-        "s",
+      sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "path" },
       }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-        else
-          fallback()
-        end
-      end, {
-        "i",
-        "s",
-      }),
-    },
-    sources = cmp.config.sources({
-      { name = "nvim_lsp" },
-      { name = "luasnip" },
-      { name = "path" },
-    }),
   }
-
 end
 
 M.null_ls = function()
@@ -162,11 +161,11 @@ M.null_ls = function()
   end
 
   null.setup({
-    sources = {
-      null.builtins.formatting.prettierd,
-      null.builtins.formatting.rustfmt,
-      null.builtins.completion.spell,
-    },
+      sources = {
+          null.builtins.formatting.prettierd,
+          null.builtins.formatting.rustfmt,
+          null.builtins.completion.spell,
+      },
   })
 end
 
@@ -179,14 +178,14 @@ M.treesitter = function()
   end
 
   tree.setup {
-    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust" },
-    highlight = {
-      enable = true,
-      use_languagetree = true,
-    },
-    indent = {
-      enable = true
-    }, incremental_selection = {
+      ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust" },
+      highlight = {
+          enable = true,
+          use_languagetree = true,
+      },
+      indent = {
+          enable = true
+      }, incremental_selection = {
       enable = true,
       -- keymaps = {
       --   init_selection = '<c-space>',
@@ -194,53 +193,52 @@ M.treesitter = function()
       --   scope_incremental = '<c-s>',
       --   node_decremental = '<c-backspace>',
       -- },
-    },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-        },
+  },
+      textobjects = {
+          select = {
+              enable = true,
+              lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+              keymaps = {
+                  -- You can use the capture groups defined in textobjects.scm
+                  ['aa'] = '@parameter.outer',
+                  ['ia'] = '@parameter.inner',
+                  ['af'] = '@function.outer',
+                  ['if'] = '@function.inner',
+                  ['ac'] = '@class.outer',
+                  ['ic'] = '@class.inner',
+              },
+          },
+          move = {
+              enable = true,
+              set_jumps = true, -- whether to set jumps in the jumplist
+              goto_next_start = {
+                  [']m'] = '@function.outer',
+                  [']]'] = '@class.outer',
+              },
+              goto_next_end = {
+                  [']M'] = '@function.outer',
+                  [']['] = '@class.outer',
+              },
+              goto_previous_start = {
+                  ['[m'] = '@function.outer',
+                  ['[['] = '@class.outer',
+              },
+              goto_previous_end = {
+                  ['[M'] = '@function.outer',
+                  ['[]'] = '@class.outer',
+              },
+          },
+          swap = {
+              enable = true,
+              swap_next = {
+                  ['<leader>a'] = '@parameter.inner',
+              },
+              swap_previous = {
+                  ['<leader>A'] = '@parameter.inner',
+              },
+          },
       },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
   }
-
 end
 
 M.telescope = function()
@@ -252,62 +250,67 @@ M.telescope = function()
   end
 
   telescope.setup {
-    defaults = {
-      vimgrep_arguments = {
-        "rg",
-        "--color=never",
-        "--no-heading",
-        "--with-filename",
-        "--line-number",
-        "--column",
-        "--smart-case",
+      defaults = {
+          vimgrep_arguments = {
+              "rg",
+              "--color=never",
+              "--no-heading",
+              "--with-filename",
+              "--line-number",
+              "--column",
+              "--smart-case",
+          },
+          prompt_prefix = "   ",
+          selection_caret = "  ",
+          entry_prefix = "  ",
+          initial_mode = "insert",
+          selection_strategy = "reset",
+          sorting_strategy = "ascending",
+          layout_strategy = "horizontal",
+          layout_config = {
+              horizontal = {
+                  prompt_position = "top",
+                  preview_width = 0.55,
+                  results_width = 0.8,
+              },
+              vertical = {
+                  mirror = false,
+              },
+              width = 0.87,
+              height = 0.80,
+              preview_cutoff = 120,
+          },
+          file_sorter = require("telescope.sorters").get_fuzzy_file,
+          file_ignore_patterns = { "node_modules" },
+          generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
+          path_display = { "truncate" },
+          winblend = 0,
+          border = {},
+          borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+          color_devicons = true,
+          -- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+          file_previewer = require("telescope.previewers").vim_buffer_cat.new,
+          grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
+          qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
+          mappings = {
+              n = { ["q"] = require("telescope.actions").close },
+          },
       },
-      prompt_prefix = "   ",
-      selection_caret = "  ",
-      entry_prefix = "  ",
-      initial_mode = "insert",
-      selection_strategy = "reset",
-      sorting_strategy = "ascending",
-      layout_strategy = "horizontal",
-      layout_config = {
-        horizontal = {
-          prompt_position = "top",
-          preview_width = 0.55,
-          results_width = 0.8,
-        },
-        vertical = {
-          mirror = false,
-        },
-        width = 0.87,
-        height = 0.80,
-        preview_cutoff = 120,
+      pickers = {
+          buffers = {
+              ignore_current_buffer = true,
+              sort_lastused = true
+          }
       },
-      file_sorter = require("telescope.sorters").get_fuzzy_file,
-      file_ignore_patterns = { "node_modules" },
-      generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
-      path_display = { "truncate" },
-      winblend = 0,
-      border = {},
-      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-      color_devicons = true,
-      -- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-      file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-      grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-      qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
-      mappings = {
-        n = { ["q"] = require("telescope.actions").close },
-      },
-    },
-    extensions = {
-      fzf = {
-        fuzzy = true, -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+      extensions = {
+          fzf = {
+              fuzzy = true, -- false will only do exact matching
+              override_generic_sorter = true, -- override the generic sorter
+              override_file_sorter = true, -- override the file sorter
+              case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+          }
       }
-    }
   }
-
 end
 
 M.gitsigns = function()
@@ -318,15 +321,14 @@ M.gitsigns = function()
   end
 
   gitsigns.setup {
-    signs = {
-      add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
-    },
+      signs = {
+          add = { text = '+' },
+          change = { text = '~' },
+          delete = { text = '_' },
+          topdelete = { text = '‾' },
+          changedelete = { text = '~' },
+      },
   }
-
 end
 
 M.barbecue = function()
@@ -337,9 +339,8 @@ M.barbecue = function()
   end
 
   barbecue.setup {
-    create_autocmd = true
+      create_autocmd = true
   }
-
 end
 
 M.lualine = function()
@@ -350,12 +351,11 @@ M.lualine = function()
   end
 
   lualine.setup {
-    options = {
-      component_separators = '|',
-      section_separators = '',
-    },
+      options = {
+          component_separators = '|',
+          section_separators = '',
+      },
   }
-
 end
 
 M.toggleterm = function()
@@ -366,20 +366,19 @@ M.toggleterm = function()
   end
 
   toggleterm.setup {
-    open_mapping = [[<c-\>]],
-    hide_numbers = true,
-    shading_factor = 2,
-    start_in_insert = true,
-    insert_mappings = true,
-    persist_size = true,
-    direction = "float",
-    close_on_exit = true,
-    shell = vim.o.shell,
-    float_opts = {
-      border = "curved",
-    },
+      open_mapping = [[<c-\>]],
+      hide_numbers = true,
+      shading_factor = 2,
+      start_in_insert = true,
+      insert_mappings = true,
+      persist_size = true,
+      direction = "float",
+      close_on_exit = true,
+      shell = vim.o.shell,
+      float_opts = {
+          border = "curved",
+      },
   }
-
 end
 
 M.nvimtree = function()
@@ -390,78 +389,78 @@ M.nvimtree = function()
   end
 
   nvimtree.setup {
-    filters = {
-      dotfiles = false,
-    },
-    disable_netrw = true,
-    hijack_netrw = true,
-    ignore_ft_on_setup = { "alpha" },
-    hijack_cursor = true,
-    hijack_unnamed_buffer_when_opening = false,
-    update_cwd = true,
-    update_focused_file = {
-      enable = true,
-      update_cwd = false,
-    },
-    view = {
-      adaptive_size = true,
-      side = "left",
-      width = 40,
-      hide_root_folder = true,
-    },
-    git = {
-      enable = true,
-      ignore = true
-    },
-    filesystem_watchers = {
-      enable = true,
-    },
-    actions = {
-      open_file = {
-        resize_window = true,
+      filters = {
+          dotfiles = false,
       },
-    },
-    renderer = {
-      highlight_git = true,
-      highlight_opened_files = "none",
-
-      indent_markers = {
-        enable = true,
+      disable_netrw = true,
+      hijack_netrw = true,
+      ignore_ft_on_setup = { "alpha" },
+      hijack_cursor = true,
+      hijack_unnamed_buffer_when_opening = false,
+      update_cwd = true,
+      update_focused_file = {
+          enable = true,
+          update_cwd = false,
       },
-
-      icons = {
-        show = {
-          file = true,
-          folder = true,
-          folder_arrow = true,
-          git = true,
-        },
-
-        glyphs = {
-          default = "",
-          symlink = "",
-          folder = {
-            default = "",
-            empty = "",
-            empty_open = "",
-            open = "",
-            symlink = "",
-            symlink_open = "",
-            arrow_open = "",
-            arrow_closed = "",
+      view = {
+          adaptive_size = true,
+          side = "left",
+          width = 40,
+          hide_root_folder = true,
+      },
+      git = {
+          enable = true,
+          ignore = true
+      },
+      filesystem_watchers = {
+          enable = true,
+      },
+      actions = {
+          open_file = {
+              resize_window = true,
           },
-          git = {
-            unstaged = "✗",
-            staged = "✓",
-            unmerged = "",
-            renamed = "➜",
-            untracked = "★",
-            deleted = "",
-            ignored = "◌",
-          }
-        },
       },
-    },
+      renderer = {
+          highlight_git = true,
+          highlight_opened_files = "none",
+
+          indent_markers = {
+              enable = true,
+          },
+
+          icons = {
+              show = {
+                  file = true,
+                  folder = true,
+                  folder_arrow = true,
+                  git = true,
+              },
+
+              glyphs = {
+                  default = "",
+                  symlink = "",
+                  folder = {
+                      default = "",
+                      empty = "",
+                      empty_open = "",
+                      open = "",
+                      symlink = "",
+                      symlink_open = "",
+                      arrow_open = "",
+                      arrow_closed = "",
+                  },
+                  git = {
+                      unstaged = "✗",
+                      staged = "✓",
+                      unmerged = "",
+                      renamed = "➜",
+                      untracked = "★",
+                      deleted = "",
+                      ignored = "◌",
+                  }
+              },
+          },
+      },
   }
 
   local nvim_tree_events = require('nvim-tree.events')
@@ -478,10 +477,9 @@ M.indentblankline = function()
   end
 
   indent.setup {
-    char = '┊',
-    show_trailing_blankline_indent = false,
+      char = '┊',
+      show_trailing_blankline_indent = false,
   }
-
 end
 
 M.theme = function()
@@ -492,9 +490,9 @@ M.theme = function()
   end
 
   theme.setup {
-    telescope = {
-      style = "flat"
-    }
+      telescope = {
+          style = "classic"
+      }
   }
   vim.cmd.colorscheme "nordic"
 end
@@ -507,8 +505,8 @@ M.autopairs = function()
   end
 
   autopairs.setup({
-    fast_wrap = {},
-    disable_filetype = { "TelescopePrompt", "vim" },
+      fast_wrap = {},
+      disable_filetype = { "TelescopePrompt", "vim" },
   })
 
   local cmp_autopairs = require "nvim-autopairs.completion.cmp"
