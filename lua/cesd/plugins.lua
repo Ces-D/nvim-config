@@ -31,7 +31,8 @@ local plugins = {
   { "kyazdani42/nvim-tree.lua" },
   { "kyazdani42/nvim-web-devicons" },
   { "lukas-reineke/indent-blankline.nvim" },
-  { "utilyre/barbecue.nvim", requires = { "SmiteshP/nvim-navic" } },
+  { "utilyre/barbecue.nvim",
+    requires = { "SmiteshP/nvim-navic" } },
   { "AlexvZyl/nordic.nvim" },
   { "windwp/nvim-autopairs" },
   { "windwp/nvim-ts-autotag" },
@@ -44,6 +45,9 @@ local plugins = {
     cond = vim.fn.executable "make" == 1
   },
   { "nvim-telescope/telescope.nvim" },
+
+  --- Work Flow
+  { "epwalsh/obsidian.nvim" }
 }
 
 local present, packer = pcall(require, "packer")
@@ -67,7 +71,6 @@ if present then
   for _, plugin in pairs(plugins) do
     packer.use(plugin)
   end
-
 else
   vim.api.nvim_err_writeln("packer missing")
 end

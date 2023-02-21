@@ -178,4 +178,18 @@ M.telescope = {
   },
 }
 
+M.obsidion = {
+  n = {
+    ["<leader>ogf"] = {
+      function()
+        if require('obsidian').util.cursor_on_markdown_link() then
+          return "<cmd>ObsidianFollowLink<CR>"
+        else
+          return "gf"
+        end
+      end, "follow obsidion link"
+    }
+  }
+}
+
 return M

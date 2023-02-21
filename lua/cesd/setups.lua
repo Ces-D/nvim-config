@@ -113,7 +113,7 @@ M.cmp = function()
     mapping = {
       ["<C-p>"] = cmp.mapping.select_prev_item(),
       ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-d>"] = cmp.mapping.scroll_docs( -4),
       ["<C-f>"] = cmp.mapping.scroll_docs(4),
       ["<C-Space>"] = cmp.mapping.complete(),
       ["<C-e>"] = cmp.mapping.close(),
@@ -136,7 +136,7 @@ M.cmp = function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
+        elseif require("luasnip").jumpable( -1) then
           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
         else
           fallback()
@@ -167,8 +167,6 @@ M.null_ls = function()
       null.builtins.completion.spell,
     },
   })
-
-
 end
 
 M.treesitter = function()
@@ -180,22 +178,23 @@ M.treesitter = function()
   end
 
   tree.setup {
-    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust" },
+    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown", "markdown_inline" },
     highlight = {
       enable = true,
       use_languagetree = true,
+      additional_vim_regex_highlighting = { "markdown" }
     },
     indent = {
       enable = true
     }, incremental_selection = {
-      enable = true,
-      -- keymaps = {
-      --   init_selection = '<c-space>',
-      --   node_incremental = '<c-space>',
-      --   scope_incremental = '<c-s>',
-      --   node_decremental = '<c-backspace>',
-      -- },
-    },
+    enable = true,
+    -- keymaps = {
+    --   init_selection = '<c-space>',
+    --   node_incremental = '<c-space>',
+    --   scope_incremental = '<c-s>',
+    --   node_decremental = '<c-backspace>',
+    -- },
+  },
     textobjects = {
       select = {
         enable = true,
@@ -531,6 +530,20 @@ M.comment = function()
   end
 
   nvim_comment.setup()
+end
+
+M.obsidion = function()
+  local present, obsidion = pcall(require, "obsidion")
+  if not present then
+    return
+  end
+
+  obsidion.setup {
+    dir = "~/Documents/notes",
+    completion = {
+      nvim_cmp = true
+    }
+  }
 end
 
 return M
