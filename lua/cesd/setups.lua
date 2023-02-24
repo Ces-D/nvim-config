@@ -463,11 +463,6 @@ M.nvimtree = function()
       },
     },
   }
-
-  local nvim_tree_events = require('nvim-tree.events')
-  local function get_tree_size()
-    return require 'nvim-tree.view'.View.width
-  end
 end
 
 M.indentblankline = function()
