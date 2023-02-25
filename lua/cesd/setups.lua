@@ -397,7 +397,6 @@ M.nvimtree = function()
     hijack_netrw = true,
     ignore_ft_on_setup = { "alpha" },
     hijack_cursor = true,
-    hijack_unnamed_buffer_when_opening = false,
     update_cwd = true,
     update_focused_file = {
       enable = true,
@@ -528,13 +527,13 @@ M.comment = function()
 end
 
 M.obsidion = function()
-  local present, obsidion = pcall(require, "obsidion")
+  local present, obsidion = pcall(require, "obsidian")
   if not present then
     return
   end
 
   obsidion.setup {
-    dir = "~/Documents/notes",
+    dir = "~/Documents/notes/notes",
     completion = {
       nvim_cmp = true
     }

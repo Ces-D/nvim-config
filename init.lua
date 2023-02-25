@@ -1,12 +1,1 @@
--- require("plugins")
--- require("core.options")
--- local mappings = require("core.mappings")
--- require("core.utils").load_mappings(mappings.general)
--- require("core.utils").load_mappings(mappings.bufferline)
--- require("core.utils").load_mappings(mappings.gitsigns)
--- require("core.utils").load_mappings(mappings.lspconfig)
--- require("core.utils").load_mappings(mappings.comment)
--- require("core.utils").load_mappings(mappings.nvimTree)
--- require("core.utils").load_mappings(mappings.telescope)
---
 require("cesd")
