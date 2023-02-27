@@ -33,7 +33,7 @@ local plugins = {
   { "lukas-reineke/indent-blankline.nvim" },
   { "utilyre/barbecue.nvim",
     requires = { "SmiteshP/nvim-navic" } },
-  { "AlexvZyl/nordic.nvim" },
+  { "loctvl842/monokai-pro.nvim" },
   { "windwp/nvim-autopairs" },
   { "windwp/nvim-ts-autotag" },
   { "numToStr/Comment.nvim" },
