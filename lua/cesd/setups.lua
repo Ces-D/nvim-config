@@ -60,9 +60,7 @@ M.lspconfig = function()
         handlers = {
           ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
           ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
-            {
-              border = "single"
-            })
+            { border = "single" })
         },
         capabilities = capabilities,
         on_attach = on_attach,
@@ -489,10 +487,10 @@ M.theme = function()
     terminal_colors = true,
     devicons = true, -- highlight the icons of `nvim-web-devicons`
     italic_comments = true,
-    filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
+    -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
     -- Enable this will disable filter option
     day_night = {
-      enable = false, -- turn off by default
+      enable = true, -- turn off by default
       day_filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
       night_filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
     },
@@ -503,16 +501,24 @@ M.theme = function()
       "telescope",
     }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree"
     plugins = {
-      bufferline = {
-        underline_selected = false,
-        underline_visible = false,
-      },
       indent_blankline = {
-        context_highlight = "default", -- default | pro
-        context_start_underline = false,
+        context_highlight = "pro", -- default | pro
+        context_start_underline = true,
       },
     },
+    override = function(c)
+      return {
+        MatchParen = {
+          -- bg = hp.blend(c.base.blue, 0.2),
+          -- bg = hp.lighten(c.base.white, -55),
+          fg = c.base.yellow,
+          bold = true,
+          underline = true,
+        }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
+      }
+    end,
   }
+
   vim.cmd([[colorscheme monokai-pro]])
 end
 
