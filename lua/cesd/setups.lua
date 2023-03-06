@@ -162,7 +162,12 @@ M.null_ls = function()
     sources = {
       null.builtins.formatting.prettierd,
       null.builtins.formatting.rustfmt,
-      null.builtins.completion.spell,
+      null.builtins.diagnostics.cspell.with({
+        filetypes = { "markdown", "html" }
+      }),
+      null.builtins.code_actions.cspell.with({
+        filetypes = { "markdown", "html" }
+      })
     },
   })
 end
@@ -488,11 +493,11 @@ M.theme = function()
     -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
     -- Enable this will disable filter option
     day_night = {
-      enable = true,              -- turn off by default
-      day_filter = "pro",         -- classic | octagon | pro | machine | ristretto | spectrum
+      enable = true,            -- turn off by default
+      day_filter = "pro",       -- classic | octagon | pro | machine | ristretto | spectrum
       night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
     },
-    inc_search = "background",    -- underline | background
+    inc_search = "background",  -- underline | background
     background_clear = {
       "float_win",
       "toggleterm",
