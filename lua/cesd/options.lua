@@ -26,8 +26,8 @@ opt.mouse = "a"
 
 -- Numbers
 opt.number = true
-opt.numberwidth = 2
-opt.ruler = false
+opt.numberwidth = 3
+opt.ruler = true
 
 -- disable nvim intro
 opt.shortmess:append "sI"
@@ -59,18 +59,15 @@ local default_plugins = {
   "tar",
   "tarPlugin",
   "rrhelper",
-  "spellfile_plugin",
   "vimball",
   "vimballPlugin",
   "zip",
   "zipPlugin",
   "tutor",
   "rplugin",
-  "syntax",
   "synmenu",
   "optwin",
   "compiler",
-  "bugreport",
   "ftplugin",
 }
 

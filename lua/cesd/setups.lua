@@ -58,8 +58,8 @@ M.lspconfig = function()
     function(server_name)
       lsp[server_name].setup {
         handlers = {
-          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
+              ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
+              ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
             { border = "single" })
         },
         capabilities = capabilities,
@@ -109,17 +109,17 @@ M.cmp = function()
       end,
     },
     mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item(),
-      ["<C-n>"] = cmp.mapping.select_next_item(),
-      ["<C-d>"] = cmp.mapping.scroll_docs( -4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-Space>"] = cmp.mapping.complete(),
-      ["<C-e>"] = cmp.mapping.close(),
-      ["<CR>"] = cmp.mapping.confirm {
+          ["<C-p>"] = cmp.mapping.select_prev_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item(),
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.close(),
+          ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
       },
-      ["<Tab>"] = cmp.mapping(function(fallback)
+          ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
         elseif require("luasnip").expand_or_jumpable() then
@@ -131,10 +131,10 @@ M.cmp = function()
         "i",
         "s",
       }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
-        elseif require("luasnip").jumpable( -1) then
+        elseif require("luasnip").jumpable(-1) then
           vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
         else
           fallback()
@@ -176,7 +176,8 @@ M.treesitter = function()
   end
 
   tree.setup {
-    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown", "markdown_inline" },
+    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
+      "markdown_inline" },
     highlight = {
       enable = true,
       use_languagetree = true,
@@ -199,41 +200,41 @@ M.treesitter = function()
         lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
+              ['aa'] = '@parameter.outer',
+              ['ia'] = '@parameter.inner',
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
+              ['ic'] = '@class.inner',
         },
       },
       move = {
         enable = true,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
+              [']m'] = '@function.outer',
+              [']]'] = '@class.outer',
         },
         goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
+              [']M'] = '@function.outer',
+              [']['] = '@class.outer',
         },
         goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
+              ['[m'] = '@function.outer',
+              ['[['] = '@class.outer',
         },
         goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
+              ['[M'] = '@function.outer',
+              ['[]'] = '@class.outer',
         },
       },
       swap = {
         enable = true,
         swap_next = {
-          ['<leader>a'] = '@parameter.inner',
+              ['<leader>a'] = '@parameter.inner',
         },
         swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
+              ['<leader>A'] = '@parameter.inner',
         },
       },
     },
@@ -303,10 +304,10 @@ M.telescope = function()
     },
     extensions = {
       fzf = {
-        fuzzy = true, -- false will only do exact matching
+        fuzzy = true,                   -- false will only do exact matching
         override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true, -- override the file sorter
-        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+        override_file_sorter = true,    -- override the file sorter
+        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
       }
     }
   }
@@ -421,11 +422,9 @@ M.nvimtree = function()
     renderer = {
       highlight_git = true,
       highlight_opened_files = "none",
-
       indent_markers = {
         enable = true,
       },
-
       icons = {
         show = {
           file = true,
@@ -433,7 +432,6 @@ M.nvimtree = function()
           folder_arrow = true,
           git = true,
         },
-
         glyphs = {
           default = "",
           symlink = "",
@@ -485,16 +483,16 @@ M.theme = function()
   theme.setup {
     transparent_background = false,
     terminal_colors = true,
-    devicons = true, -- highlight the icons of `nvim-web-devicons`
+    devicons = false, -- highlight the icons of `nvim-web-devicons`
     italic_comments = true,
     -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
     -- Enable this will disable filter option
     day_night = {
-      enable = true, -- turn off by default
-      day_filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
-      night_filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
+      enable = true,              -- turn off by default
+      day_filter = "pro",         -- classic | octagon | pro | machine | ristretto | spectrum
+      night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
     },
-    inc_search = "background", -- underline | background
+    inc_search = "background",    -- underline | background
     background_clear = {
       "float_win",
       "toggleterm",
@@ -506,17 +504,6 @@ M.theme = function()
         context_start_underline = true,
       },
     },
-    override = function(c)
-      return {
-        MatchParen = {
-          -- bg = hp.blend(c.base.blue, 0.2),
-          -- bg = hp.lighten(c.base.white, -55),
-          fg = c.base.yellow,
-          bold = true,
-          underline = true,
-        }, -- The character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
-      }
-    end,
   }
 
   vim.cmd([[colorscheme monokai-pro]])
