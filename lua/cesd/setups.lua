@@ -58,8 +58,8 @@ M.lspconfig = function()
     function(server_name)
       lsp[server_name].setup {
         handlers = {
-              ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
-              ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
+          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
+          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
             { border = "single" })
         },
         capabilities = capabilities,
@@ -109,17 +109,17 @@ M.cmp = function()
       end,
     },
     mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.close(),
-          ["<CR>"] = cmp.mapping.confirm {
+      ["<C-p>"] = cmp.mapping.select_prev_item(),
+      ["<C-n>"] = cmp.mapping.select_next_item(),
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
       },
-          ["<Tab>"] = cmp.mapping(function(fallback)
+      ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
         elseif require("luasnip").expand_or_jumpable() then
@@ -131,7 +131,7 @@ M.cmp = function()
         "i",
         "s",
       }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
         elseif require("luasnip").jumpable(-1) then
@@ -205,41 +205,41 @@ M.treesitter = function()
         lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
-              ['aa'] = '@parameter.outer',
-              ['ia'] = '@parameter.inner',
-              ['af'] = '@function.outer',
-              ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
         },
       },
       move = {
         enable = true,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-              [']m'] = '@function.outer',
-              [']]'] = '@class.outer',
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
         },
         goto_next_end = {
-              [']M'] = '@function.outer',
-              [']['] = '@class.outer',
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
         },
         goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[['] = '@class.outer',
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
         },
         goto_previous_end = {
-              ['[M'] = '@function.outer',
-              ['[]'] = '@class.outer',
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
         },
       },
       swap = {
         enable = true,
         swap_next = {
-              ['<leader>a'] = '@parameter.inner',
+          ['<leader>a'] = '@parameter.inner',
         },
         swap_previous = {
-              ['<leader>A'] = '@parameter.inner',
+          ['<leader>A'] = '@parameter.inner',
         },
       },
     },
@@ -305,6 +305,9 @@ M.telescope = function()
       buffers = {
         ignore_current_buffer = true,
         sort_lastused = true
+      },
+      colorscheme = {
+        enable_preview = true
       }
     },
     extensions = {
@@ -479,13 +482,19 @@ M.indentblankline = function()
 end
 
 M.theme = function()
-  local theme_present, theme = pcall(require, "monokai-pro")
-  if not theme_present then
-    vim.notify("theme not present")
+  local theme1_present, theme1 = pcall(require, "monokai-pro")
+  if not theme1_present then
+    vim.notify("theme 1 not present")
     return
   end
 
-  theme.setup {
+  local theme2_present, theme2 = pcall(require, "github-theme")
+  if not theme1_present then
+    vim.notify("theme 2 not present")
+    return
+  end
+
+  theme1.setup {
     transparent_background = false,
     terminal_colors = true,
     devicons = false, -- highlight the icons of `nvim-web-devicons`
@@ -510,6 +519,11 @@ M.theme = function()
       },
     },
   }
+
+  theme2.setup({
+    theme_style = "light",
+    sidebars = { "qf", "vista_kind", "terminal", "packer" },
+  })
 
   vim.cmd([[colorscheme monokai-pro]])
 end

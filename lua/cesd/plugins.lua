@@ -18,7 +18,8 @@ local plugins = {
   { "hrsh7th/cmp-path" },
 
   --- Highlight, Edit, Navigate
-  { "nvim-treesitter/nvim-treesitter",
+  {
+    "nvim-treesitter/nvim-treesitter",
     run = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
   },
 
@@ -31,16 +32,20 @@ local plugins = {
   { "kyazdani42/nvim-tree.lua" },
   { "kyazdani42/nvim-web-devicons" },
   { "lukas-reineke/indent-blankline.nvim" },
-  { "utilyre/barbecue.nvim",
-    requires = { "SmiteshP/nvim-navic" } },
+  {
+    "utilyre/barbecue.nvim",
+    requires = { "SmiteshP/nvim-navic" }
+  },
   { "loctvl842/monokai-pro.nvim" },
+  { 'projekt0n/github-nvim-theme' },
   { "windwp/nvim-autopairs" },
   { "windwp/nvim-ts-autotag" },
   { "numToStr/Comment.nvim" },
 
   --- Fuzzy Finders
   { "BurntSushi/ripgrep" },
-  { "nvim-telescope/telescope-fzf-native.nvim",
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
     run = "make",
     cond = vim.fn.executable "make" == 1
   },
