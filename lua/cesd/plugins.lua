@@ -25,6 +25,7 @@ local plugins = {
 
   --- Git
   { "lewis6991/gitsigns.nvim" },
+  { "sindrets/diffview.nvim" },
 
   --- UI
   { "nvim-lualine/lualine.nvim" },
