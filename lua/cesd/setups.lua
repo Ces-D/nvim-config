@@ -37,7 +37,8 @@ M.lspconfig = function()
     rust_analyzer = {},
     cssls = {},
     cssmodules_ls = {},
-    html = {}
+    html = {},
+    jsonls = {}
   }
 
   mason.setup {
