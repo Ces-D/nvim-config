@@ -13,7 +13,43 @@ local function border(hl_name)
   }
 end
 
-M.lspconfig = function()
+M.theme = function()
+  local theme1_present, theme1 = pcall(require, "monokai-pro")
+  if not theme1_present then
+    vim.notify("theme 1 not present")
+    return
+  end
+
+  theme1.setup {
+    transparent_background = false,
+    terminal_colors = true,
+    devicons = false, -- highlight the icons of `nvim-web-devicons`
+    italic_comments = true,
+    -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
+    -- Enable this will disable filter option
+    day_night = {
+      enable = true,             -- turn off by default
+      day_filter = "classic",    -- classic | octagon | pro | machine | ristretto | spectrum
+      night_filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
+    },
+    inc_search = "background",   -- underline | background
+    background_clear = {
+      "float_win",
+      "toggleterm",
+      "telescope",
+    }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree"
+    plugins = {
+      indent_blankline = {
+        context_highlight = "pro", -- default | pro
+        context_start_underline = true,
+      },
+    },
+  }
+
+  vim.cmd([[colorscheme monokai-pro]])
+end
+
+M.lspConfig = function()
   local lsp_present, lsp = pcall(require, "lspconfig")
   local mason_present, mason = pcall(require, "mason")
   local mason_lsp_present, mason_lsp = pcall(require, "mason-lspconfig")
@@ -69,9 +105,26 @@ M.lspconfig = function()
       }
     end,
   }
+end
 
-  vim.diagnostic.config {
-    float = { border = "single" }
+M.null = function()
+  local null_present, null = pcall(require, "null-ls")
+  if not null_present then
+    vim.notify("Null LS not installed")
+  end
+
+  null.setup {
+
+    sources = {
+      null.builtins.formatting.prettierd,
+      null.builtins.formatting.rustfmt,
+      null.builtins.diagnostics.cspell.with({
+        filetypes = { "markdown", "html" }
+      }),
+      null.builtins.code_actions.cspell.with({
+        filetypes = { "markdown", "html" }
+      })
+    },
   }
 end
 
@@ -82,16 +135,6 @@ M.cmp = function()
   if not (cmp_present and snip_present) then
     vim.notify("Completions not installed")
     return
-  end
-
-
-  local cmp_window = require "cmp.utils.window"
-
-  cmp_window.info_ = cmp_window.info
-  cmp_window.info = function(self)
-    local info = self:info_()
-    info.scrollable = false
-    return info
   end
 
   cmp.setup {
@@ -120,130 +163,35 @@ M.cmp = function()
         behavior = cmp.ConfirmBehavior.Replace,
         select = false,
       },
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif require("luasnip").expand_or_jumpable() then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
-        else
-          fallback()
+      ["<Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif require("luasnip").expand_or_jumpable() then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+          else
+            fallback()
+          end
         end
-      end, {
-        "i",
-        "s",
-      }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif require("luasnip").jumpable(-1) then
-          vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
-        else
-          fallback()
+        , { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(
+        function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif require("luasnip").jumpable(-1) then
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+          else
+            fallback()
+          end
         end
-      end, {
-        "i",
-        "s",
-      }),
+        , { "i", "s", }),
     },
     sources = cmp.config.sources({
       { name = "nvim_lsp" },
       { name = "luasnip" },
+      { name = "buffer" },
       { name = "path" },
     }),
-  }
-end
-
-M.null_ls = function()
-  local null_present, null = pcall(require, "null-ls")
-  if not null_present then
-    vim.notify("Null LS not installed")
-  end
-
-  null.setup({
-    sources = {
-      null.builtins.formatting.prettierd,
-      null.builtins.formatting.rustfmt,
-      null.builtins.diagnostics.cspell.with({
-        filetypes = { "markdown", "html" }
-      }),
-      null.builtins.code_actions.cspell.with({
-        filetypes = { "markdown", "html" }
-      })
-    },
-  })
-end
-
-M.treesitter = function()
-  local tree_present, tree = pcall(require, "nvim-treesitter.configs")
-
-  if not tree_present then
-    vim.notify("Tree sitter not installed")
-    return
-  end
-
-  tree.setup {
-    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
-      "markdown_inline" },
-    highlight = {
-      enable = true,
-      use_languagetree = true,
-      additional_vim_regex_highlighting = { "markdown" }
-    },
-    indent = {
-      enable = true
-    }, incremental_selection = {
-    enable = true,
-    -- keymaps = {
-    --   init_selection = '<c-space>',
-    --   node_incremental = '<c-space>',
-    --   scope_incremental = '<c-s>',
-    --   node_decremental = '<c-backspace>',
-    -- },
-  },
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-        keymaps = {
-          -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
-        },
-      },
-      move = {
-        enable = true,
-        set_jumps = true, -- whether to set jumps in the jumplist
-        goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
-        },
-        goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
-        },
-        goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
-        },
-        goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
-        },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ['<leader>a'] = '@parameter.inner',
-        },
-        swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
-        },
-      },
-    },
   }
 end
 
@@ -270,7 +218,6 @@ M.telescope = function()
       selection_caret = "  ",
       entry_prefix = "  ",
       initial_mode = "insert",
-      selection_strategy = "reset",
       sorting_strategy = "ascending",
       layout_strategy = "horizontal",
       layout_config = {
@@ -322,7 +269,72 @@ M.telescope = function()
   }
 end
 
-M.gitsigns = function()
+M.treesitter = function()
+  local tree_present, tree = pcall(require, "nvim-treesitter.configs")
+
+  if not tree_present then
+    vim.notify("Tree sitter not installed")
+    return
+  end
+
+  tree.setup {
+    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
+      "markdown_inline" },
+    highlight = {
+      enable = true,
+      use_languagetree = true,
+      additional_vim_regex_highlighting = { "markdown" }
+    },
+    indent = { enable = true },
+    incremental_selection = { enable = true, },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
+        },
+      },
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<leader>A'] = '@parameter.inner',
+        },
+      },
+    },
+  }
+end
+
+M.git = function()
   local gitsigns_present, gitsigns = pcall(require, "gitsigns")
   if not gitsigns_present then
     vim.notify("Git signs not installed")
@@ -377,29 +389,6 @@ M.lualine = function()
   }
 end
 
-M.toggleterm = function()
-  local toggleterm_present, toggleterm = pcall(require, "toggleterm")
-  if not toggleterm_present then
-    vim.notify("toggleterm is not installed")
-    return
-  end
-
-  toggleterm.setup {
-    open_mapping = [[<c-\>]],
-    hide_numbers = true,
-    shading_factor = 2,
-    start_in_insert = true,
-    insert_mappings = true,
-    persist_size = true,
-    direction = "float",
-    close_on_exit = true,
-    shell = vim.o.shell,
-    float_opts = {
-      border = "curved",
-    },
-  }
-end
-
 M.nvimtree = function()
   local nvimtree_present, nvimtree = pcall(require, "nvim-tree")
   if not nvimtree_present then
@@ -413,7 +402,6 @@ M.nvimtree = function()
     },
     disable_netrw = true,
     hijack_netrw = true,
-    ignore_ft_on_setup = { "alpha" },
     hijack_cursor = true,
     update_cwd = true,
     update_focused_file = {
@@ -479,80 +467,27 @@ M.nvimtree = function()
   }
 end
 
-M.indentblankline = function()
-  local indent_present, indent = pcall(require, "indent-blankline")
-  if not indent_present then
-    vim.notify("indent-blankline is not installed")
+M.toggleterm = function()
+  local toggleterm_present, toggleterm = pcall(require, "toggleterm")
+  if not toggleterm_present then
+    vim.notify("toggleterm is not installed")
     return
   end
 
-  indent.setup {
-    char = '┊',
-    show_trailing_blankline_indent = false,
-  }
-end
-
-M.theme = function()
-  local theme1_present, theme1 = pcall(require, "monokai-pro")
-  if not theme1_present then
-    vim.notify("theme 1 not present")
-    return
-  end
-
-  local theme2_present, theme2 = pcall(require, "github-theme")
-  if not theme1_present then
-    vim.notify("theme 2 not present")
-    return
-  end
-
-  theme1.setup {
-    transparent_background = false,
-    terminal_colors = true,
-    devicons = false, -- highlight the icons of `nvim-web-devicons`
-    italic_comments = true,
-    -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
-    -- Enable this will disable filter option
-    day_night = {
-      enable = true,            -- turn off by default
-      day_filter = "pro",       -- classic | octagon | pro | machine | ristretto | spectrum
-      night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
-    },
-    inc_search = "background",  -- underline | background
-    background_clear = {
-      "float_win",
-      "toggleterm",
-      "telescope",
-    }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree"
-    plugins = {
-      indent_blankline = {
-        context_highlight = "pro", -- default | pro
-        context_start_underline = true,
-      },
+  toggleterm.setup {
+    open_mapping = [[<c-\>]],
+    hide_numbers = true,
+    shading_factor = 2,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = "float",
+    close_on_exit = true,
+    shell = vim.o.shell,
+    float_opts = {
+      border = "curved",
     },
   }
-
-  theme2.setup({
-    theme_style = "light",
-    sidebars = { "qf", "vista_kind", "terminal", "packer" },
-  })
-
-  vim.cmd([[colorscheme monokai-pro]])
-end
-
-M.autopairs = function()
-  local present1, autopairs = pcall(require, "nvim-autopairs")
-  local present2, cmp = pcall(require, "cmp")
-  if not (present1 and present2) then
-    return
-  end
-
-  autopairs.setup({
-    fast_wrap = {},
-    disable_filetype = { "TelescopePrompt", "vim" },
-  })
-
-  local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end
 
 M.ts_autotag = function()

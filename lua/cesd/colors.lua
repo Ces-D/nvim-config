@@ -32,7 +32,7 @@ M.choose_colors = function()
   -- local colors = vim.fn.getcompletion("", "color")
 
   local opts = {
-    finder = finders.new_table { "monokai-pro","github_dark","github_light" },
+    finder = finders.new_table { "monokai-pro" },
     -- finder = finders.new_table(colors),
     sorter = sorters.get_generic_fuzzy_sorter({}),
     attach_mappings = function(prompt_bufnr, map)

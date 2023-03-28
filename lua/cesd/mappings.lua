@@ -73,34 +73,32 @@ M.nvimTree = {
 }
 
 M.lspconfig = {
-  -- See `<cmd> :help vim.lsp.*` for documentation on any of the below functions
-
   n = {
     ["gD"] = {
       "<cmd>lua vim.lsp.buf.declaration()<cr>",
-      "lsp declaration",
+      "Go to LSP Declaration",
     },
     ["gd"] = {
-      "<cmd>lua vim.lsp.buf.definition()<cr>",
-      "lsp definition",
+      "<cmd>Telescope lsp_definitions<cr>",
+      "Go to LSP Definitions",
+    },
+    ["gr"] = {
+      "<cmd>Telescope lsp_references<cr>",
+      "Go to LSP References"
+    },
+    ["gi"] = {
+      "<cmd>Telescope lsp_implementation<cr>",
+      "Go to LSP Implementations",
+    },
+    ["gt"] = {
+      "<cmd>Telescope lsp_type_definitions<cr>",
+      "LSP Type Definitions",
     },
     ["K"] = {
       "<cmd>lua vim.lsp.buf.hover()<cr>",
       "lsp hover",
     },
-    ["gi"] = {
-      "<cmd>lua vim.lsp.buf.implementation()<cr>",
-      "lsp implementation",
-    },
-    ["<leader>ls"] = {
-      "<cmd>lua vim.lsp.buf.signature_help()<cr>",
-      "lsp signature_help",
-    },
-    ["<leader>D"] = {
-      "<cmd>lua vim.lsp.buf.type_definition()<cr>",
-      "lsp definition type",
-    },
-    ["<leader>ca"] = {
+    ["ca"] = {
       "<cmd>lua vim.lsp.buf.code_action()<cr>",
       "lsp code_action",
     },
@@ -108,35 +106,19 @@ M.lspconfig = {
       "<cmd>lua vim.diagnostic.open_float()<cr>",
       "floating diagnostic",
     },
-    ["[d"] = {
+    [",e"] = {
       "<cmd>lua vim.diagnostic.goto_prev()<cr>",
-      "goto prev",
+      "goto prev diagnostic",
     },
-    ["d]"] = {
+    [".e"] = {
       "<cmd>lua vim.diagnostic.goto_next()<cr>",
-      "goto_next",
-    },
-    ["<leader>q"] = {
-      "<cmd>lua vim.diagnostic.setloclist()<cr>",
-      "diagnostic setloclist",
+      "goto next diagnostic",
     },
     ["<leader>fm"] = {
       "<cmd>lua vim.lsp.buf.format()<cr>",
       "lsp formatting",
     },
-    ["<leader>wa"] = {
-      "<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>",
-      "add workspace folder",
-    },
-    ["<leader>wr"] = {
-      "<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>",
-      "remove workspace folder",
-    },
-    ["<leader>wl"] = {
-      "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>",
-      "list workspace folders",
-    },
-  },
+  }
 }
 
 M.telescope = {
