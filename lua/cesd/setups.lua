@@ -28,11 +28,11 @@ M.theme = function()
     -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
     -- Enable this will disable filter option
     day_night = {
-      enable = true,             -- turn off by default
-      day_filter = "octagon",    -- classic | octagon | pro | machine | ristretto | spectrum
-      night_filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
+      enable = true,            -- turn off by default
+      day_filter = "classic",   -- classic | octagon | pro | machine | ristretto | spectrum
+      night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
     },
-    inc_search = "background",   -- underline | background
+    inc_search = "background",  -- underline | background
     background_clear = {
       "float_win",
       "toggleterm",
@@ -40,7 +40,7 @@ M.theme = function()
     }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree"
     plugins = {
       indent_blankline = {
-        context_highlight = "pro", -- default | pro
+        context_highlight = "default", -- default | pro
         context_start_underline = true,
       },
     },
@@ -279,7 +279,7 @@ M.treesitter = function()
 
   tree.setup {
     ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
-      "markdown_inline" },
+      "markdown_inline", "vim" },
     highlight = {
       enable = true,
       use_languagetree = true,
