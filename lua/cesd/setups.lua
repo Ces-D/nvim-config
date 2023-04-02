@@ -29,7 +29,7 @@ M.theme = function()
     -- Enable this will disable filter option
     day_night = {
       enable = true,            -- turn off by default
-      day_filter = "classic",   -- classic | octagon | pro | machine | ristretto | spectrum
+      day_filter = "pro",       -- classic | octagon | pro | machine | ristretto | spectrum
       night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
     },
     inc_search = "background",  -- underline | background
@@ -67,14 +67,17 @@ M.lspConfig = function()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   local servers = {
-    pyright = {},
-    tsserver = {},
-    lua_ls = {},
-    rust_analyzer = {},
-    cssls = {},
-    cssmodules_ls = {},
-    html = {},
-    jsonls = {}
+    "pyright",
+    "tsserver",
+    "lua_ls",
+    "rust_analyzer",
+    "cssls",
+    "cssmodules_ls",
+    "html",
+    "jsonls",
+    "svelte",
+    "vimls",
+    "marksman"
   }
 
   mason.setup {
@@ -88,7 +91,7 @@ M.lspConfig = function()
   }
 
   mason_lsp.setup {
-    ensure_installed = vim.tbl_keys(servers)
+    ensure_installed = servers
   }
 
   mason_lsp.setup_handlers {
@@ -101,7 +104,6 @@ M.lspConfig = function()
         },
         capabilities = capabilities,
         on_attach = on_attach,
-        settings = servers[server_name],
       }
     end,
   }
@@ -279,7 +281,7 @@ M.treesitter = function()
 
   tree.setup {
     ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
-      "markdown_inline", "vim" },
+      "markdown_inline", "vim", "svelte" },
     highlight = {
       enable = true,
       use_languagetree = true,
