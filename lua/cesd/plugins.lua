@@ -117,12 +117,6 @@ return {
       setups.theme()
     end
   },
-  {
-    "windwp/nvim-autopairs",
-    config = function()
-      require("nvim-autopairs").setup()
-    end
-  },
 
   --- Fuzzy Finders
   {
@@ -171,6 +165,22 @@ return {
         -- Configuration here, or leave empty to use defaults
       })
     end
+  },
+  {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup()
+    end
+  },
+  {
+    "jackMort/ChatGPT.nvim",
+    lazy = true,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      config = function()
+        require("chatgpt").setup()
+      end
+    }
   }
 
 }
