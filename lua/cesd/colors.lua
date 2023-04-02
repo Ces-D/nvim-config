@@ -29,11 +29,11 @@ M.choose_colors = function()
     vim.cmd(cmd)
   end
 
-  -- local colors = vim.fn.getcompletion("", "color")
+  local colors = vim.fn.getcompletion("", "color")
 
   local opts = {
-    finder = finders.new_table { "monokai-pro" },
-    -- finder = finders.new_table(colors),
+    -- finder = finders.new_table { "nordic" },
+    finder = finders.new_table(colors),
     sorter = sorters.get_generic_fuzzy_sorter({}),
     attach_mappings = function(prompt_bufnr, map)
       map("i", "<CR>", enter)

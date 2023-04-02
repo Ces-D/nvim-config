@@ -1,52 +1,64 @@
 local M = {}
 
-local function border(hl_name)
-  return {
-    { "╭", hl_name },
-    { "─", hl_name },
-    { "╮", hl_name },
-    { "│", hl_name },
-    { "╯", hl_name },
-    { "─", hl_name },
-    { "╰", hl_name },
-    { "│", hl_name },
-  }
-end
+local border = {
+  { "╭", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╮", "FloatBorder" },
+  { "│", "FloatBorder" },
+  { "╯", "FloatBorder" },
+  { "─", "FloatBorder" },
+  { "╰", "FloatBorder" },
+  { "│", "FloatBorder" },
+}
 
 M.theme = function()
-  local theme1_present, theme1 = pcall(require, "monokai-pro")
+  local theme1_present, theme1 = pcall(require, "nordic")
   if not theme1_present then
     vim.notify("theme 1 not present")
     return
   end
 
   theme1.setup {
-    transparent_background = false,
-    terminal_colors = true,
-    devicons = false, -- highlight the icons of `nvim-web-devicons`
+    -- Available themes: 'nordic', 'onedark'.
+    -- Onedark is WIP.
+    theme = 'nordic',
+    -- Enable bold keywords.
+    bold_keywords = true,
+    -- Enable italic comments.
     italic_comments = true,
-    -- filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
-    -- Enable this will disable filter option
-    day_night = {
-      enable = true,            -- turn off by default
-      day_filter = "pro",       -- classic | octagon | pro | machine | ristretto | spectrum
-      night_filter = "octagon", -- classic | octagon | pro | machine | ristretto | spectrum
+    -- Enable general editor background transparency.
+    transparent_bg = false,
+    -- Nordic specific options.
+    -- Set all to false to use original Nord colors.
+    -- Adjusts some colors to make the theme a bit nicer (imo).
+    nordic = {
+      -- Reduce the overall amount of blue in the theme (diverges from base Nord).
+      reduced_blue = true,
     },
-    inc_search = "background",  -- underline | background
-    background_clear = {
-      "float_win",
-      "toggleterm",
-      "telescope",
-    }, -- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree"
-    plugins = {
-      indent_blankline = {
-        context_highlight = "default", -- default | pro
-        context_start_underline = true,
-      },
+    -- Override the styling of any highlight group.
+    override = {},
+    cursorline = {
+      -- Enable bold font in cursorline.
+      bold = true,
+      -- Avialable styles: 'dark', 'light'.
+      theme = 'dark',
+      -- Hide the cursorline when the window is not focused.
+      hide_unfocused = true,
     },
-  }
+    noice = {
+      -- Available styles: `classic`, `flat`.
+      style = 'classic',
+    },
+    telescope = {
+      -- Available styles: `classic`, `flat`.
+      style = 'classic',
+    },
+    leap = {
+      -- Dims the backdrop when using leap.
+      dim_backdrop = false,
+    }, }
 
-  vim.cmd([[colorscheme monokai-pro]])
+  vim.cmd([[colorscheme nordic]])
 end
 
 M.lspConfig = function()
@@ -94,14 +106,17 @@ M.lspConfig = function()
     ensure_installed = servers
   }
 
+  -- adds border to all floating windows
+  local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+  function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or border
+    return orig_util_open_floating_preview(contents, syntax, opts, ...)
+  end
+
   mason_lsp.setup_handlers {
     function(server_name)
       lsp[server_name].setup {
-        handlers = {
-          ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border("FloatBorder") }),
-          ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help,
-            { border = "single" })
-        },
         capabilities = capabilities,
         on_attach = on_attach,
       }

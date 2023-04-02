@@ -111,7 +111,7 @@ return {
     dependencies = { "SmiteshP/nvim-navic" }
   },
   {
-    "loctvl842/monokai-pro.nvim",
+    "AlexvZyl/nordic.nvim",
     lazy = false,
     config = function()
       setups.theme()
