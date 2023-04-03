@@ -41,7 +41,7 @@ M.theme = function()
       -- Enable bold font in cursorline.
       bold = true,
       -- Avialable styles: 'dark', 'light'.
-      theme = 'dark',
+      theme = 'light',
       -- Hide the cursorline when the window is not focused.
       hide_unfocused = true,
     },

@@ -174,13 +174,33 @@ return {
   },
   {
     "jackMort/ChatGPT.nvim",
-    lazy = true,
+    -- commit = '8820b99c', -- March 6th 2023, before submit issue
+    lazy = false,
     dependencies = {
       "MunifTanjim/nui.nvim",
-      config = function()
-        require("chatgpt").setup()
-      end
-    }
-  }
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    },
+    config = function()
+      require("chatgpt").setup {
+        -- keymap = {
+        --   close = "<C-c>",
+        -- submit = "<C-s>",
+        --   yank_last = "<C-y>",
+        --   yank_last_code = "<C-k>",
+        --   scroll_up = "<C-u>",
+        --   scroll_down = "<C-d>",
+        --   toggle_settings = "<C-o>",
+        --   new_session = "<C-n>",
+        --   cycle_windows = "<Tab>",
+        --   -- in the Sessions pane
+        --   select_session = "<Space>",
+        --   rename_session = "r",
+        --   delete_session = "d",
+        -- }
+      }
+    end
+  },
+  { "github/copilot.vim", }
 
 }
