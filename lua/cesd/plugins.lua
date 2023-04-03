@@ -192,7 +192,7 @@ return {
         --   scroll_down = "<C-d>",
         --   toggle_settings = "<C-o>",
         --   new_session = "<C-n>",
-        --   cycle_windows = "<Tab>",
+        cycle_windows = "<C-cw>",
         --   -- in the Sessions pane
         --   select_session = "<Space>",
         --   rename_session = "r",
@@ -201,6 +201,18 @@ return {
       }
     end
   },
-  { "github/copilot.vim", }
+  {
+    "github/copilot.vim",
+    config = function()
+      vim.g.copilot_assume_mapped = true
+      vim.g.copilot_filetypes = {
+        ["*"] = false,
+        ["javascript"] = true,
+        ["python"] = true,
+        ["typescript"] = true,
+        ["rust"] = true
+      }
+    end
+  }
 
 }
