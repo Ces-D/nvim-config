@@ -202,17 +202,27 @@ return {
     end
   },
   {
-    "github/copilot.vim",
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
     config = function()
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_filetypes = {
-        ["*"] = false,
-        ["javascript"] = true,
-        ["python"] = true,
-        ["typescript"] = true,
-        ["rust"] = true
+      require("copilot").setup {
+        panel = {
+          enabled = false,
+          auto_refresh = true
+        },
+        suggestion = {
+          auto_trigger = true,
+          keymap = { accept = "<C-J>", next = "<C-K>" }
+        },
+        filetypes = {
+          markdown = true,
+          rust = true,
+          javascript = true,
+          typescript = true,
+          python = true,
+          lua = true
+        }
       }
     end
-  }
-
-}
+  } }
