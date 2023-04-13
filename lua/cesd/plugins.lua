@@ -71,7 +71,7 @@ return {
   --- Git
   {
     "lewis6991/gitsigns.nvim",
-    lazy = true,
+    lazy = false,
     config = function()
       setups.git()
     end
