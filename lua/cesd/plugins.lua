@@ -114,7 +114,7 @@ return {
     dependencies = { "SmiteshP/nvim-navic" }
   },
   {
-    "AlexvZyl/nordic.nvim",
+    "EdenEast/nightfox.nvim",
     lazy = false,
     config = function()
       setups.theme()
