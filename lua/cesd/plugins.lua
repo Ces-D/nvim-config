@@ -79,13 +79,6 @@ return {
       setups.git()
     end
   },
-  {
-    "sindrets/diffview.nvim",
-    lazy = true,
-    config = function()
-      setups.diffview()
-    end
-  },
 
   --- UI
   {

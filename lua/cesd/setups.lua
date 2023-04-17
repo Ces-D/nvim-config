@@ -297,16 +297,6 @@ M.git = function()
   }
 end
 
-M.diffview = function()
-  local diffview_present, diffview = pcall(require, "diffview")
-  if not diffview_present then
-    vim.notify("Git Diffview not installed")
-    return
-  end
-
-  diffview.setup()
-end
-
 M.barbecue = function()
   local barbecue_present, barbecue = pcall(require, "barbecue")
   if not barbecue_present then
