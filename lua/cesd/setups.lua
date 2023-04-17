@@ -27,7 +27,7 @@ M.theme = function()
       }
     } }
 
-  vim.cmd("colorscheme nightfox")
+  vim.cmd("colorscheme duskfox")
 end
 
 M.lspConfig = function()
