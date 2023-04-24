@@ -89,7 +89,6 @@ return {
   },
   {
     "akinsho/toggleterm.nvim",
-    lazy = true,
     config = function()
       setups.toggleterm()
     end
@@ -107,7 +106,7 @@ return {
     dependencies = { "SmiteshP/nvim-navic" }
   },
   {
-    "EdenEast/nightfox.nvim",
+    "rebelot/kanagawa.nvim",
     lazy = false,
     config = function()
       setups.theme()
@@ -140,14 +139,13 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    lazy = true,
+    event = "InsertEnter",
     config = function()
       setups.ts_autotag()
     end
   },
   {
     "numToStr/Comment.nvim",
-    lazy = true,
     config = function()
       setups.comment()
     end

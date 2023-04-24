@@ -12,22 +12,15 @@ local border = {
 }
 
 M.theme = function()
-  local theme1_present, theme1 = pcall(require, "nightfox")
+  local theme1_present, theme1 = pcall(require, "kanagawa")
   if not theme1_present then
     vim.notify("theme 1 not present")
     return
   end
 
-  theme1.setup {
-    options = {
-      styles = {
-        comments = "italic",
-        keywords = "bold",
-        types = "italic,bold",
-      }
-    } }
+  theme1.setup {}
 
-  vim.cmd("colorscheme duskfox")
+  vim.cmd("colorscheme kanagawa-wave")
 end
 
 M.lspConfig = function()
@@ -412,13 +405,19 @@ M.toggleterm = function()
   toggleterm.setup {
     open_mapping = [[<c-\>]],
     hide_numbers = true,
-    shading_factor = 2,
     start_in_insert = true,
     insert_mappings = true,
     persist_size = true,
-    direction = "float",
     close_on_exit = true,
     shell = vim.o.shell,
+    direction = "vertical",
+    size = function(term)
+      if term.direction == "vertical" then
+        return vim.o.columns * 0.4
+      elseif term.direction == "horizontal" then
+        return vim.o.lines * 0.3
+      end
+    end,
     float_opts = {
       border = "curved",
     },
