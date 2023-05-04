@@ -112,7 +112,6 @@ return {
       setups.theme()
     end
   },
-
   --- Fuzzy Finders
   {
     "nvim-telescope/telescope.nvim",
