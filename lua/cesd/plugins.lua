@@ -18,9 +18,6 @@ return {
     dependencies = {
       { "williamboman/mason-lspconfig.nvim" },
       { "neovim/nvim-lspconfig" },
-      { "folke/neodev.nvim" },
-      --- Auto Completion
-      { "hrsh7th/nvim-cmp" },
     },
     opts         = {
       diagnostics = {
@@ -52,7 +49,9 @@ return {
       { "saadparwaiz1/cmp_luasnip" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-buffer" },
     },
+    event = "InsertEnter",
     config = function()
       setups.cmp()
     end
@@ -64,7 +63,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = function() require("nvim-treesitter.install").update({ with_sync = true }) end,
     dependencies = {
-      "andymass/vim-matchup",
+      { "andymass/vim-matchup", event = "CursorMoved" },
     },
     config = function()
       setups.treesitter()
@@ -101,10 +100,7 @@ return {
   },
   { "kyazdani42/nvim-web-devicons",        lazy = true },
   { "lukas-reineke/indent-blankline.nvim", lazy = true },
-  {
-    "utilyre/barbecue.nvim",
-    dependencies = { "SmiteshP/nvim-navic" }
-  },
+
   {
     "nyoom-engineering/oxocarbon.nvim",
     lazy = false,
@@ -139,7 +135,7 @@ return {
   },
   {
     "windwp/nvim-ts-autotag",
-    event = "InsertEnter",
+    lazy = false,
     config = function()
       setups.ts_autotag()
     end

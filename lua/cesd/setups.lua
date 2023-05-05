@@ -18,7 +18,6 @@ M.theme = function()
   else                       -- night
     vim.opt.background = 'dark'
   end
-
   vim.cmd("colorscheme oxocarbon")
 end
 
@@ -130,6 +129,9 @@ M.cmp = function()
         snip.lsp_expand(args.body)
       end,
     },
+    formatting = {
+      fields = { 'menu', 'abbr', 'kind' },
+    },
     mapping = {
       ["<C-p>"] = cmp.mapping.select_prev_item(),
       ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -212,19 +214,22 @@ M.telescope = function()
         preview_cutoff = 120,
       },
       file_sorter = require("telescope.sorters").get_fuzzy_file,
-      file_ignore_patterns = { "node_modules" },
+      file_ignore_patterns = { "node_modules", ".git" },
       generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
       path_display = { "truncate" },
       winblend = 0,
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
-      -- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+      set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
       file_previewer = require("telescope.previewers").vim_buffer_cat.new,
       grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
       qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
       mappings = {
-        n = { ["q"] = require("telescope.actions").close },
+        n = {
+          ["q"] = require("telescope.actions").close,
+          ["<esc>"] = require("telescope.actions").close,
+        },
       },
     },
     pickers = {
@@ -289,18 +294,6 @@ M.git = function()
   }
 end
 
-M.barbecue = function()
-  local barbecue_present, barbecue = pcall(require, "barbecue")
-  if not barbecue_present then
-    vim.notify("Barbecue not installed")
-    return
-  end
-
-  barbecue.setup {
-    create_autocmd = true
-  }
-end
-
 M.lualine = function()
   local lualine_present, lualine = pcall(require, "lualine")
   if not lualine_present then
@@ -310,8 +303,17 @@ M.lualine = function()
 
   lualine.setup {
     options = {
-      component_separators = '|',
-      section_separators = '',
+      section_separators = "",
+      component_separators = "",
+      icons_enabled = true,
+    },
+    sections = {
+      lualine_a = { "mode" },
+      lualine_b = { "branch" },
+      lualine_c = { "filename", "diagnostics" },
+      lualine_x = { "encoding", "fileformat", "filetype" },
+      lualine_y = { "progress" },
+      lualine_z = { "location" },
     },
   }
 end
