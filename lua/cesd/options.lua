@@ -3,26 +3,36 @@ local g = vim.g
 
 g.mapleader = " "
 
-opt.laststatus = 3
-opt.showmode = false
+opt.laststatus = 2
+opt.showmode = true
 
 opt.title = true
 opt.clipboard = "unnamedplus"
-opt.cursorline = true
 opt.fileencoding = "utf-8"
-opt.wrap = true
+opt.spell = true
 
 -- Indenting
 opt.expandtab = true
 opt.shiftwidth = 2
 opt.smartindent = true
+opt.autoindent = true
 opt.tabstop = 2
 opt.softtabstop = 2
 
 opt.fillchars = { eob = " " }
-opt.ignorecase = true
-opt.smartcase = true
 opt.mouse = "a"
+
+-- Text Rendering
+opt.linebreak = false
+opt.encoding = "utf-8"
+opt.scrolloff = 1
+opt.sidescrolloff = 5
+opt.wrap = true
+
+-- Search
+opt.hlsearch = true
+opt.incsearch = true
+opt.smartcase = true
 
 -- Numbers
 opt.relativenumber = true
@@ -30,16 +40,25 @@ opt.number = true
 opt.numberwidth = 3
 opt.ruler = false
 
+-- Interface
+opt.wildmenu = true
+opt.cursorline = true
+
 -- disable nvim intro
 opt.shortmess:append "sI"
+
 
 opt.signcolumn = "yes"
 opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
+opt.background = "dark"
 opt.timeoutlen = 300
 opt.undofile = true
 opt.writebackup = false
+
+-- Performance
+opt.lazyredraw = true
 
 
 -- interval for writing swap file to disk, also used by gitsigns

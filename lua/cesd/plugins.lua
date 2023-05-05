@@ -106,8 +106,9 @@ return {
     dependencies = { "SmiteshP/nvim-navic" }
   },
   {
-    "rebelot/kanagawa.nvim",
+    "projekt0n/github-nvim-theme",
     lazy = false,
+    version = "v0.0.7",
     config = function()
       setups.theme()
     end
