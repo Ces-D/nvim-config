@@ -9,7 +9,7 @@ opt.showmode = true
 opt.title = true
 opt.clipboard = "unnamedplus"
 opt.fileencoding = "utf-8"
-opt.spell = true
+opt.spell = false
 
 -- Indenting
 opt.expandtab = true
@@ -52,7 +52,7 @@ opt.signcolumn = "yes"
 opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
-opt.background = "dark"
+opt.background = "light"
 opt.timeoutlen = 300
 opt.undofile = true
 opt.writebackup = false

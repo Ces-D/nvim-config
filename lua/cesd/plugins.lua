@@ -106,7 +106,7 @@ return {
     dependencies = { "SmiteshP/nvim-navic" }
   },
   {
-    "projekt0n/github-nvim-theme",
+    "nyoom-engineering/oxocarbon.nvim",
     lazy = false,
     version = "v0.0.7",
     config = function()

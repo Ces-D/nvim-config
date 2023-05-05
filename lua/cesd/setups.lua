@@ -12,15 +12,14 @@ local border = {
 }
 
 M.theme = function()
-  local theme1_present, theme1 = pcall(require, "github-theme")
-  if not theme1_present then
-    vim.notify("theme 1 not present")
-    return
+  local hr = tonumber(os.date('%H', os.time()))
+  if hr > 9 and hr < 20 then -- day between 9am and 8pm
+    vim.opt.background = 'light'
+  else                       -- night
+    vim.opt.background = 'dark'
   end
 
-  theme1.setup {}
-
-  vim.cmd("colorscheme github_dark_default")
+  vim.cmd("colorscheme oxocarbon")
 end
 
 M.lspConfig = function()
