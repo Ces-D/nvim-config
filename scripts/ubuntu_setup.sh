@@ -10,20 +10,20 @@ sudo apt-get upgrade
 
 # Node
 echo -e "\nUpgrading Node"
-# sudo apt-get install --only-upgrade nodejs
+sudo apt-get install --only-upgrade nodejs
 node -v
 echo -e "\nUpgrading global NPM packages"
-# sudo npm -g outdated
-# sudo npm -g upgrade --latest
+sudo npm -g outdated
+sudo npm -g upgrade --latest
 
 ## Rust
 echo -e "\nUpgrading Rust"
-# rustup update
+rustup update
 rustup -v
 
 # Nvim 
 echo -e "\nUpgrading Neovim"
-# sudo apt-get install neovim
+sudo apt-get install neovim
 
 # Alacritty
 echo -e "\nUpgrading Alacritty"
