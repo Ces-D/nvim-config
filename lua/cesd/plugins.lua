@@ -100,7 +100,6 @@ return {
   },
   { "kyazdani42/nvim-web-devicons",        lazy = true },
   { "lukas-reineke/indent-blankline.nvim", lazy = true },
-  { "chrisbra/Colorizer",                   lazy = true },
 
   --- Themes
   {
