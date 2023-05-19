@@ -100,15 +100,19 @@ return {
   },
   { "kyazdani42/nvim-web-devicons",        lazy = true },
   { "lukas-reineke/indent-blankline.nvim", lazy = true },
+  { "chrisbra/Colorizer",                   lazy = true },
 
+  --- Themes
   {
     "nyoom-engineering/oxocarbon.nvim",
+    dependencies = { { "olimorris/onedarkpro.nvim" }, },
     lazy = false,
     version = "v0.0.7",
     config = function()
       setups.theme()
     end
   },
+
   --- Fuzzy Finders
   {
     "nvim-telescope/telescope.nvim",
