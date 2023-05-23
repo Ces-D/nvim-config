@@ -56,7 +56,8 @@ M.lspConfig = function()
     "jsonls",
     "svelte",
     "vimls",
-    "marksman"
+    "marksman",
+    "dockerfile-language-server"
   }
 
   mason.setup {
@@ -268,8 +269,10 @@ M.treesitter = function()
   end
 
   tree.setup {
-    ensure_installed = { "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
-      "markdown_inline", "vim", "svelte" },
+    ensure_installed = {
+      "javascript", "typescript", "lua", "css", "html", "tsx", "python", "rust", "markdown",
+      "markdown_inline", "vim", "svelte", "dockerfile"
+    },
     highlight = {
       enable = true,
       use_languagetree = true,
