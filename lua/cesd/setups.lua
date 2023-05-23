@@ -55,9 +55,8 @@ M.lspConfig = function()
     "html",
     "jsonls",
     "svelte",
-    "vimls",
     "marksman",
-    "dockerfile-language-server"
+    "dockerls"
   }
 
   mason.setup {
