@@ -42,7 +42,7 @@ M.theme = function()
   if hr > 9 and hr < 19 then -- day between 9am and 7pm
     vim.cmd("colorscheme github_dark")
   else                       -- night
-    vim.cmd("colorscheme github_dark_default")
+    vim.cmd("colorscheme github_dark_high_contrast")
   end
 end
 
