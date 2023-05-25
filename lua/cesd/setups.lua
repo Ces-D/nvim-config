@@ -12,19 +12,37 @@ local border = {
 }
 
 M.theme = function()
-  local hr = tonumber(os.date('%H', os.time()))
-  if hr > 9 and hr < 20 then -- day between 9am and 8pm
-    local second_theme = require("onedarkpro").setup({
-      colors = {
-        onelight = {
-          bg = "#daf1f1",
-        }
+  local theme_present, theme = pcall(require, "github-theme")
+  if not theme_present then
+    vim.notify("Theme not installed")
+    return
+  end
+
+  theme.setup({
+    styles = {
+      comments = 'italic', -- Value is any valid attr-list value `:help attr-list`
+      functions = 'NONE',
+      keywords = 'italic',
+      variables = 'NONE',
+      conditionals = 'NONE',
+      constants = 'NONE',
+      numbers = 'NONE',
+      operators = 'NONE',
+      strings = 'NONE',
+      types = 'italic,bold',
+    },
+    palettes = {
+      github_light = {
+        bg = "#daf1f1",
       }
-    })
-    vim.cmd("colorscheme onedark")
-  else -- night
-    vim.opt.background = 'dark'
-    vim.cmd("colorscheme oxocarbon")
+    }
+  })
+
+  local hr = tonumber(os.date('%H', os.time()))
+  if hr > 9 and hr < 19 then -- day between 9am and 7pm
+    vim.cmd("colorscheme github_dark")
+  else                       -- night
+    vim.cmd("colorscheme github_dark_default")
   end
 end
 

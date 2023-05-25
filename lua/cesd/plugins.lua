@@ -104,10 +104,9 @@ return {
 
   --- Themes
   {
-    "nyoom-engineering/oxocarbon.nvim",
-    dependencies = { { "olimorris/onedarkpro.nvim" }, },
+    "projekt0n/github-nvim-theme",
     lazy = false,
-    version = "v0.0.7",
+    priority = 1000,
     config = function()
       setups.theme()
     end
