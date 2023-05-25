@@ -21,6 +21,8 @@ echo -e "\nUpgrading NVIM"
 brew upgrade nvim
 
 # Alacritty
+echo -e "\nUpgrading Alacritty"
+cargo install alacritty
 
 echo -e "\nEnd - mac_setup.sh"
 

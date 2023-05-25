@@ -82,6 +82,7 @@ return {
   --- UI
   {
     "nvim-lualine/lualine.nvim",
+    dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
       setups.lualine()
     end
@@ -129,13 +130,6 @@ return {
   },
 
   --- Work Flow
-  {
-    "epwalsh/obsidian.nvim",
-    lazy = true,
-    config = function()
-      setups.obsidion()
-    end
-  },
   {
     "windwp/nvim-ts-autotag",
     lazy = false,

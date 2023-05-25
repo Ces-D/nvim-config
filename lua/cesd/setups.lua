@@ -220,18 +220,13 @@ M.telescope = function()
         height = 0.80,
         preview_cutoff = 120,
       },
-      file_sorter = require("telescope.sorters").get_fuzzy_file,
       file_ignore_patterns = { "node_modules", ".git" },
-      generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,
       path_display = { "truncate" },
       winblend = 0,
       border = {},
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
       color_devicons = true,
       set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
-      file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-      grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
-      qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
       mappings = {
         n = {
           ["q"] = require("telescope.actions").close,
@@ -242,7 +237,8 @@ M.telescope = function()
     pickers = {
       buffers = {
         ignore_current_buffer = true,
-        sort_lastused = true
+        sort_lastused = true,
+        sort_mru = true,
       },
       colorscheme = {
         enable_preview = true
@@ -298,8 +294,10 @@ M.git = function()
       change = { text = '~' },
       delete = { text = '_' },
       topdelete = { text = '‾' },
+      untracked = { text = '┆' },
       changedelete = { text = '~' },
     },
+    numhl = false,
   }
 end
 
@@ -312,9 +310,9 @@ M.lualine = function()
 
   lualine.setup {
     options = {
-      section_separators = "",
-      component_separators = "",
-      icons_enabled = true,
+      section_separators = { left = '', right = '' },
+      component_separators = { left = '', right = '' },
+      icons_enabled = false,
     },
     sections = {
       lualine_a = { "mode" },
@@ -366,7 +364,8 @@ M.nvimtree = function()
     },
     renderer = {
       highlight_git = true,
-      highlight_opened_files = "none",
+      highlight_opened_files = "icon",
+      highlight_modified = "icon",
       indent_markers = {
         enable = true,
       },
@@ -423,7 +422,7 @@ M.toggleterm = function()
     direction = "vertical",
     size = function(term)
       if term.direction == "vertical" then
-        return vim.o.columns * 0.4
+        return vim.o.columns * 0.5
       elseif term.direction == "horizontal" then
         return vim.o.lines * 0.3
       end
@@ -450,20 +449,6 @@ M.comment = function()
   end
 
   nvim_comment.setup()
-end
-
-M.obsidion = function()
-  local present, obsidion = pcall(require, "obsidian")
-  if not present then
-    return
-  end
-
-  obsidion.setup {
-    dir = "~/Documents/notes/notes",
-    completion = {
-      nvim_cmp = true
-    }
-  }
 end
 
 return M

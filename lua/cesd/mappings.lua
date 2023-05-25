@@ -45,8 +45,10 @@ M.general = {
 
 M.gitsigns = {
   n = {
-    ["<leader>gS"] = { "<cmd>Gitsigns toggle_signs<cr>", "Toggle git signs" },
-    ["<leader>gb"] = { "<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle current line blame" }
+    ["<leader>hS"] = { "<cmd>Gitsigns toggle_signs<cr>", "Toggle git signs" },
+    ["<leader>hb"] = { "<cmd>Gitsigns toggle_current_line_blame<cr>", "Toggle current git line blame" },
+    ["<leader>hp"] = { "<cmd>Gitsigns preview_hunk<cr>", "Preview git Hunk" },
+    ["<leader>hd"] = { "<cmd>lua require('gitsigns').diffthis('~')<cr>", "Preview Diff" },
   }
 }
 
