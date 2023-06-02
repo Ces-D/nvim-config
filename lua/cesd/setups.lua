@@ -38,7 +38,7 @@ M.theme = function()
     }
   })
 
-  local hr = tonumber(os.date('%H', os.time()))
+  local hr = tonumber(os.date('%H'))
   if hr > 9 and hr < 19 then -- day between 9am and 7pm
     vim.cmd("colorscheme github_dark")
   else                       -- night
@@ -366,7 +366,6 @@ M.nvimtree = function()
       adaptive_size = true,
       side = "left",
       width = 40,
-      hide_root_folder = true,
     },
     git = {
       enable = true,
@@ -381,9 +380,10 @@ M.nvimtree = function()
       },
     },
     renderer = {
+      root_folder_label = false,
       highlight_git = true,
       highlight_opened_files = "icon",
-      highlight_modified = "icon",
+      highlight_modified = "name",
       indent_markers = {
         enable = true,
       },
