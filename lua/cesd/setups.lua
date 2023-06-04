@@ -220,8 +220,6 @@ M.telescope = function()
         "--smart-case",
       },
       prompt_prefix = "   ",
-      selection_caret = "  ",
-      entry_prefix = "  ",
       initial_mode = "insert",
       sorting_strategy = "ascending",
       layout_strategy = "horizontal",
@@ -239,12 +237,14 @@ M.telescope = function()
         preview_cutoff = 120,
       },
       file_ignore_patterns = { "node_modules", ".git" },
-      path_display = { "truncate" },
+      path_display = { "smart" },
       winblend = 0,
-      border = {},
-      borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+      border = true,
       color_devicons = true,
-      set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+      -- set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
+      preview = {
+        treesitter = false
+      },
       mappings = {
         n = {
           ["q"] = require("telescope.actions").close,
