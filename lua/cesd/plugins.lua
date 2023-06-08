@@ -18,6 +18,7 @@ return {
     dependencies = {
       { "williamboman/mason-lspconfig.nvim" },
       { "neovim/nvim-lspconfig" },
+      { "loctvl842/breadcrumb.nvim" }
     },
     opts         = {
       diagnostics = {
@@ -97,6 +98,14 @@ return {
     "kyazdani42/nvim-tree.lua",
     config = function()
       setups.nvimtree()
+    end
+  },
+  {
+    "loctvl842/breadcrumb.nvim",
+    dependencies = { "kyazdani42/nvim-web-devicons" },
+    lazy = true,
+    config = function()
+      setups.breadcrumb()
     end
   },
   { "kyazdani42/nvim-web-devicons",        lazy = true },

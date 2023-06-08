@@ -56,7 +56,11 @@ M.lspConfig = function()
     return
   end
 
-  local function on_attach(client)
+  local function on_attach(client, bufnr)
+    local breadcrumb_present, breadcrumb = pcall(require, "breadcrumb")
+    if breadcrumb_present and client.server_capabilities.documentSymbolProvider then
+      breadcrumb.attach(client, bufnr)
+    end
     vim.notify('Attaching to ' .. client.name)
   end
 
@@ -420,6 +424,57 @@ M.nvimtree = function()
       },
     },
   }
+end
+
+M.breadcrumb = function()
+  local breadcrumb_present, breadcrumb = pcall(require, "breadcrumb")
+  if not breadcrumb_present then
+    vim.notify("breadcrumb is not installed")
+    return
+  end
+
+  breadcrumb.setup({
+    disabled_filetype = {
+      "",
+      "help",
+    },
+    icons = {
+      File = " ",
+      Module = " ",
+      Namespace = " ",
+      Package = " ",
+      Class = " ",
+      Method = " ",
+      Property = " ",
+      Field = " ",
+      Constructor = " ",
+      Enum = "練",
+      Interface = "練",
+      Function = " ",
+      Variable = " ",
+      Constant = " ",
+      String = " ",
+      Number = " ",
+      Boolean = "◩ ",
+      Array = " ",
+      Object = " ",
+      Key = " ",
+      Null = "ﳠ ",
+      EnumMember = " ",
+      Struct = " ",
+      Event = " ",
+      Operator = " ",
+      TypeParameter = " ",
+    },
+    separator = ">",
+    depth_limit = 0,
+    depth_limit_indicator = "..",
+    color_icons = true,
+    highlight_group = {
+      component = "BreadcrumbText",
+      separator = "BreadcrumbSeparator",
+    }
+  })
 end
 
 M.toggleterm = function()
