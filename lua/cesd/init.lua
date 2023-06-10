@@ -13,7 +13,18 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("cesd.options")
-require("lazy").setup("cesd.plugins")
+require("lazy").setup({
+  spec = require("cesd.plugins"),
+  defaults = {
+    lazy    = true,
+    version = "*"
+  },
+  ui = {
+    border = "solid"
+  }
+}
+)
+
 local utils = require("cesd.utils")
 
 for _, mapping in pairs(require("cesd.mappings")) do

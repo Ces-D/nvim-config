@@ -67,12 +67,12 @@ M.comment = {
   },
 }
 
-M.nvimTree = {
-  n = {
-    ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nvim tree" },
-    ["<leader>o"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nvim tree" }
-  }
-}
+--M.nvimTree = {
+--  n = {
+--    ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nvim tree" },
+--    ["<leader>o"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nvim tree" }
+--  }
+--}
 
 M.lspconfig = {
   n = {
@@ -140,7 +140,7 @@ M.telescope = {
     -- pick a hidden term
     ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "pick hidden term" },
     -- color scheme
-    ["<leader>cs"] = { ":lua require('cesd.colors').choose_colors()<CR>", "toggle color schemes" }
+    ["<leader>cs"] = { ":lua require('cesd.colors').telescope_choose_colors()<CR>", "toggle color schemes" }
   },
 }
 
