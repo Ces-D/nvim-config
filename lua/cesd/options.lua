@@ -60,12 +60,11 @@ opt.writebackup = false
 -- Performance
 opt.lazyredraw = true
 
-
 -- interval for writing swap file to disk, also used by gitsigns
 opt.updatetime = 250
 
 -- disable some builtin vim plugins
-local default_plugins = {
+local disabled_plugins = {
   "2html_plugin",
   "getscript",
   "getscriptPlugin",
@@ -91,6 +90,6 @@ local default_plugins = {
   "ftplugin",
 }
 
-for _, plugin in pairs(default_plugins) do
+for _, plugin in pairs(disabled_plugins) do
   g["loaded_" .. plugin] = 1
 end

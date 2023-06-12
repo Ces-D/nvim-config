@@ -52,28 +52,6 @@ M.gitsigns = {
   }
 }
 
-M.comment = {
-  n = {
-    ["<leader>/"] = {
-      "<cmd>lua require('Comment.api').toggle.linewise.current()<cr>",
-      "toggle comment",
-    },
-  },
-  v = {
-    ["<leader>/"] = {
-      "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-      "toggle comment",
-    },
-  },
-}
-
---M.nvimTree = {
---  n = {
---    ["<leader>e"] = { "<cmd>NvimTreeToggle<cr>", "Toggle Nvim tree" },
---    ["<leader>o"] = { "<cmd>NvimTreeFocus<cr>", "Focus Nvim tree" }
---  }
---}
-
 M.lspconfig = {
   n = {
     ["gD"] = {
@@ -142,20 +120,6 @@ M.telescope = {
     -- color scheme
     ["<leader>cs"] = { ":lua require('cesd.colors').telescope_choose_colors()<CR>", "toggle color schemes" }
   },
-}
-
-M.obsidion = {
-  n = {
-    ["<leader>ogf"] = {
-      function()
-        if require('obsidian').util.cursor_on_markdown_link() then
-          return "<cmd>ObsidianFollowLink<CR>"
-        else
-          return "gf"
-        end
-      end, "follow obsidion link"
-    }
-  }
 }
 
 return M

@@ -6,13 +6,23 @@ return {
     },
     event = "VeryLazy",
     opts = {
-      icons_enabled = false,
+      icons_enabled = true,
       component_separators = { left = '', right = '' },
       section_separators = { left = '', right = '' },
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch" },
-        lualine_c = { "filename", "diagnostics" },
+        lualine_c = { "filename",
+          {
+            "diagnostics",
+            symbols = {
+              error = require("cesd.icons").diagnostics.error,
+              warn = require("cesd.icons").diagnostics.warn,
+              info = require("cesd.icons").diagnostics.info,
+              hint = require("cesd.icons").diagnostics.hint,
+            },
+          }
+        },
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" },
@@ -79,18 +89,27 @@ return {
   },
 
   {
-    "AlexvZyl/nordic.nvim",
+    "rose-pine/neovim",
+    dependencies = { "romgrk/kyntell.vim" },
+    name = "rose-pine",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("nordic")
-      theme.setup()
+      local theme = require("rose-pine")
+      theme.setup({
+        variant = "auto",
+        dark_variant = "moon",
+        bold_vert_split = true
+
+      })
 
       local hr = tonumber(os.date('%H'))
       if hr > 8 and hr < 20 then -- day between 8am and 8pm
-        vim.cmd.colorscheme "nordic"
-      else                       -- night
-        vim.cmd.colorscheme "nordic"
+        vim.o.background = "light"
+        vim.cmd.colorscheme "rose-pine"
+      else -- night
+        vim.o.background = "dark"
+        vim.cmd.colorscheme "kyntell"
       end
     end
   },

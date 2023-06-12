@@ -1,3 +1,16 @@
+local treesitter_servers = {
+  "bash", "html", "javascript", "json", "lua",
+  "markdown", "markdown_inline", "python", "tsx",
+  "typescript", "vim", "yaml", "lua", "css",
+  "html", "rust", "dockerfile"
+}
+
+local lsp_config_servers = {
+  "pyright", "tsserver", "lua_ls",
+  "rust_analyzer", "cssls", "cssmodules_ls",
+  "html", "jsonls", "svelte", "marksman", "dockerls",
+}
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -5,25 +18,7 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
-      ensure_installed = {
-        "bash",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "python",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-        "lua",
-        "css",
-        "html",
-        "rust",
-        "dockerfile"
-      },
+      ensure_installed = treesitter_servers,
       highlight = { enable = true },
       indent = { enable = true, disable = { "yaml", "python", "html" } },
       context_commentstring = { enable = true },
@@ -112,109 +107,6 @@ return {
   },
 
   {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    branch = "master",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      {
-        "williamboman/mason.nvim",
-        config = function()
-          require("mason").setup {
-            defaults = { lazy = true }
-          }
-        end
-      },
-      { "williamboman/mason-lspconfig.nvim" },
-      -- { "L3MON4D3/LuaSnip" },
-      -- { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      -- { "hrsh7th/cmp-path" },
-      -- { "hrsh7th/cmp-buffer" },
-    },
-    config = function()
-      local servers = {
-        pyright = {},
-        tsserver = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = { "vim" },
-              },
-              workspace = {
-                checkThirdParty = false,
-              },
-              format = {
-                enable = true,
-                defaultConfig = {
-                  indent_style = "space",
-                  indent_size = "2",
-                  continuation_indent_size = "2",
-                },
-              },
-            }
-          }
-        },
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              inlayHints = true,
-            },
-          },
-        },
-        cssls = {},
-        cssmodules_ls = {},
-        html = {},
-        jsonls = {},
-        svelte = {},
-        marksman = {},
-        dockerls = {}
-
-      }
-
-      local ext_capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- extends capabilities using the cmp_nvim_lsp capabilities
-      local capabilities = vim.tbl_deep_extend("force", {}, ext_capabilities,
-        require("cmp_nvim_lsp").default_capabilities(),
-        { textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } } }
-      )
-
-      -- Setup lsp servers
-      local function server_setup(server)
-        if servers[server] and servers[server].disabled then
-          return
-        end
-
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
-
-        require("lspconfig")[server].setup(server_opts)
-      end
-
-
-      local available = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
-      local ensure_installed = {}
-
-      -- Call the server setup or add to ensure_installed
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          if not vim.tbl_contains(available, server) then
-            server_setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        end
-      end
-
-      require("mason-lspconfig").setup({ ensure_installed = ensure_installed })
-      require("mason-lspconfig").setup_handlers({ server_setup })
-    end
-  },
-
-  {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
@@ -231,47 +123,81 @@ return {
   },
 
   {
+    "neovim/nvim-lspconfig",
+    lazy = false,
+    branch = "master",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      { "williamboman/mason.nvim",          build = ":MasonUpdate" },
+      { "williamboman/mason-lspconfig.nvim" },
+      { "hrsh7th/nvim-cmp" },
+      { "hrsh7th/cmp-nvim-lsp" },
+    },
+    config = function()
+      require("mason").setup()
+      local mason_lsp = require("mason-lspconfig")
+
+
+      mason_lsp.setup({ ensure_installed = lsp_config_servers })
+
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+      local handlers     = {
+        function(server_name)
+          require("lspconfig")[server_name].setup { capabilities = capabilities }
+        end,
+
+        ["lua_ls"] = function()
+          require("lspconfig")["lua_ls"].setup {
+            capabilities = capabilities,
+            settings = {
+              ["lua_ls"] = {
+                diagnostics = { globals = { "vim" } },
+                workspace = {
+                  checkThirdParty = false,
+                },
+                format = {
+                  enable = true,
+                  defaultConfig = {
+                    indent_style = "space",
+                    indent_size = "2",
+                    continuation_indent_size = "2",
+                  },
+                },
+              }
+            }
+          }
+        end,
+
+        ["rust_analyzer"] = function()
+          require("lspconfig")["rust_analyzer"].setup {
+            capabilities = capabilities,
+            settings = {
+              ["rust-analyzer"] = {
+                inlayHints = true,
+              },
+            }
+          }
+        end
+
+      }
+
+      mason_lsp.setup_handlers(handlers)
+    end
+  },
+
+  {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter" },
     dependencies = {
       {
         "L3MON4D3/LuaSnip",
         dependencies = {
-          "rafamadriz/friendly-snippets",
-          config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-            require("luasnip.loaders.from_snipmate").lazy_load()
-          end,
+          { "rafamadriz/friendly-snippets" }
         },
-        opts = {
-          history = true,
-          delete_check_events = "TextChanged",
-        },
-        keys = {
-          {
-            "<tab>",
-            function()
-              return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = "i",
-          },
-          {
-            "<tab>",
-            function()
-              require("luasnip").jump(1)
-            end,
-            mode = "s",
-          },
-          {
-            "<s-tab>",
-            function()
-              require("luasnip").jump(-1)
-            end,
-            mode = { "i", "s" },
-          },
-        },
+        config = function(opts)
+          require("luasnip.loaders.from_vscode").lazy_load()
+        end,
       },
       { "saadparwaiz1/cmp_luasnip" },
       { "hrsh7th/cmp-nvim-lsp" },
@@ -280,7 +206,7 @@ return {
     config = function()
       local cmp = require("cmp")
 
-      return {
+      cmp.setup({
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
@@ -294,7 +220,7 @@ return {
           fields = { "kind", "abbr", "menu" },
           format = function(entry, item)
             local icons = require("cesd.icons").kinds
-            item.kindd = icons[item.kind]
+            item.kind = icons[item.kind]
             item.menu = ({
               nvim_lsp = "Lsp",
               nvim_lua = "Lua",
@@ -305,12 +231,14 @@ return {
             return item
           end
         },
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "path" },
-        }),
+        sources = cmp.config.sources(
+          { { name = "luasnip" } },
+          {
+            { name = "buffer" },
+            { name = "path" },
+            { name = "nvim_lsp" }
+          }
+        ),
         mapping = cmp.mapping.preset.insert({
           ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }), { "i", "c" }),
           ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }), { "i", "c" }),
@@ -326,7 +254,7 @@ return {
             fallback()
           end),
         }),
-      }
+      })
     end,
   },
 
