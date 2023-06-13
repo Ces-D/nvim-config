@@ -106,10 +106,10 @@ return {
       local hr = tonumber(os.date('%H'))
       if hr > 8 and hr < 20 then -- day between 8am and 8pm
         vim.o.background = "light"
-        vim.cmd.colorscheme "rose-pine"
+        vim.cmd.colorscheme "kyntell"
       else -- night
         vim.o.background = "dark"
-        vim.cmd.colorscheme "kyntell"
+        vim.cmd.colorscheme "rose-pine"
       end
     end
   },
@@ -196,15 +196,13 @@ return {
       require("mini.comment").setup(
         {
           options = {
-            ignore_blank_line = true
+            ignore_blank_line = true,
+            custom_commentstring = function()
+              return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+            end,
           },
           mappings = {
             comment = "<leader>/",
-          },
-          hooks = {
-            pre = function()
-              require("ts_context_commentstring.internal").update_commentstring({})
-            end,
           },
         }
       )

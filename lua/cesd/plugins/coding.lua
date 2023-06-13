@@ -21,7 +21,10 @@ return {
       ensure_installed = treesitter_servers,
       highlight = { enable = true },
       indent = { enable = true, disable = { "yaml", "python", "html" } },
-      context_commentstring = { enable = true },
+      context_commentstring = {
+        enable = false,
+        enable_autocmd = false
+      },
       incremental_selection = { enable = true }
     },
     config = function(_, opts)
@@ -240,8 +243,6 @@ return {
           }
         ),
         mapping = cmp.mapping.preset.insert({
-          ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }), { "i", "c" }),
-          ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }), { "i", "c" }),
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
