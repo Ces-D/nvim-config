@@ -89,28 +89,62 @@ return {
   },
 
   {
-    "rose-pine/neovim",
-    dependencies = { "romgrk/kyntell.vim" },
-    name = "rose-pine",
+    "catppuccin/nvim",
+    name = "catppuccin",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("rose-pine")
-      theme.setup({
-        variant = "auto",
-        dark_variant = "moon",
-        bold_vert_split = true
+      local theme = require("catppuccin")
 
+      theme.setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+        background = {
+          light = "latte",
+          dark = "mocha",
+        },
+        transparent_background = false, -- disables setting the background color.
+        show_end_of_buffer = false,     -- shows the '~' characters after the end of buffers
+        term_colors = true,             -- sets terminal colors (e.g. `g:terminal_color_0`)
+        dim_inactive = {
+          enabled = false,              -- dims the background color of inactive window
+          shade = "dark",
+          percentage = 0.15,            -- percentage of the shade to apply to the inactive window
+        },
+        no_italic = false,              -- Force no italic
+        no_bold = false,                -- Force no bold
+        no_underline = false,           -- Force no underline
+        styles = {
+          comments = { "italic" },      -- Change the style of comments
+          conditionals = { "italic" },
+          loops = {},
+          functions = {},
+          keywords = {},
+          strings = {},
+          variables = {},
+          numbers = {},
+          booleans = {},
+          properties = {},
+          types = {},
+          operators = {},
+        },
+        color_overrides = {},
+        custom_highlights = {},
+        integrations = {
+          cmp = true,
+          gitsigns = true,
+          nvimtree = true,
+          telescope = true,
+          mini = true,
+        },
       })
 
-      local hr = tonumber(os.date('%H'))
-      if hr > 8 and hr < 20 then -- day between 8am and 8pm
-        vim.o.background = "light"
-        vim.cmd.colorscheme "kyntell"
-      else -- night
-        vim.o.background = "dark"
-        vim.cmd.colorscheme "rose-pine"
-      end
+      vim.cmd.colorscheme "catppuccin"
+
+      -- local hr = tonumber(os.date('%H'))
+
+      -- if hr > 8 and hr < 20 then -- day between 8am and 8pm
+      -- else -- night
+      -- end
     end
   },
 
@@ -157,33 +191,6 @@ return {
         -- Available modes for `mode`: foreground, background,  virtualtext
         mode = "background", -- Set the display mode.
         virtualtext = "■",
-      },
-    },
-  },
-
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      char = "▏",
-      context_char = "▏",
-      show_end_of_line = false,
-      space_char_blankline = " ",
-      show_current_context = false,
-      show_current_context_start = true,
-      filetype_exclude = {
-        "help",
-        "startify",
-        "dashboard",
-        "packer",
-        "neogitstatus",
-        "NvimTree",
-        "Trouble",
-        "alpha",
-      },
-      buftype_exclude = {
-        "terminal",
-        "nofile",
       },
     },
   },
@@ -260,4 +267,12 @@ return {
       },
     },
   },
+
+  {
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
+    config = function()
+      require("better_escape").setup()
+    end,
+  }
 }

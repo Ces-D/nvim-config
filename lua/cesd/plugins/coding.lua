@@ -177,6 +177,14 @@ return {
             capabilities = capabilities,
             settings = {
               ["rust-analyzer"] = {
+                imports = {
+                  granularity = { group = "module", },
+                  prefix = "self",
+                },
+                cargo = {
+                  buildScripts = { enable = true, },
+                },
+                procMacro = { enable = true },
                 inlayHints = true,
               },
             }
@@ -193,15 +201,7 @@ return {
     "hrsh7th/nvim-cmp",
     event = { "InsertEnter" },
     dependencies = {
-      {
-        "L3MON4D3/LuaSnip",
-        dependencies = {
-          { "rafamadriz/friendly-snippets" }
-        },
-        config = function(opts)
-          require("luasnip.loaders.from_vscode").lazy_load()
-        end,
-      },
+      { "L3MON4D3/LuaSnip" },
       { "saadparwaiz1/cmp_luasnip" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-buffer" },
@@ -235,11 +235,11 @@ return {
           end
         },
         sources = cmp.config.sources(
-          { { name = "luasnip" } },
           {
+            { name = "luasnip" },
+            { name = "nvim_lsp" },
             { name = "buffer" },
             { name = "path" },
-            { name = "nvim_lsp" }
           }
         ),
         mapping = cmp.mapping.preset.insert({
