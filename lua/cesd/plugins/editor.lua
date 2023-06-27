@@ -89,16 +89,18 @@ return {
   },
 
   {
-    "lunarvim/Onedarker.nvim",
-    name = "onedarker",
+    "rose-pine/neovim",
+    name = "rose-pine",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("onedarker")
+      local theme = require("rose-pine")
+      vim.o.background = "dark"
+      theme.setup({
+        disable_background = true
+      })
 
-      theme.setup({})
-
-      vim.cmd.colorscheme "onedarker"
+      vim.cmd.colorscheme "rose-pine"
 
       -- local hr = tonumber(os.date('%H'))
 
