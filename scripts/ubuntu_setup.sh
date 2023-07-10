@@ -27,8 +27,8 @@ sudo apt-get install neovim
 
 # Alacritty
 echo -e "\nUpgrading Alacritty"
-# cargo install alacritty
-# sudo cp /home/$(whoami)/.cargo/bin/alacritty /usr/local/bin
+cargo install alacritty
+sudo cp /home/$(whoami)/.cargo/bin/alacritty /usr/local/bin
 
 # Like clean, autoclean clears out the local repository of retrieved package files. The difference is that it only removes package files that can no longer be downloaded, and are largely useless.
 echo -e "\nCleaning up"

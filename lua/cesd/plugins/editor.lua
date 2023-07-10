@@ -89,18 +89,16 @@ return {
   },
 
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "rebelot/kanagawa.nvim",
+    name = "kanagawa",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("rose-pine")
+      local theme = require("kanagawa")
       vim.o.background = "dark"
-      theme.setup({
-        disable_background = true
-      })
+      theme.setup({})
 
-      vim.cmd.colorscheme "rose-pine"
+      vim.cmd.colorscheme "kanagawa-wave"
 
       -- local hr = tonumber(os.date('%H'))
 
