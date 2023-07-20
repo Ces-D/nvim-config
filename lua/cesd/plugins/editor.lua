@@ -48,10 +48,18 @@ return {
           enable = true,
         },
         diagnostics = {
-          enable = false
+          enable = false,
+          show_on_dirs = true,
+          show_on_open_dirs = false
         },
         modified = {
-          enable = true
+          enable = true,
+          show_on_dirs = true,
+          show_on_open_dirs = false
+        },
+        git = {
+          show_on_dirs = true,
+          show_on_open_dirs = false
         },
         view = {
           width = {
@@ -62,19 +70,19 @@ return {
         renderer = {
           highlight_modified = "icon",
           indent_markers = {
-            enable = true
+            enable = false
           },
           icons = {
             webdev_colors = true,
             glyphs = {
               git = {
-                unstaged = require("cesd.icons").gitsigns.unstaged,
-                staged = require("cesd.icons").gitsigns.staged,
-                unmerged = require("cesd.icons").gitsigns.untracked,
-                renamed = require("cesd.icons").gitsigns.renamed,
-                untracked = require("cesd.icons").gitsigns.untracked,
-                deleted = require("cesd.icons").gitsigns.deleted,
-                ignored = require("cesd.icons").gitsigns.ignored,
+                unstaged = require("cesd.icons").git.unstaged,
+                staged = require("cesd.icons").git.staged,
+                unmerged = require("cesd.icons").git.untracked,
+                renamed = require("cesd.icons").git.renamed,
+                untracked = require("cesd.icons").git.untracked,
+                deleted = require("cesd.icons").git.deleted,
+                ignored = require("cesd.icons").git.ignored,
               }
             }
           }
@@ -89,16 +97,18 @@ return {
   },
 
   {
-    "rebelot/kanagawa.nvim",
-    name = "kanagawa",
+    "AlexvZyl/nordic.nvim",
+    name = "nordic",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("kanagawa")
+      local theme = require("nordic")
       vim.o.background = "dark"
-      theme.setup({})
+      theme.setup({
+        swap_backgrounds = false
+      })
 
-      vim.cmd.colorscheme "kanagawa-wave"
+      vim.cmd.colorscheme "nordic"
 
       -- local hr = tonumber(os.date('%H'))
 
