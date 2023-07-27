@@ -97,24 +97,27 @@ return {
   },
 
   {
-    "AlexvZyl/nordic.nvim",
-    name = "nordic",
+    "ramojus/mellifluous.nvim",
+    name = "mellifluous",
     lazy = false,
     priority = 1000,
     config = function()
-      local theme = require("nordic")
+      local theme = require("mellifluous")
       vim.o.background = "dark"
-      theme.setup({
-        swap_backgrounds = false
-      })
 
-      vim.cmd.colorscheme "nordic"
 
       -- local hr = tonumber(os.date('%H'))
 
       -- if hr > 8 and hr < 20 then -- day between 8am and 8pm
-      -- else -- night
+      --   theme.setup({
+
+      --   })
+      -- else                       -- night
+      theme.setup({
+        color_set = "tender"
+      })
       -- end
+      vim.cmd.colorscheme "mellifluous"
     end
   },
 
