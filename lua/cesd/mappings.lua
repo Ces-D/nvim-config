@@ -3,8 +3,6 @@ local M = {}
 M.general = {
   ------------------------- INSERT MODE -------------------------
   i = {
-    ["<C-H>"] = { "<ESC>^i", "beginning of line" },
-    ["<C-L>"] = { "<End>", "end of line" },
     -- navigate within insert mode
     ["<C-h>"] = { "<Left>", "move left" },
     ["<C-l>"] = { "<Right>", "move right" },
@@ -14,7 +12,8 @@ M.general = {
   ----------------------- NORMAL MODE -------------------------
   n = {
     -- common function
-
+    ["<C-l>"] = { ":vertical resize -2<CR>", "vertical resize -" },
+    ["<C-h>"] = { ":vertical resize +2<CR>", "vertical resize +" },
     -- switch between windows
     ["<left>"] = { "<C-w>h", "window left" },
     ["<right>"] = { "<C-w>l", "window right" },
@@ -23,11 +22,12 @@ M.general = {
     -- move text
     ["<C-k>"] = { ":m .-2<CR>==", "move text up" },
     ["<C-j>"] = { ":m .+1<CR>==", "move text down" },
-    -- basic buffer handling
-    ["<leader>w"] = { "<cmd>w<cr>", "save file" },
-    ["<leader>q"] = { "<cmd>q<cr>", "quit file" },
-    ["<leader>wq"] = { "<cmd>wq<cr>", "save then quit file" },
-    ["<leader>bd"] = { "<cmd>bd<cr>", "delete buffer" },
+
+    -- -- basic buffer handling
+    -- ["<leader>w"] = { "<cmd>w<cr>", "save file" },
+    -- ["<leader>q"] = { "<cmd>q<cr>", "quit file" },
+    -- ["<leader>wq"] = { "<cmd>wq<cr>", "save then quit file" },
+    -- ["<leader>bd"] = { "<cmd>bd<cr>", "delete buffer" },
     -- highlight
     ["<leader>h"] = { "<cmd>nohlsearch<cr>", "no highlight" },
   },
@@ -112,11 +112,9 @@ M.telescope = {
     ["<leader>fh"] = { "<cmd> Telescope help_tags <CR>", "help page" },
     ["<leader>fo"] = { "<cmd> Telescope oldfiles <CR>", "find oldfiles" },
     ["<leader>tk"] = { "<cmd> Telescope keymaps <CR>", "show keys" },
+    ["/"] = { "<cmd> Telescope current_buffer_fuzzy_find <CR>", "find in buffer" },
     -- git
     ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
-    ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "git status" },
-    -- pick a hidden term
-    ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "pick hidden term" },
     -- color scheme
     ["<leader>cs"] = { ":lua require('cesd.colors').telescope_choose_colors()<CR>", "toggle color schemes" }
   },

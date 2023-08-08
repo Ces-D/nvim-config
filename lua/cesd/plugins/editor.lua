@@ -96,30 +96,29 @@ return {
     end,
   },
 
-  {
-    "ramojus/mellifluous.nvim",
-    name = "mellifluous",
-    lazy = false,
-    priority = 1000,
-    config = function()
-      local theme = require("mellifluous")
-      vim.o.background = "dark"
+  -- {
+  --   "olivercederborg/poimandres.nvim",
+  --   name = "poimandres",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     local theme = require("poimandres")
+  --     vim.o.background = "dark"
+
+  --     theme.setup({
+  --     })
+
+  --     -- local hr = tonumber(os.date('%H'))
+
+  --     -- if hr > 7 and hr < 12 then -- day between 7am and 12pm
+  --     -- else -- night
 
 
-      -- local hr = tonumber(os.date('%H'))
+  --     -- end
 
-      -- if hr > 8 and hr < 20 then -- day between 8am and 8pm
-      --   theme.setup({
-
-      --   })
-      -- else                       -- night
-      theme.setup({
-        color_set = "tender"
-      })
-      -- end
-      vim.cmd.colorscheme "mellifluous"
-    end
-  },
+  --     vim.cmd.colorscheme "poimandres"
+  --   end
+  -- },
 
   {
     "akinsho/toggleterm.nvim",
@@ -247,5 +246,13 @@ return {
     config = function()
       require("better_escape").setup()
     end,
+  },
+
+  {
+    'ibhagwan/smartyank.nvim',
+
+    config = function()
+      require("smartyank").setup()
+    end
   }
 }

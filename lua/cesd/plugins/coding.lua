@@ -16,16 +16,27 @@ return {
     "nvim-treesitter/nvim-treesitter",
     version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-refactor'
+    },
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       ensure_installed = treesitter_servers,
       highlight = { enable = true },
       indent = { enable = true, disable = { "yaml", "python", "html" } },
       context_commentstring = {
-        enable = false,
+        enable = true,
         enable_autocmd = false
       },
-      incremental_selection = { enable = true }
+      incremental_selection = { enable = true },
+      refactor = {
+        highlight_definitions = {
+          enable = true,
+          -- Set to false if you have an `updatetime` of ~100.
+          clear_on_cursor_move = true,
+        },
+        highlight_current_scope = { enable = false },
+      },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
