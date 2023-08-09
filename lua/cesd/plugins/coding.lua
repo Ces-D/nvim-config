@@ -2,7 +2,7 @@ local treesitter_servers = {
   "bash", "html", "javascript", "json", "lua",
   "markdown", "markdown_inline", "python", "tsx",
   "typescript", "vim", "yaml", "lua", "css",
-  "html", "rust", "dockerfile"
+  "html", "rust", "dockerfile", "toml"
 }
 
 local lsp_config_servers = {
@@ -206,6 +206,24 @@ return {
 
       mason_lsp.setup_handlers(handlers)
     end
+  },
+
+  {
+    "simrat39/rust-tools.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      tools = {
+        runnables = {
+          use_telescope = true,
+        },
+        inlay_hints = {
+          auto = true,
+          show_parameter_hints = false,
+          parameter_hints_prefix = "",
+          other_hints_prefix = "",
+        },
+      }
+    }
   },
 
   {

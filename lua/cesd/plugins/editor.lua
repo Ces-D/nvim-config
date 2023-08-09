@@ -247,12 +247,4 @@ return {
       require("better_escape").setup()
     end,
   },
-
-  {
-    'ibhagwan/smartyank.nvim',
-
-    config = function()
-      require("smartyank").setup()
-    end
-  }
 }
