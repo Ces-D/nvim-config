@@ -5,13 +5,11 @@ keymaps["lsp"] = function(ev)
   -- function sets up specific lsp keymaps
   map('n', 'gD', vim.lsp.buf.declaration, { buffer = ev.buf, desc = "Go to LSP declaration" })
   map('n', 'gd', vim.lsp.buf.definition, { buffer = ev.buf, desc = "Go to LSP definitions" })
-  map('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, dsec = "Open LSP hover menu" })
+  map('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, desc = "Open LSP hover menu" })
   map('n', 'gi', vim.lsp.buf.implementation, { buffer = ev.buf, desc = "List all LSP implementation" })
   map({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
   map('n', 'gr', vim.lsp.buf.references, { buffer = ev.buf, desc = "List all LSP references" })
-  map('n', '<leader>fm', function()
-    vim.lsp.buf.formatting({ async = true })
-  end, { buffer = ev.buf, desc = "LSP formatting" })
+  map('n', '<leader>fm', vim.lsp.buf.format, { buffer = ev.buf, desc = "LSP formatting" })
 end
 
 keymaps["cmp"] = function()
@@ -52,9 +50,9 @@ keymaps["copilot"] = {
   accept = "<C-J>"
 }
 
-keymaps["nvim-tree"] = {
-  { "<leader>e", "<CMD>NvimTreeToggle<CR>",  "Toggle NvimTree" },
-  { "<leader>r", "<CMD>NvimTreeRefresh<CR>", "Refresh NvimTree" },
-}
+keymaps["nvim_tree_keymaps"] = function()
+  map("n", "<leader>e", "<CMD>NvimTreeToggle<CR>", { silent = true, desc = "Toggle NvimTree" })
+  map("n", "<leader>r", "<CMD>NvimTreeRefresh<CR>", { silent = true, desc = "Refresh NvimTree" })
+end
 
 return keymaps

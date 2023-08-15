@@ -1,5 +1,7 @@
 local settings = {}
 
+settings["map_leader"] = " "
+
 -- see `:h nvim_open_win()`
 settings["open_win_config"] = {
   style = "minimal",
@@ -7,7 +9,7 @@ settings["open_win_config"] = {
 }
 
 -- see `https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations`
-settings["lsp_deps"] = {
+settings["mason_lspconfig_servers"] = {
   "bashls",
   "html",
   "cssls",
@@ -17,7 +19,7 @@ settings["lsp_deps"] = {
   "pyright",
   "tsserver",
   "rust_analyzer",
-  "dockerls",
+  "docker_ls",
   "marksman"
 }
 

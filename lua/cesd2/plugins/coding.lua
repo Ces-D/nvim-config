@@ -5,10 +5,12 @@ return {
   {
     "neovim/nvim-lspconfig",
     lazy = true,
-    event = { "CursorHold", "CursorHoldI" },
+    event = { "BufReadPre" },
     dependencies = {
       { "williamboman/mason.nvim" },
       { "williamboman/mason-lspconfig.nvim" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/nvim-cmp" },
       {
         "ray-x/lsp_signature.nvim",
         config = function()
@@ -18,7 +20,6 @@ return {
           })
         end
       },
-      {}
     },
     config = function()
       local nvim_lsp = require("lspconfig")
@@ -26,28 +27,12 @@ return {
       local mason_lspconfig = require("mason-lspconfig")
 
       local open_win_config = settings["open_win_config"]
-
       require("lspconfig.ui.windows").default_options.border = open_win_config.border
 
-      local icons = {
-        ui = require("cesd2.core.icons").get("ui", true),
-        misc = require("cesd2.core.icons").get("misc", true),
-      }
-
-      mason.setup({
-        ui = {
-          border = open_win_config.border,
-          icons = {
-            package_pending = icons.ui.Modified_alt,
-            package_installed = icons.ui.Check,
-            package_uninstalled = icons.misc.Ghost,
-          },
-
-        },
-      })
+      mason.setup({ ui = { border = open_win_config.border, } })
 
       mason_lspconfig.setup({
-        ensure_installed = require("cesd2.core.settings").lsp_deps,
+        ensure_installed = require("cesd2.core.settings").mason_lsp_deps,
       })
 
       local opts = {
@@ -72,23 +57,15 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    lazy = true,
-    event = "InsertEnter",
+    event = { "InsertEnter" },
     dependencies = {
       { "L3MON4D3/LuaSnip" },
       { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-nvim-lua" },
       { "hrsh7th/cmp-path" },
       { "hrsh7th/cmp-buffer" },
     },
     config = function()
-      local icons = {
-        kind = require("cesd2.core.icons").get("kind"),
-        type = require("cesd2.core.icons").get("type"),
-        cmp = require("cesd2.core.icons").get("cmp"),
-      }
-
       require("luasnip.loaders.from_lua").lazy_load()
       require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -115,17 +92,41 @@ return {
         },
         formatting = {
           fields = { "abbr", "kind", "menu" },
-          sources = {
-            { name = "nvim_lsp", max_item_count = 350 },
-            { name = "nvim_lua" },
-            { name = "luasnip" },
-            { name = "path" },
-            { name = "buffer" },
-          },
-        }
+        },
+        sources = {
+          { name = "nvim_lsp" },
+          { name = "nvim_lua" },
+          { name = "luasnip" },
+          { name = "path" },
+          { name = "buffer" },
+        },
       })
     end
   },
+
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    event = { "BufReadPre" },
+    config = function()
+      local null_ls = require("null-ls")
+      local formatting = null_ls.builtins.formatting
+      local diagnostics = null_ls.builtins.diagnostics
+      local code_actions = null_ls.builtins.code_actions
+
+      null_ls.setup({
+        debug = false,
+        sources = {
+          formatting.prettierd,
+          formatting.rustfmt,
+          formatting.stylua,
+          diagnostics.cspell.with({ filetypes = { "markdown", "html" } }),
+          code_actions.cspell.with({ filetypes = { "markdown", "html" } })
+        },
+      })
+    end,
+  },
+
+
 
   {
     "zbirenbaum/copilot.lua",
@@ -210,7 +211,6 @@ return {
     end,
   },
 
-  // TODO: finish the telescope and treesitter configs and mappings
   {
     "nvim-telescope/telescope.nvim",
     lazy = true,
@@ -218,15 +218,37 @@ return {
     dependencies = {
       { "BurntSushi/ripgrep" },
       { "nvim-lua/plenary.nvim" },
-      { "nvim-tree/nvim-web-devicons" },
       { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim",    build = "make" },
       { "jvgrootveld/telescope-zoxide" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
+      require("telescope").setup({
 
+      })
     end,
   },
+
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate",
+    event = "BufReadPost",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
+      { "nvim-treesitter/nvim-treesitter-context" },
+    },
+    config = function()
+      require("nvim-treesitter.configs").setup({})
+    end
+  },
+
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre" },
+    config = function()
+      require("gitsigns").setup({})
+    end
+  }
 
 }

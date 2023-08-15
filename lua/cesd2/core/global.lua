@@ -34,9 +34,10 @@ M["disable_distribution_plugins"] = function()
 end
 
 M["map_leader"] = function()
+  local leader = require("cesd2.core.settings").map_leader
   vim.g.mapleader = " "
-  vim.api.nvim_set_keymap("n", " ", "", { noremap = true })
-  vim.api.nvim_set_keymap("x", " ", "", { noremap = true })
+  vim.api.nvim_set_keymap("n", leader, "", { noremap = true })
+  vim.api.nvim_set_keymap("x", leader, "", { noremap = true })
 end
 
 return M

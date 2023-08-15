@@ -1,5 +1,4 @@
 local keymaps = require("cesd2.plugins.utils.plugin_keymaps")
-local core_icons = require("cesd2.core.icons")
 
 return {
   {
@@ -7,68 +6,23 @@ return {
     lazy = true,
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
     config = function()
-      local icons = {
-        diagnostics = core_icons.get("diagnostics", true),
-        git = core_icons.get("git", true),
-        git_nosep = core_icons.get("git"),
-        misc = core_icons.get("misc", true),
-        ui = core_icons.get("ui", true),
-      }
-
       require("lualine").setup({
         options = {
           icons_enabled = true,
           disabled_filetypes = { statusline = { "alpha" } },
           component_separators = "",
-          section_separators = { left = "", right = "" }
-        },
-        sections = {
-          lualine_a = { "mode" },
-          lualine_b = {
-            "branch",
-            icon = icons.git_nosep.Branch,
+          extensions = {
+            "nvim-tree",
+            "toggleterm",
           },
-          lualine_c = {
-            {
-              "branch",
-              icon = icons.git_nosep.Branch,
-            },
-            {
-              "diff",
-              symbols = {
-                added = icons.git.Add,
-                modified = icons.git.Mod_alt,
-                removed = icons.git.Remove,
-              },
-              padding = { right = 1 },
-            },
-            {
-              "diagnostics",
-              sources = { "nvim_diagnostic" },
-              sections = { "error", "warn", "info", "hint" },
-              symbols = {
-                error = icons.diagnostics.Error,
-                warn = icons.diagnostics.Warning,
-                info = icons.diagnostics.Information,
-                hint = icons.diagnostics.Hint_alt,
-              },
-            },
-          },
-          lualine_x = { "encoding", "fileformat", "filetype" },
-          lualine_y = { "progress" },
-          lualine_z = { "location" },
-        },
-        extensions = {
-          "nvim-tree",
-          "toggleterm",
-        },
+        }
       })
     end
   },
 
   {
     "nvim-tree/nvim-tree.lua",
-    lazy = true,
+    event = "BufEnter",
     cmd = {
       "NvimTreeToggle",
       "NvimTreeOpen",
@@ -76,14 +30,8 @@ return {
       "NvimTreeFindFileToggle",
       "NvimTreeRefresh",
     },
-    keys = keymaps["nvim-tree"],
     config = function()
-      local icons = {
-        diagnostics = core_icons.get("diagnostics"),
-        documents = core_icons.get("documents"),
-        git = core_icons.get("git"),
-        ui = core_icons.get("ui"),
-      }
+      keymaps.nvim_tree_keymaps()
 
       require("nvim-tree").setup({
         disable_netrw = true,
@@ -93,12 +41,6 @@ return {
           enable = false,
           show_on_dirs = true,
           show_on_open_dirs = false,
-          icons = {
-            hint = icons.diagnostics.Hint_alt,
-            info = icons.diagnostics.Information_alt,
-            warning = icons.diagnostics.Warning_alt,
-            error = icons.diagnostics.Error_alt,
-          },
         },
         modified = {
           enable = true,
@@ -115,45 +57,17 @@ return {
             max = 90
           },
         },
-        indent_markers = { enable = true, },
         renderer = {
           highlight_modified = "icon",
           indent_markers = {
-            enable = false
+            enable = true
           },
-          icons = {
-            webdev_colors = true,
-            glyphs = {
-              default = icons.documents.Default, --
-              symlink = icons.documents.Symlink, --
-              bookmark = icons.ui.Bookmark,
-              git = {
-                unstaged = icons.git.Mod_alt,
-                staged = icons.git.Add,          --󰄬
-                unmerged = icons.git.Unmerged,
-                renamed = icons.git.Rename,      --󰁔
-                untracked = icons.git.Untracked, -- "󰞋"
-                deleted = icons.git.Remove,      --
-                ignored = icons.git.Ignore,      --◌
-              },
-              folder = {
-                arrow_open = icons.ui.ArrowOpen,
-                arrow_closed = icons.ui.ArrowClosed,
-                default = icons.ui.Folder,
-                open = icons.ui.FolderOpen,
-                empty = icons.ui.EmptyFolder,
-                empty_open = icons.ui.EmptyFolderOpen,
-                symlink = icons.ui.SymlinkFolder,
-                symlink_open = icons.ui.FolderOpen,
-              },
-            },
-          }
         },
         actions = {
           open_file = {
             quit_on_open = true
           }
-        }
+        },
       })
     end,
   },
@@ -283,4 +197,6 @@ return {
       require("better_escape").setup()
     end,
   },
+
+  { 'nvim-tree/nvim-web-devicons' }
 }

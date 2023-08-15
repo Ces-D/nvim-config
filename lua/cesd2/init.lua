@@ -12,6 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+require("cesd2.core.global").map_leader()
 require("cesd2.core.global").disable_distribution_plugins()
 require("cesd2.core.options")
 require("cesd2.core.keymaps")
