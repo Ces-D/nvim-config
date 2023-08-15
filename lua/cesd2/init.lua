@@ -26,9 +26,10 @@ local lazy_config = {
 }
 
 local lazy_plugins = {
-  require("cesd2.plugins.lsp"),
+  require("cesd2.plugins.coding"),
   require("cesd2.plugins.editor"),
-  require("cesd2.plugins.appearance"),
 }
 
 require("lazy").setup(lazy_plugins, lazy_config)
+
+require("cesd2.plugins.utils.autocommands")
