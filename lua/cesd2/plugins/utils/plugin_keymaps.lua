@@ -55,4 +55,13 @@ keymaps["nvim_tree_keymaps"] = function()
   map("n", "<leader>r", "<CMD>NvimTreeRefresh<CR>", { silent = true, desc = "Refresh NvimTree" })
 end
 
+keymaps["telescope"] = function()
+  map("n", "<leader>ff", "<cmd> Telescope find_files no-ignore=true hidden=true <CR>", { desc = "find files" })
+  map("n", "<leader>fa", "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", { desc = "find all" })
+  map("n", "<leader>fw", "<cmd> Telescope live_grep <CR>", { desc = "find words" })
+  map("n", "<leader>gr", "<cmd> Telescope lsp_references <cr>", { desc = "find references" })
+  map("n", "<leader>fb", "<cmd> Telescope buffers <CR>", { desc = "find buffers" })
+  map("n", "<leader>tk", "<cmd> Telescope keymaps <CR>", { desc = "show keys" })
+end
+
 return keymaps

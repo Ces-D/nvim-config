@@ -12,6 +12,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 require("cesd2.core.global").map_leader()
 require("cesd2.core.global").disable_distribution_plugins()
 require("cesd2.core.options")
@@ -34,3 +35,5 @@ local lazy_plugins = {
 require("lazy").setup(lazy_plugins, lazy_config)
 
 require("cesd2.plugins.utils.autocommands")
+-- local theme = require("cesd2.core.settings").theme
+vim.cmd.colorscheme "ayu-mirage"

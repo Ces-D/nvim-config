@@ -198,5 +198,13 @@ return {
     end,
   },
 
-  { 'nvim-tree/nvim-web-devicons' }
+  { 'nvim-tree/nvim-web-devicons' },
+
+  {
+    "Shatur/neovim-ayu",
+    lazy = false,
+    config = function()
+      require("ayu").setup({ })
+    end
+  }
 }
