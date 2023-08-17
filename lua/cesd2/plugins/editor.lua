@@ -11,9 +11,18 @@ return {
           icons_enabled = true,
           disabled_filetypes = { statusline = { "alpha" } },
           component_separators = "",
+          sections = {
+            lualine_a = { 'mode' },
+            lualine_b = { 'branch', 'diff', 'filename' },
+            lualine_c = { { "diagnostics", symbols = { error = " ", warn = " ", hint = " ", info = " ", } } },
+            lualine_x = { 'encoding', 'fileformat', 'filetype' },
+            lualine_y = { 'progress' },
+            lualine_z = { 'location' }
+          },
           extensions = {
             "nvim-tree",
             "toggleterm",
+            "fzf"
           },
         }
       })
@@ -204,7 +213,7 @@ return {
     "Shatur/neovim-ayu",
     lazy = false,
     config = function()
-      require("ayu").setup({ })
+      require("ayu").setup({})
     end
   }
 }

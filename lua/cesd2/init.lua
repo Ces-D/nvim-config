@@ -15,6 +15,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("cesd2.core.global").map_leader()
 require("cesd2.core.global").disable_distribution_plugins()
+require("cesd2.core.global").map_H_to_vert_help()
 require("cesd2.core.options")
 require("cesd2.core.keymaps")
 
@@ -36,4 +37,4 @@ require("lazy").setup(lazy_plugins, lazy_config)
 
 require("cesd2.plugins.utils.autocommands")
 -- local theme = require("cesd2.core.settings").theme
-vim.cmd.colorscheme "ayu-mirage"
+vim.cmd.colorscheme "ayu-dark"

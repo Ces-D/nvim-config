@@ -40,4 +40,8 @@ M["map_leader"] = function()
   vim.api.nvim_set_keymap("x", leader, "", { noremap = true })
 end
 
+M["map_H_to_vert_help"] = function()
+  vim.cmd("cnoreabbrev H vert h")
+end
+
 return M

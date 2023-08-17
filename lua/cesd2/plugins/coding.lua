@@ -228,6 +228,13 @@ return {
         defaults = {
           file_ignore_patterns = settings["telescope_ignore_patterns"]
         },
+        pickers = {
+          buffers = {
+            ignore_current_buffer = true,
+            sort_lastused = true,
+            sort_mru = true
+          }
+        },
         extensions = {
           fzf = {
             fuzzy = true,                   -- false will only do exact matching
