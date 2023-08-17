@@ -3,6 +3,7 @@ echo "Edit this file to specify what you want to install"
 ## updates the list of available packages and their versions, but it does not install or upgrade any packages.
 echo -e "\nUpdating package lists"
 sudo apt-get update
+sudo snap refresh
 
 ## actually installs newer versions of the packages you have. After updating the lists, the package manager knows about available updates for the software you have installed. 
 echo -e "\nUpgrading packages"
@@ -22,11 +23,7 @@ rustup update
 rustup -v
 
 # Nvim 
-echo -e "\nUpgrading Neovim"
-sudo apt remove neovim -y
-sudo add-apt-repository ppa:neovim-ppa/stable
-sudo apt-get update
-sudo apt-get install neovim
+# echo -e "\nUpgrading Neovim"
 
 # Alacritty
 echo -e "\nUpgrading Alacritty"
