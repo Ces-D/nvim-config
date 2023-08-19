@@ -23,6 +23,13 @@ settings["mason_lspconfig_servers"] = {
   "marksman"
 }
 
+settings["treesitter_servers"] = {
+  "bash", "html", "javascript", "json", "lua",
+  "markdown", "markdown_inline", "python", "tsx",
+  "typescript", "vim", "yaml", "lua", "css",
+  "html", "rust", "dockerfile", "toml"
+}
+
 settings["copilot_filetypes"] = {
   markdown = true,
   typescript = true,
