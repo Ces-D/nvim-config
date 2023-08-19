@@ -23,7 +23,11 @@ rustup update
 rustup -v
 
 # Nvim 
-# echo -e "\nUpgrading Neovim"
+echo -e "\nUpgrading Neovim"
+echo -e "\nDownload tarbell then extract it"
+echo -e "\nRun `sudo mv nvim-linux63 /usr/local/bin"
+echo -e "\nRun sudo ln -s /usr/local/bin/nvim-linux64/bin/nvim /usr/local/bin/nvim"
+echo -e "\n This is a manual process to get the latest version of nvim using tarbell"
 
 # Alacritty
 echo -e "\nUpgrading Alacritty"
