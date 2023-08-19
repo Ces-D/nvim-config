@@ -47,7 +47,7 @@ keymaps["cmp"] = function()
 end
 
 keymaps["copilot"] = {
-  accept = "<C-J>"
+  accept = "<C-j>"
 }
 
 keymaps["nvim_tree_keymaps"] = function()

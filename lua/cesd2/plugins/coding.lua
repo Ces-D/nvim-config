@@ -134,8 +134,12 @@ return {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        keymap = keymaps["copilot"],
-        filetypes = settings["copilot_filetypes"]
+        filetypes = settings["copilot_filetypes"],
+        auto_refresh = true,
+        suggestion = {
+          keymap = keymaps["copilot"],
+          auto_trigger = true
+        }
       })
     end,
   },
