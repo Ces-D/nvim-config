@@ -37,4 +37,4 @@ require("lazy").setup(lazy_plugins, lazy_config)
 
 require("cesd2.plugins.utils.autocommands")
 -- local theme = require("cesd2.core.settings").theme
-vim.cmd.colorscheme "ayu-mirage"
+vim.cmd.colorscheme "alabaster"

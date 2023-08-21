@@ -23,6 +23,10 @@ opt.incsearch = true
 -- cursor line
 opt.cursorline = true
 
+-- status line
+opt.laststatus = 3
+opt.showmode = false
+
 -- appearance
 opt.signcolumn = "yes"
 opt.background = "dark"

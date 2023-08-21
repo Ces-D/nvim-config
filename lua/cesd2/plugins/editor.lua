@@ -4,27 +4,34 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     lazy = true,
+
     event = { "BufReadPost", "BufAdd", "BufNewFile" },
     config = function()
       require("lualine").setup({
         options = {
           icons_enabled = true,
           disabled_filetypes = { statusline = { "alpha" } },
+          section_separators = { left = '', right = '' },
           component_separators = "",
-          sections = {
-            lualine_a = { 'mode' },
-            lualine_b = { 'branch', 'diff', 'filename' },
-            lualine_c = { { "diagnostics", symbols = { error = " ", warn = " ", hint = " ", info = " ", } } },
-            lualine_x = { 'encoding', 'fileformat', 'filetype' },
-            lualine_y = { 'progress' },
-            lualine_z = { 'location' }
-          },
-          extensions = {
-            "nvim-tree",
-            "toggleterm",
-            "fzf"
-          },
-        }
+          globalstatus = true
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { {
+            "diagnostics",
+            source = { "nvim_diagnostic", "nvim_lsp" },
+            symbols = { error = " ", warn = " ", hint = " ", info = " ", },
+          } },
+          lualine_c = { "%=", "%f" },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' }
+        },
+        extensions = {
+          "nvim-tree",
+          "toggleterm",
+          "fzf"
+        },
       })
     end
   },
@@ -210,10 +217,10 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
 
   {
-    "Shatur/neovim-ayu",
+    "p00f/alabaster.nvim",
     lazy = false,
     config = function()
-      require("ayu").setup({})
+      -- require("alabaster").setup({})
     end
   }
 }
