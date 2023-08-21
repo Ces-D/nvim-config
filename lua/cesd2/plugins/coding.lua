@@ -31,6 +31,18 @@ return {
 
       mason.setup({ ui = { border = open_win_config.border, } })
 
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+        vim.lsp.handlers.hover, { border = open_win_config.border, }
+      )
+
+
+      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+        vim.lsp.handlers.signature_help, {
+          -- Use a sharp border with `FloatBorder` highlights
+          border = "single"
+        }
+      )
+
       mason_lspconfig.setup({
         ensure_installed = require("cesd2.core.settings").mason_lsp_deps,
       })

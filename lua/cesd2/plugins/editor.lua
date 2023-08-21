@@ -220,7 +220,7 @@ return {
     "p00f/alabaster.nvim",
     lazy = false,
     config = function()
-      -- require("alabaster").setup({})
+      vim.g.alabaster_floatborder = true
     end
   }
 }
