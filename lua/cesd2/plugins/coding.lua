@@ -229,7 +229,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     lazy = true,
-    event = "BufReadPost",
+    event = "BufEnter",
     dependencies = {
       { "BurntSushi/ripgrep" },
       { "nvim-lua/plenary.nvim" },
@@ -266,7 +266,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     build = ":TSUpdate",
-    event = "BufReadPost",
+    event = "BufReadPre",
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
       { "nvim-treesitter/nvim-treesitter-context" },

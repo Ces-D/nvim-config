@@ -42,9 +42,6 @@ return {
     cmd = {
       "NvimTreeToggle",
       "NvimTreeOpen",
-      "NvimTreeFindFile",
-      "NvimTreeFindFileToggle",
-      "NvimTreeRefresh",
     },
     config = function()
       keymaps.nvim_tree_keymaps()
@@ -216,11 +213,41 @@ return {
 
   { 'nvim-tree/nvim-web-devicons' },
 
+
+  -- {
+  --   "lewpoly/sherbet.nvim",
+  --   lazy = false,
+  -- },
+
+  -- {
+  --   "p00f/alabaster.nvim",
+  --   config = function()
+  --     vim.g.alabaster_floatborder = true
+  --   end
+  -- },
+
+  -- {
+  --   "liuchengxu/space-vim-dark",
+  --   lazy = false,
+  --   config = function()
+  --     vim.cmd.colorscheme "space-vim-dark"
+  --   end
+  -- }
+
   {
-    "p00f/alabaster.nvim",
+    'ramojus/mellifluous.nvim',
     lazy = false,
     config = function()
-      vim.g.alabaster_floatborder = true
+      require 'mellifluous'.setup({
+        color_set = 'tender',
+        plugins = {
+          telescope = {
+            nvchad_like = false,
+          },
+        }
+      })
+
+      vim.cmd.colorscheme 'mellifluous'
     end
   }
 }
