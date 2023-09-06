@@ -217,7 +217,32 @@ return {
   -- {
   --   "lewpoly/sherbet.nvim",
   --   lazy = false,
+  --   config = function()
+  --     vim.cmd.colorscheme "sherbet"
+  --   end
   -- },
+
+  {
+    'rose-pine/neovim',
+    lazy = false,
+    name = 'rose-pine',
+    config = function()
+      require('rose-pine').setup({
+        --- @usage 'auto'|'main'|'moon'|'dawn'
+        variant = 'moon',
+        --- @usage 'main'|'moon'|'dawn'
+        -- dark_variant = 'main',
+        disable_background = false,
+        disable_float_background = true,
+        groups = {
+          background = "#121926"
+        }
+      })
+
+      -- Set colorscheme after options
+      vim.cmd('colorscheme rose-pine')
+    end
+  }
 
   -- {
   --   "p00f/alabaster.nvim",
@@ -227,27 +252,19 @@ return {
   -- },
 
   -- {
-  --   "liuchengxu/space-vim-dark",
+  --   'ramojus/mellifluous.nvim',
   --   lazy = false,
   --   config = function()
-  --     vim.cmd.colorscheme "space-vim-dark"
+  --     require 'mellifluous'.setup({
+  --       -- color_set = 'tender',
+  --       plugins = {
+  --         telescope = {
+  --           nvchad_like = false,
+  --         },
+  --       }
+  --     })
+
+  --     vim.cmd.colorscheme 'mellifluous'
   --   end
   -- }
-
-  {
-    'ramojus/mellifluous.nvim',
-    lazy = false,
-    config = function()
-      require 'mellifluous'.setup({
-        color_set = 'tender',
-        plugins = {
-          telescope = {
-            nvchad_like = false,
-          },
-        }
-      })
-
-      vim.cmd.colorscheme 'mellifluous'
-    end
-  }
 }

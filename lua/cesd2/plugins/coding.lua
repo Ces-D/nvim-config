@@ -13,6 +13,7 @@ return {
       { "hrsh7th/nvim-cmp" },
       {
         "ray-x/lsp_signature.nvim",
+        event = "VeryLazy",
         config = function()
           require("lsp_signature").setup({
             zindex = 45, -- avoid overlap with nvim.cmp
@@ -20,11 +21,54 @@ return {
           })
         end
       },
+      {
+        "SmiteshP/nvim-navic",
+        config = function()
+          require("nvim-navic").setup({
+            icons = {
+              File = ' ',
+              Module = ' ',
+              Namespace = ' ',
+              Package = ' ',
+              Class = ' ',
+              Method = ' ',
+              Property = ' ',
+              Field = ' ',
+              Constructor = ' ',
+              Enum = ' ',
+              Interface = ' ',
+              Function = ' ',
+              Variable = ' ',
+              Constant = ' ',
+              String = ' ',
+              Number = ' ',
+              Boolean = ' ',
+              Array = ' ',
+              Object = ' ',
+              Key = ' ',
+              Null = ' ',
+              EnumMember = ' ',
+              Struct = ' ',
+              Event = ' ',
+              Operator = ' ',
+              TypeParameter = ' '
+            },
+            lsp = {
+              auto_attach = true,
+              preference = { "tsserver", "rust" }
+            },
+            highlight = true,
+            lazy_update_context = false
+          })
+          vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+        end
+      }
     },
     config = function()
       local nvim_lsp = require("lspconfig")
       local mason = require("mason")
       local mason_lspconfig = require("mason-lspconfig")
+      local navic = require("nvim-navic")
 
       local open_win_config = settings["open_win_config"]
       require("lspconfig.ui.windows").default_options.border = open_win_config.border
@@ -48,6 +92,11 @@ return {
       })
 
       local opts = {
+        on_attach = function(client, bufnr)
+          if client.server_capabilities.documentSymbolProvider then
+            navic.attach(client, bufnr)
+          end
+        end,
         capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
       }
 
@@ -233,9 +282,7 @@ return {
     dependencies = {
       { "BurntSushi/ripgrep" },
       { "nvim-lua/plenary.nvim" },
-      { "nvim-lua/plenary.nvim" },
       { "nvim-telescope/telescope-fzf-native.nvim",    build = "make" },
-      { "jvgrootveld/telescope-zoxide" },
       { "nvim-telescope/telescope-live-grep-args.nvim" },
     },
     config = function()
@@ -269,7 +316,6 @@ return {
     event = "BufReadPre",
     dependencies = {
       { "nvim-treesitter/nvim-treesitter-textobjects" },
-      { "nvim-treesitter/nvim-treesitter-context" },
     },
     config = function()
       require("nvim-treesitter.configs").setup({
