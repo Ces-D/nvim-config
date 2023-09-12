@@ -213,7 +213,6 @@ return {
 
   { 'nvim-tree/nvim-web-devicons' },
 
-
   -- {
   --   "lewpoly/sherbet.nvim",
   --   lazy = false,
@@ -229,13 +228,13 @@ return {
     config = function()
       require('rose-pine').setup({
         --- @usage 'auto'|'main'|'moon'|'dawn'
-        variant = 'moon',
+        variant = 'main',
         --- @usage 'main'|'moon'|'dawn'
         -- dark_variant = 'main',
         disable_background = false,
         disable_float_background = true,
         groups = {
-          background = "#121926"
+          background = "#1a202b"
         }
       })
 
