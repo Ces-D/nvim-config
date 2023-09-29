@@ -1,2 +1,1 @@
--- require("cesd")
-require("cesd2")
+require("cesd")

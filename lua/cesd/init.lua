@@ -12,21 +12,28 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("cesd.options")
-require("lazy").setup({
-  spec = require("cesd.plugins"),
+
+require("cesd.core.global").map_leader()
+require("cesd.core.global").disable_distribution_plugins()
+require("cesd.core.global").map_H_to_vert_help()
+require("cesd.core.options")
+require("cesd.core.keymaps")
+
+local lazy_config = {
   defaults = {
-    lazy    = true,
-    version = "*"
+    lazy = false,
   },
   ui = {
-    border = "solid"
+    border = require("cesd.core.settings")["open_win_config"].border
   }
 }
-)
 
-local utils = require("cesd.utils")
+local lazy_plugins = {
+  require("cesd.plugins.coding"),
+  require("cesd.plugins.editor"),
+}
 
-for _, mapping in pairs(require("cesd.mappings")) do
-  utils.load_mappings(mapping)
-end
+require("lazy").setup(lazy_plugins, lazy_config)
+
+require("cesd.plugins.utils.autocommands")
+-- local theme = require("cesd.core.settings").theme

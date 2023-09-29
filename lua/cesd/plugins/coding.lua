@@ -1,337 +1,327 @@
-local treesitter_servers = {
-  "bash", "html", "javascript", "json", "lua",
-  "markdown", "markdown_inline", "python", "tsx",
-  "typescript", "vim", "yaml", "lua", "css",
-  "html", "rust", "dockerfile", "toml"
-}
-
-local lsp_config_servers = {
-  "pyright", "tsserver", "lua_ls",
-  "rust_analyzer", "cssls", "cssmodules_ls",
-  "html", "jsonls", "svelte", "marksman", "dockerls",
-}
+local settings = require("cesd.core.settings")
+local keymaps = require("cesd.plugins.utils.plugin_keymaps")
 
 return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    version = false, -- last release is way too old and doesn't work on Windows
-    build = ":TSUpdate",
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-refactor'
-    },
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      ensure_installed = treesitter_servers,
-      highlight = { enable = true },
-      indent = { enable = true, disable = { "yaml", "python", "html" } },
-      context_commentstring = {
-        enable = true,
-        enable_autocmd = false
-      },
-      incremental_selection = { enable = true },
-      refactor = {
-        highlight_definitions = {
-          enable = true,
-          -- Set to false if you have an `updatetime` of ~100.
-          clear_on_cursor_move = true,
-        },
-        highlight_current_scope = { enable = false },
-      },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-  },
-
-  {
-    "nvim-telescope/telescope.nvim",
-    lazy = false,
-    tag = "0.1.1",
-    dependencies = {
-      { "BurntSushi/ripgrep" },
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        cond = vim.fn.executable "make" == 1
-      },
-      { "nvim-lua/plenary.nvim" },
-      { "BurntSushi/ripgrep" },
-      { "nvim-treesitter/nvim-treesitter" }
-    },
-    config = function()
-      require("telescope").setup({
-        defaults = {
-          prompt_prefix = "   ",
-          selection_caret = "  ",
-          entry_prefix = "   ",
-          border = true,
-          dynamic_preview_title = true,
-          hl_result_eol = true,
-          sorting_strategy = "ascending",
-          file_ignore_patterns = {
-            ".git/", "target/", "docs/", "vendor/*", "%.lock", "__pycache__/*", "%.sqlite3", "%.ipynb", "node_modules/*",
-            -- "%.jpg", "%.jpeg", "%.png", "%.svg", "%.otf", "%.ttf",
-            "%.webp", ".dart_tool/", ".github/", ".gradle/", ".idea/", ".settings/", ".vscode/", "__pycache__/",
-            "build/", "gradle/", "node_modules/", "%.pdb", "%.dll", "%.class", "%.exe", "%.cache", "%.ico", "%.pdf",
-            "%.dylib", "%.jar", "%.docx", "%.met", "smalljre_*/*", ".vale/", "%.burp", "%.mp4", "%.mkv", "%.rar",
-            "%.zip", "%.7z", "%.tar", "%.bz2", "%.epub", "%.flac", "%.tar.gz",
-          },
-          layout_strategy = "horizontal",
-          layout_config = {
-            horizontal = {
-              prompt_position = "top",
-              preview_width = 0.55,
-              results_width = 0.8,
+    {
+        "neovim/nvim-lspconfig",
+        lazy = true,
+        event = { "BufReadPre" },
+        dependencies = {
+            { "williamboman/mason.nvim" },
+            { "williamboman/mason-lspconfig.nvim" },
+            { "hrsh7th/cmp-nvim-lsp" },
+            { "hrsh7th/nvim-cmp" },
+            {
+                "ray-x/lsp_signature.nvim",
+                event = "VeryLazy",
+                config = function()
+                    require("lsp_signature").setup({
+                        zindex = 45, -- avoid overlap with nvim.cmp
+                        handler_opts = { border = settings["open_win_config"].border },
+                    })
+                end,
             },
-            vertical = {
-              mirror = false,
+            {
+                "SmiteshP/nvim-navic",
+                config = function()
+                    require("nvim-navic").setup({
+                        icons = settings["lsp_icons"],
+                        lsp = {
+                            auto_attach = true,
+                            preference = { "tsserver", "rust" },
+                        },
+                        highlight = true,
+                        lazy_update_context = false,
+                    })
+                    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+                end,
             },
-            width = 0.87,
-            height = 0.80,
-            preview_cutoff = 120,
-          },
-          path_display = { "smart" },
-          mappings = {
-            n = {
-              ["q"] = require("telescope.actions").close,
-              ["<esc>"] = require("telescope.actions").close,
-            },
-          },
         },
-        pickers = {
-          buffers = {
-            ignore_current_buffer = true,
-            sort_lastused = true,
-            sort_mru = true,
-          },
-          colorscheme = {
-            enable_preview = true
-          }
-        },
-        extensions = {
-          fzf = {
-            fuzzy = true,                   -- false will only do exact matching
-            override_generic_sorter = true, -- override the generic sorter
-            override_file_sorter = true,    -- override the file sorter
-            case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-          }
-        }
-      })
-    end,
-  },
+        config = function()
+            local nvim_lsp = require("lspconfig")
+            local mason = require("mason")
+            local mason_lspconfig = require("mason-lspconfig")
+            local navic = require("nvim-navic")
 
-  {
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      signs = {
-        add = { text = require("cesd.icons").gitsigns.add },
-        delete = { text = require("cesd.icons").gitsigns.delete },
-        change = { text = require("cesd.icons").gitsigns.change },
-        topdelhfe = { text = require("cesd.icons").gitsigns.topdelhfe },
-        changedelete = { text = require("cesd.icons").gitsigns.changedelete },
-        untracked = { text = require("cesd.icons").gitsigns.untracked },
-      },
-      preview_config = { border = "rounded" },
-    }
-  },
+            local open_win_config = settings["open_win_config"]
+            require("lspconfig.ui.windows").default_options.border = open_win_config.border
 
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    branch = "master",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      { "williamboman/mason.nvim",          build = ":MasonUpdate" },
-      { "williamboman/mason-lspconfig.nvim" },
-      { "hrsh7th/nvim-cmp" },
-      { "hrsh7th/cmp-nvim-lsp" },
-    },
-    config = function()
-      require("mason").setup()
-      local mason_lsp = require("mason-lspconfig")
+            mason.setup({ ui = { border = open_win_config.border } })
 
+            vim.lsp.handlers["textDocument/hover"] =
+                vim.lsp.with(vim.lsp.handlers.hover, { border = open_win_config.border })
 
-      mason_lsp.setup({ ensure_installed = lsp_config_servers })
+            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+                border = "single",
+            })
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            mason_lspconfig.setup({
+                ensure_installed = settings["mason_lspconfig_servers"],
+            })
 
-      local handlers     = {
-        function(server_name)
-          require("lspconfig")[server_name].setup { capabilities = capabilities }
-        end,
-
-        ["lua_ls"] = function()
-          require("lspconfig")["lua_ls"].setup {
-            capabilities = capabilities,
-            settings = {
-              ["lua_ls"] = {
-                diagnostics = { globals = { "vim" } },
-                workspace = {
-                  checkThirdParty = false,
-                },
-                format = {
-                  enable = true,
-                  defaultConfig = {
-                    indent_style = "space",
-                    indent_size = "2",
-                    continuation_indent_size = "2",
-                  },
-                },
-              }
+            local opts = {
+                on_attach = function(client, bufnr)
+                    if client.server_capabilities.documentSymbolProvider then
+                        navic.attach(client, bufnr)
+                    end
+                end,
+                capabilities = require("cmp_nvim_lsp").default_capabilities(
+                    vim.lsp.protocol.make_client_capabilities()
+                ),
             }
-          }
+
+            local function lsp_handlers(lsp_name)
+                local servers = require("cesd.plugins.utils.lsp_servers")
+                local custom_lsp_server = servers[lsp_name]
+
+                if type(custom_lsp_server) == "table" then
+                    nvim_lsp[lsp_name].setup(vim.tbl_deep_extend("force", opts, custom_lsp_server))
+                    return
+                else
+                    nvim_lsp[lsp_name].setup(opts)
+                end
+            end
+
+            mason_lspconfig.setup_handlers({ lsp_handlers })
+
+            vim.diagnostic.config({
+                virtual_text = {
+                    -- source = "always",  -- Or "if_many"
+                    prefix = "●", -- Could be '■', '▎', 'x'
+                },
+                severity_sort = true,
+                float = {
+                    source = "always", -- Or "if_many"
+                },
+            })
         end,
-
-        ["rust_analyzer"] = function()
-          require("lspconfig")["rust_analyzer"].setup {
-            capabilities = capabilities,
-            settings = {
-              ["rust-analyzer"] = {
-                imports = {
-                  granularity = { group = "module", },
-                  prefix = "self",
-                },
-                cargo = {
-                  buildScripts = { enable = true, },
-                },
-                procMacro = { enable = true },
-                inlayHints = true,
-              },
-            }
-          }
-        end
-
-      }
-
-      mason_lsp.setup_handlers(handlers)
-    end
-  },
-
-  {
-    "simrat39/rust-tools.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      tools = {
-        runnables = {
-          use_telescope = true,
-        },
-        inlay_hints = {
-          auto = true,
-          show_parameter_hints = false,
-          parameter_hints_prefix = "",
-          other_hints_prefix = "",
-        },
-      }
-    }
-  },
-
-  {
-    "hrsh7th/nvim-cmp",
-    event = { "InsertEnter" },
-    dependencies = {
-      { "L3MON4D3/LuaSnip" },
-      { "saadparwaiz1/cmp_luasnip" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-buffer" },
     },
-    config = function()
-      local cmp = require("cmp")
 
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end
+    {
+        "hrsh7th/nvim-cmp",
+        event = { "InsertEnter" },
+        dependencies = {
+            { "L3MON4D3/LuaSnip" },
+            { "saadparwaiz1/cmp_luasnip" },
+            { "hrsh7th/cmp-nvim-lua" },
+            { "hrsh7th/cmp-path" },
+            { "hrsh7th/cmp-buffer" },
         },
-        window = {
-          completion = { border = "rounded" },
-          documentation = { border = "rounded" },
-        },
-        formatting = {
-          fields = { "kind", "abbr", "menu" },
-          format = function(entry, item)
-            local icons = require("cesd.icons").kinds
-            item.kind = icons[item.kind]
-            item.menu = ({
-              nvim_lsp = "Lsp",
-              nvim_lua = "Lua",
-              luasnip = "Snippet",
-              buffer = "Buffer",
-              path = "Path",
-            })[entry.source.name]
-            return item
-          end
-        },
-        sources = cmp.config.sources(
-          {
-            { name = "luasnip" },
-            { name = "nvim_lsp" },
-            { name = "buffer" },
-            { name = "path" },
-          }
-        ),
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<Esc>"] = cmp.mapping(function(fallback)
-            require("luasnip").unlink_current()
-            fallback()
-          end),
-        }),
-      })
-    end,
-  },
+        config = function()
+            require("luasnip.loaders.from_lua").lazy_load()
+            require("luasnip.loaders.from_vscode").lazy_load()
 
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    lazy = false,
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "hrsh7th/nvim-cmp", "nvim-lua/plenary.nvim" },
-    config = function()
-      local null_ls = require("null-ls")
-      local formatting = null_ls.builtins.formatting
-      local diagnostics = null_ls.builtins.diagnostics
-      local code_actions = null_ls.builtins.code_actions
+            local cmp = require("cmp")
+            cmp.setup({
+                preselect = cmp.PreselectMode.Item,
+                window = {
+                    completion = {
+                        border = settings["open_win_config"].border,
+                        winhighlight = "Normal:Pmenu,CursorLine:PmenuSel,Search:PmenuSel",
+                        scrollbar = false,
+                    },
+                    documentation = {
+                        border = settings["open_win_config"].border,
+                        winhighlight = "Normal:CmpDoc",
+                    },
+                },
+                sorting = { priority_weight = 2 },
+                mapping = cmp.mapping.preset.insert(keymaps["cmp"]()),
+                snippet = {
+                    expand = function(args)
+                        require("luasnip").lsp_expand(args.body)
+                    end,
+                },
+                formatting = {
+                    fields = { "abbr", "kind", "menu" },
+                    format = function(entry, item)
+                        item.kind = settings["lsp_icons"][item.kind] or ""
+                        item.menu = ({
+                            nvim_lsp = "Lsp",
+                            nvim_lua = "Lua",
+                            luasnip = "Snippet",
+                            buffer = "Buffer",
+                            path = "Path",
+                        })[entry.source.name]
+                        return item
+                    end,
+                },
+                sources = {
+                    { name = "nvim_lsp" },
+                    { name = "luasnip" },
+                },
+                {
+                    { name = "nvim_lua" },
+                    { name = "path" },
+                    { name = "buffer" },
+                },
+            })
+        end,
+    },
 
-      null_ls.setup({
-        debug = false,
-        sources = {
-          formatting.prettierd,
-          formatting.rustfmt,
-          formatting.stylua,
-          diagnostics.cspell.with({ filetypes = { "markdown", "html" } }),
-          code_actions.cspell.with({ filetypes = { "markdown", "html" } })
+    {
+        "stevearc/conform.nvim",
+        event = { "BufReadPre" },
+        config = function()
+            require("conform").setup({
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    python = { "black" },
+                    javascript = { { "prettierd" } },
+                    typescript = { { "prettierd" } },
+                    typescriptreact = { { "prettierd" } },
+                    json = { "prettierd" },
+                    jsonc = { "prettierd" },
+                    css = { "prettierd" },
+                    scss = { "prettierd" },
+                    rust = { "rustfmt" },
+                    markdown = { "markdownlint", "codespell" },
+                    ["_"] = { "codespell" },
+                },
+            })
+            keymaps["conform"]()
+        end,
+    },
+
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        config = function()
+            require("copilot").setup({
+                filetypes = settings["copilot_filetypes"],
+                auto_refresh = true,
+                suggestion = {
+                    keymap = keymaps["copilot"],
+                    auto_trigger = true,
+                },
+            })
+        end,
+    },
+
+    {
+        "simrat39/rust-tools.nvim",
+        lazy = true,
+        ft = "rust",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("rust-tools").setup({
+                tools = { -- rust-tools options
+
+                    -- how to execute terminal commands
+                    -- options right now: termopen / quickfix
+                    executor = require("rust-tools.executors").termopen,
+
+                    -- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
+                    reload_workspace_from_cargo_toml = true,
+
+                    -- These apply to the default RustSetInlayHints command
+                    inlay_hints = {
+                        -- automatically set inlay hints (type hints)
+                        -- default: true
+                        auto = true,
+
+                        -- Only show inlay hints for the current line
+                        only_current_line = false,
+
+                        -- whether to show parameter hints with the inlay hints or not
+                        -- default: true
+                        show_parameter_hints = true,
+
+                        -- prefix for parameter hints
+                        -- default: "<-"
+                        parameter_hints_prefix = "<- ",
+
+                        -- prefix for all the other hints (type, chaining)
+                        -- default: "=>"
+                        other_hints_prefix = "=> ",
+
+                        -- whether to align to the length of the longest line in the file
+                        max_len_align = false,
+
+                        -- padding from the left if max_len_align is true
+                        max_len_align_padding = 1,
+
+                        -- whether to align to the extreme right or not
+                        right_align = false,
+
+                        -- padding from the right if right_align is true
+                        right_align_padding = 7,
+
+                        -- The color of the hints
+                        highlight = "Comment",
+                    },
+
+                    -- options same as lsp hover / vim.lsp.util.open_floating_preview()
+                    hover_actions = {
+
+                        -- the border that is used for the hover window
+                        -- see vim.api.nvim_open_win()
+                        border = settings["open_win_config"].border,
+
+                        -- whether the hover action window gets automatically focused
+                        -- default: false
+                        auto_focus = false,
+                    },
+                },
+            })
+        end,
+    },
+
+    {
+        "nvim-telescope/telescope.nvim",
+        lazy = true,
+        event = "BufEnter",
+        dependencies = {
+            { "BurntSushi/ripgrep" },
+            { "nvim-lua/plenary.nvim" },
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            { "nvim-telescope/telescope-live-grep-args.nvim" },
         },
-      })
-    end,
-  },
+        config = function()
+            require("telescope").setup({
+                defaults = {
+                    file_ignore_patterns = settings["telescope_ignore_patterns"],
+                },
+                pickers = {
+                    buffers = {
+                        ignore_current_buffer = true,
+                        sort_lastused = true,
+                        sort_mru = true,
+                    },
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true, -- false will only do exact matching
+                        override_generic_sorter = true, -- override the generic sorter
+                        override_file_sorter = true, -- override the file sorter
+                        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+                    },
+                },
+            })
+            keymaps["telescope"]()
+        end,
+    },
 
-
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-J>",
-          }
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = "BufReadPre",
+        dependencies = {
+            { "nvim-treesitter/nvim-treesitter-textobjects" },
         },
-        filetypes = {
-          markdown = true,
-          lua = true,
-          typescript = true
-        }
-      })
-    end,
-  }
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = settings["treesitter_servers"],
+            })
+        end,
+    },
+
+    {
+        "lewis6991/gitsigns.nvim",
+        event = { "BufReadPre" },
+        config = function()
+            require("gitsigns").setup({})
+        end,
+    },
 }

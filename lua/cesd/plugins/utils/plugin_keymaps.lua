@@ -9,7 +9,11 @@ keymaps["lsp"] = function(ev)
   map('n', 'gi', vim.lsp.buf.implementation, { buffer = ev.buf, desc = "List all LSP implementation" })
   map({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
   map('n', 'gr', vim.lsp.buf.references, { buffer = ev.buf, desc = "List all LSP references" })
-  map('n', '<leader>fm', vim.lsp.buf.format, { buffer = ev.buf, desc = "LSP formatting" })
+  -- map('n', '<leader>fm', vim.lsp.buf.format, { buffer = ev.buf, desc = "LSP formatting" })
+end
+
+keymaps["conform"] = function()
+  map('n', '<leader>fm', '<CMD>lua require("conform").format()<CR>', { desc = "LSP formatting" })
 end
 
 keymaps["cmp"] = function()
