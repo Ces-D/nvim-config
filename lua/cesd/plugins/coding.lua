@@ -175,7 +175,7 @@ return {
                     css = { "prettierd" },
                     scss = { "prettierd" },
                     rust = { "rustfmt" },
-                    markdown = { "markdownlint", "codespell" },
+                    markdown = { "mdformat", "codespell" },
                     ["_"] = { "codespell" },
                 },
             })
