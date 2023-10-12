@@ -237,11 +237,11 @@ return {
     { "nvim-tree/nvim-web-devicons" },
 
     -- {
-    --   "lewpoly/sherbet.nvim",
-    --   lazy = false,
-    --   config = function()
-    --     vim.cmd.colorscheme "sherbet"
-    --   end
+    --     "lewpoly/sherbet.nvim",
+    --     lazy = false,
+    --     config = function()
+    --         vim.cmd.colorscheme("sherbet")
+    --     end,
     -- },
 
     -- {
@@ -278,41 +278,52 @@ return {
     -- },
 
     {
-        "ramojus/mellifluous.nvim",
+        "EdenEast/nightfox.nvim",
         lazy = false,
+        priority = 1000,
         config = function()
-            require("mellifluous").setup({
-                color_set = "mellifluous",
-                mellifluous = {
-                    neutral = true,
-                    bg_contrast = "hard",
-                },
-                transparent_background = {
-                    enabled = false,
-                    floating_windows = false,
-                    telescope = false,
-                    file_tree = true,
-                    cursor_line = true,
-                    status_line = true,
-                },
-                flat_background = {
-                    line_numbers = false,
-                    floating_windows = true,
-                    file_tree = true,
-                    cursor_line_number = true,
-                },
-                plugins = {
-                    telescope = {
-                        nvchad_like = false,
-                    },
-                    nvim_tree = {
-                        enabled = true,
-                        show_root = true,
-                    },
-                },
-            })
+            require("nightfox").setup({})
 
-            vim.cmd.colorscheme("mellifluous")
+            vim.cmd.colorscheme("nightfox")
         end,
     },
+
+    -- {
+    --     "ramojus/mellifluous.nvim",
+    --     lazy = false,
+    --     config = function()
+    --         require("mellifluous").setup({
+    --             color_set = "mellifluous",
+    --             mellifluous = {
+    --                 neutral = true,
+    --                 bg_contrast = "hard",
+    --             },
+    --             transparent_background = {
+    --                 enabled = false,
+    --                 floating_windows = false,
+    --                 telescope = false,
+    --                 file_tree = true,
+    --                 cursor_line = true,
+    --                 status_line = true,
+    --             },
+    --             flat_background = {
+    --                 line_numbers = false,
+    --                 floating_windows = true,
+    --                 file_tree = true,
+    --                 cursor_line_number = true,
+    --             },
+    --             plugins = {
+    --                 telescope = {
+    --                     nvchad_like = false,
+    --                 },
+    --                 nvim_tree = {
+    --                     enabled = true,
+    --                     show_root = true,
+    --                 },
+    --             },
+    --         })
+
+    --         vim.cmd.colorscheme("mellifluous")
+    --     end,
+    -- },
 }
