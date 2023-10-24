@@ -156,6 +156,7 @@ return {
 
     {
         "echasnovski/mini.comment",
+        version = "*",
         event = "VeryLazy",
         dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
         config = function()
@@ -237,11 +238,11 @@ return {
     { "nvim-tree/nvim-web-devicons" },
 
     -- {
-    --     "lewpoly/sherbet.nvim",
-    --     lazy = false,
-    --     config = function()
-    --         vim.cmd.colorscheme("sherbet")
-    --     end,
+        -- "lewpoly/sherbet.nvim",
+        -- lazy = false,
+        -- config = function()
+            -- vim.cmd.colorscheme("sherbet")
+        -- end,
     -- },
 
     -- {
@@ -266,27 +267,27 @@ return {
     --   end
     -- }
 
-    -- {
-    --     "projekt0n/github-nvim-theme",
-    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     config = function()
-    --         require("github-theme").setup({})
+     {
+         "projekt0n/github-nvim-theme",
+         lazy = false, -- make sure we load this during startup if it is your main colorscheme
+         priority = 1000, -- make sure to load this before all the other start plugins
+         config = function()
+             require("github-theme").setup({})
 
-    --         vim.cmd("colorscheme github_dark_dimmed")
+             vim.cmd("colorscheme github_light")
+         end,
+     },
+
+    -- {
+    --     "EdenEast/nightfox.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require("nightfox").setup({})
+
+    --         vim.cmd.colorscheme("nightfox")
     --     end,
     -- },
-
-    {
-        "EdenEast/nightfox.nvim",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("nightfox").setup({})
-
-            vim.cmd.colorscheme("nightfox")
-        end,
-    },
 
     -- {
     --     "ramojus/mellifluous.nvim",
