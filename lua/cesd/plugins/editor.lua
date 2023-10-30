@@ -132,7 +132,7 @@ return {
 
     {
         "NvChad/nvim-colorizer.lua",
-        event = "BufReadPre",
+        event = "BufReadPost",
         opts = {
             filetypes = { "*", "!lazy", "!neo-tree" },
             buftype = { "*", "!prompt", "!nofile" },
@@ -246,55 +246,44 @@ return {
     -- },
 
     -- {
-    --   'rose-pine/neovim',
-    --   lazy = false,
-    --   name = 'rose-pine',
-    --   config = function()
-    --     require('rose-pine').setup({
-    --       --- @usage 'auto'|'main'|'moon'|'dawn'
-    --       variant = 'main',
-    --       --- @usage 'main'|'moon'|'dawn'
-    --       -- dark_variant = 'main',
-    --       disable_background = false,
-    --       disable_float_background = true,
-    --       -- groups = {
-    --       --   background = "#1a202b"
-    --       -- }
-    --     })
-
-    --     -- Set colorscheme after options
-    --     vim.cmd('colorscheme rose-pine')
-    --   end
-    -- }
-
-     {
-         "projekt0n/github-nvim-theme",
-         lazy = false, -- make sure we load this during startup if it is your main colorscheme
-         priority = 1000, -- make sure to load this before all the other start plugins
-         config = function()
-             require("github-theme").setup({})
-
-             vim.cmd("colorscheme github_light")
-         end,
-     },
-
-    -- {
-    --     "EdenEast/nightfox.nvim",
+    --     "rose-pine/neovim",
     --     lazy = false,
-    --     priority = 1000,
+    --     name = "rose-pine",
     --     config = function()
-    --         require("nightfox").setup({})
+    --         require("rose-pine").setup({
+    --             --- @usage 'auto'|'main'|'moon'|'dawn'
+    --             variant = "main",
+    --             --- @usage 'main'|'moon'|'dawn'
+    --             dark_variant = "moon",
+    --             disable_background = false,
+    --             disable_float_background = true,
+    --             -- groups = {
+    --             --   background = "#1a202b"
+    --             -- }
+    --         })
 
-    --         vim.cmd.colorscheme("nightfox")
+    --         -- Set colorscheme after options
+    --         vim.cmd("colorscheme rose-pine")
     --     end,
     -- },
+
+    {
+        "projekt0n/github-nvim-theme",
+        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        priority = 1000, -- make sure to load this before all the other start plugins
+        config = function()
+            require("github-theme").setup({})
+
+            vim.cmd("colorscheme github_dark_dimmed")
+        end,
+    },
 
     -- {
     --     "ramojus/mellifluous.nvim",
     --     lazy = false,
     --     config = function()
     --         require("mellifluous").setup({
-    --             color_set = "mellifluous",
+    --             color_set = "tender",
     --             mellifluous = {
     --                 neutral = true,
     --                 bg_contrast = "hard",
