@@ -238,82 +238,32 @@ return {
     { "nvim-tree/nvim-web-devicons" },
 
     -- {
-        -- "lewpoly/sherbet.nvim",
-        -- lazy = false,
-        -- config = function()
-            -- vim.cmd.colorscheme("sherbet")
-        -- end,
-    -- },
-
-    -- {
-    --     "rose-pine/neovim",
-    --     lazy = false,
-    --     name = "rose-pine",
+    --     "projekt0n/github-nvim-theme",
+    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --     priority = 1000, -- make sure to load this before all the other start plugins
     --     config = function()
-    --         require("rose-pine").setup({
-    --             --- @usage 'auto'|'main'|'moon'|'dawn'
-    --             variant = "main",
-    --             --- @usage 'main'|'moon'|'dawn'
-    --             dark_variant = "moon",
-    --             disable_background = false,
-    --             disable_float_background = true,
-    --             -- groups = {
-    --             --   background = "#1a202b"
-    --             -- }
-    --         })
+    --         require("github-theme").setup({})
 
-    --         -- Set colorscheme after options
-    --         vim.cmd("colorscheme rose-pine")
+    --         vim.cmd("colorscheme github_dark_dimmed")
     --     end,
     -- },
 
     {
-        "projekt0n/github-nvim-theme",
+        "arzg/vim-colors-xcode",
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            require("github-theme").setup({})
-
-            vim.cmd("colorscheme github_dark_dimmed")
+            vim.cmd("colorscheme xcodedark")
+            vim.cmd("hi VertSplit guifg=#393b44 guibg=NONE gui=NONE cterm=NONE")
         end,
     },
 
     -- {
-    --     "ramojus/mellifluous.nvim",
-    --     lazy = false,
+    --     "lunarvim/Onedarker.nvim",
+    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --     priority = 1000, -- make sure to load this before all the other start plugins
     --     config = function()
-    --         require("mellifluous").setup({
-    --             color_set = "tender",
-    --             mellifluous = {
-    --                 neutral = true,
-    --                 bg_contrast = "hard",
-    --             },
-    --             transparent_background = {
-    --                 enabled = false,
-    --                 floating_windows = false,
-    --                 telescope = false,
-    --                 file_tree = true,
-    --                 cursor_line = true,
-    --                 status_line = true,
-    --             },
-    --             flat_background = {
-    --                 line_numbers = false,
-    --                 floating_windows = true,
-    --                 file_tree = true,
-    --                 cursor_line_number = true,
-    --             },
-    --             plugins = {
-    --                 telescope = {
-    --                     nvchad_like = false,
-    --                 },
-    --                 nvim_tree = {
-    --                     enabled = true,
-    --                     show_root = true,
-    --                 },
-    --             },
-    --         })
-
-    --         vim.cmd.colorscheme("mellifluous")
+    --         vim.cmd("colorscheme onedarker")
     --     end,
     -- },
 }
