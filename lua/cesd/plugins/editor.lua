@@ -249,21 +249,11 @@ return {
     -- },
 
     {
-        "arzg/vim-colors-xcode",
+        "tinted-theming/base16-vim",
         lazy = false, -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            vim.cmd("colorscheme xcodedark")
-            vim.cmd("hi VertSplit guifg=#393b44 guibg=NONE gui=NONE cterm=NONE")
+            vim.cmd("colorscheme base16-horizon-dark")
         end,
     },
-
-    -- {
-    --     "lunarvim/Onedarker.nvim",
-    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     config = function()
-    --         vim.cmd("colorscheme onedarker")
-    --     end,
-    -- },
 }
