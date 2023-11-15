@@ -289,6 +289,11 @@ return {
                         sort_lastused = true,
                         sort_mru = true,
                     },
+                    lsp_references = {
+                        include_declaration = true,
+                        show_line = false,
+                        trim_text = true,
+                    },
                 },
                 extensions = {
                     fzf = {

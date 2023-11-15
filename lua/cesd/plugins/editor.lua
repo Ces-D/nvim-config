@@ -248,12 +248,22 @@ return {
     --     end,
     -- },
 
+    -- {
+    --     "tinted-theming/base16-vim",
+    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --     priority = 1000, -- make sure to load this before all the other start plugins
+    --     config = function()
+    --         vim.cmd("colorscheme base16-horizon-dark")
+    --     end,
+    -- },
+
     {
-        "tinted-theming/base16-vim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
+        "akinsho/horizon.nvim",
+        version = "*",
+        lazy = false,
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            vim.cmd("colorscheme base16-horizon-dark")
+            vim.cmd("colorscheme horizon")
         end,
     },
 }
