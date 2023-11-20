@@ -258,12 +258,26 @@ return {
     -- },
 
     {
-        "akinsho/horizon.nvim",
+        "Yazeed1s/oh-lucy.nvim",
         version = "*",
         lazy = false,
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            vim.cmd("colorscheme horizon")
+            vim.cmd("colorscheme oh-lucy")
+        end,
+    },
+
+    {
+        "rebelot/kanagawa.nvim",
+        lazy = false,
+        priority = 999,
+        config = function()
+            require("kanagawa").setup({
+                background = {
+                    dark = "dragon",
+                    light = "lotus",
+                },
+            })
         end,
     },
 }
