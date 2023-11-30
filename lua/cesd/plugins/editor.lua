@@ -170,6 +170,7 @@ return {
                 },
                 mappings = {
                     comment = "<leader>/",
+                    comment_visual = "<leader>/",
                 },
             })
         end,
@@ -248,36 +249,16 @@ return {
     --     end,
     -- },
 
-    -- {
-    --     "tinted-theming/base16-vim",
-    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    --     priority = 1000, -- make sure to load this before all the other start plugins
-    --     config = function()
-    --         vim.cmd("colorscheme base16-horizon-dark")
-    --     end,
-    -- },
-
     {
-        "Yazeed1s/oh-lucy.nvim",
-        version = "*",
-        lazy = false,
+        "AlexvZyl/nordic.nvim",
+        lazy = false, -- make sure we load this during startup if it is your main colorscheme
         priority = 1000, -- make sure to load this before all the other start plugins
         config = function()
-            vim.cmd("colorscheme oh-lucy")
-        end,
-    },
-
-    {
-        "rebelot/kanagawa.nvim",
-        lazy = false,
-        priority = 999,
-        config = function()
-            require("kanagawa").setup({
-                background = {
-                    dark = "dragon",
-                    light = "lotus",
-                },
+            require("nordic").setup({
+                swap_backgrounds = false,
             })
+
+            vim.cmd("colorscheme nordic")
         end,
     },
 }
