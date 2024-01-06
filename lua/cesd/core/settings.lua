@@ -49,7 +49,6 @@ settings["lsp_icons"] = {
 
 -- see `https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/server_configurations`
 settings["mason_lspconfig_servers"] = {
-    -- "bashls",
     "html",
     "cssls",
     "cssmodules_ls",
@@ -60,6 +59,7 @@ settings["mason_lspconfig_servers"] = {
     "rust_analyzer",
     "dockerls",
     "marksman",
+    "tailwindcss",
 }
 
 settings["treesitter_servers"] = {

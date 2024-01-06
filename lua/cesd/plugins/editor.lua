@@ -249,16 +249,37 @@ return {
     --     end,
     -- },
 
-    {
-        "AlexvZyl/nordic.nvim",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other start plugins
-        config = function()
-            require("nordic").setup({
-                swap_backgrounds = false,
-            })
+    -- {
+    --     "AlexvZyl/nordic.nvim",
+    --     lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    --     priority = 1000, -- make sure to load this before all the other start plugins
+    --     config = function()
+    --         require("nordic").setup({
+    --             swap_backgrounds = false,
+    --         })
 
-            vim.cmd("colorscheme nordic")
+    --         vim.cmd("colorscheme nordic")
+    --     end,
+    -- },
+
+    -- {
+    --     "Mofiqul/vscode.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         require("vscode").setup({
+    --             italic_comments = true,
+    --         })
+    --         require("vscode").load()
+    --     end,
+    -- },
+
+    {
+        "Yazeed1s/minimal.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd([[colorscheme minimal]]) -- for minimal
         end,
     },
 }

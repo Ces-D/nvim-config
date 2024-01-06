@@ -11,16 +11,16 @@ return {
             { "williamboman/mason-lspconfig.nvim" },
             { "hrsh7th/cmp-nvim-lsp" },
             { "hrsh7th/nvim-cmp" },
-            {
-                "ray-x/lsp_signature.nvim",
-                event = "VeryLazy",
-                config = function()
-                    require("lsp_signature").setup({
-                        zindex = 45, -- avoid overlap with nvim.cmp
-                        handler_opts = { border = settings["open_win_config"].border },
-                    })
-                end,
-            },
+            -- {
+            --     "ray-x/lsp_signature.nvim",
+            --     event = "VeryLazy",
+            --     config = function()
+            --         require("lsp_signature").setup({
+            --             zindex = 45, -- avoid overlap with nvim.cmp
+            --             handler_opts = { border = settings["open_win_config"].border },
+            --         })
+            --     end,
+            -- },
             {
                 "SmiteshP/nvim-navic",
                 config = function()
@@ -86,12 +86,12 @@ return {
 
             vim.diagnostic.config({
                 virtual_text = {
-                    -- source = "always",  -- Or "if_many"
+                    source = "always", -- Or "if_many"
                     prefix = "●", -- Could be '■', '▎', 'x'
                 },
                 severity_sort = true,
                 float = {
-                    source = "always", -- Or "if_many"
+                    source = "if_many", -- Or "always"
                 },
             })
         end,
@@ -169,7 +169,7 @@ return {
                     python = { "black" },
                     javascript = { "prettierd", "eslint_d" },
                     typescript = { "prettierd", "eslint_d" },
-                    typescriptreact = { "prettierd", "eslint_d" },
+                    typescriptreact = { "prettierd", "eslint_d", "rustywind" },
                     json = { "prettierd", "eslint_d" },
                     jsonc = { "prettierd", "eslint_d" },
                     css = { "prettierd" },
@@ -201,7 +201,7 @@ return {
 
     {
         "simrat39/rust-tools.nvim",
-        lazy = true,
+        event = "BufEnter *.rs",
         ft = "rust",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
@@ -222,7 +222,7 @@ return {
                         auto = true,
 
                         -- Only show inlay hints for the current line
-                        only_current_line = false,
+                        only_current_line = true,
 
                         -- whether to show parameter hints with the inlay hints or not
                         -- default: true
@@ -265,6 +265,15 @@ return {
                     },
                 },
             })
+        end,
+    },
+
+    {
+        "saecki/crates.nvim",
+        event = { "BufRead Cargo.toml" },
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("crates").setup()
         end,
     },
 
