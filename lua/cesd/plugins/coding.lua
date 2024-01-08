@@ -133,18 +133,18 @@ return {
                     end,
                 },
                 formatting = {
-                    fields = { "abbr", "kind", "menu" },
-                    format = function(entry, item)
-                        item.kind = settings["lsp_icons"][item.kind] or ""
-                        item.menu = ({
-                            nvim_lsp = "Lsp",
-                            nvim_lua = "Lua",
-                            luasnip = "Snippet",
-                            buffer = "Buffer",
-                            path = "Path",
-                        })[entry.source.name]
-                        return item
-                    end,
+                    -- fields = { "abbr", "kind", "menu" },
+                    -- format = function(entry, item)
+                    --     item.kind = settings["lsp_icons"][item.kind] or ""
+                    --     item.menu = ({
+                    --         nvim_lsp = "Lsp",
+                    --         nvim_lua = "Lua",
+                    --         luasnip = "Snippet",
+                    --         buffer = "Buffer",
+                    --         path = "Path",
+                    --     })[entry.source.name]
+                    --     return item
+                    -- end,
                 },
                 sources = {
                     { name = "nvim_lsp" },
