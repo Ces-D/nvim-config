@@ -11,9 +11,10 @@ sudo apt-get upgrade
 
 # Node
 echo -e "\nUpgrading Node"
-sudo apt-get install --only-upgrade nodejs
-node -v
+echo -e "\nVisit this url"
+echo "https://github.com/nodesource/distributions#ubuntu-versions"
 echo -e "\nUpgrading global NPM packages"
+
 sudo npm -g outdated
 sudo npm -g upgrade --latest
 

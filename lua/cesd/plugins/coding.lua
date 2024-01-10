@@ -176,6 +176,7 @@ return {
                     scss = { "prettierd" },
                     rust = { "rustfmt" },
                     markdown = { "mdformat", "codespell" },
+                    toml = { "taplo" },
                     ["_"] = { "codespell" },
                 },
             })
