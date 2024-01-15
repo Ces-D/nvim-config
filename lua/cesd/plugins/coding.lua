@@ -177,6 +177,7 @@ return {
                     rust = { "rustfmt" },
                     markdown = { "mdformat", "codespell" },
                     toml = { "taplo" },
+                    sh = { "shfmt" },
                     ["_"] = { "codespell" },
                 },
             })
