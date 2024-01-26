@@ -1,8 +1,7 @@
 local opt = vim.opt
-local g = vim.g
 
 -- line numbers
-opt.relativenumber = true
+opt.relativenumber = false
 opt.number = true
 opt.numberwidth = 3
 
@@ -32,7 +31,6 @@ opt.showmode = false
 opt.signcolumn = "yes"
 opt.background = "dark"
 opt.termguicolors = true
-g.base15_colorspace = 256
 
 -- split
 opt.splitright = true
