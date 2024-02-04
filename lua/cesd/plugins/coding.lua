@@ -294,7 +294,6 @@ return {
                 defaults = {
                     file_ignore_patterns = settings["telescope_ignore_patterns"],
                     path_display = { truncate = 3 },
-                    wrap_results = true,
                     prompt_prefix = "  ",
                 },
                 pickers = {

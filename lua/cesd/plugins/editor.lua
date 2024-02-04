@@ -271,12 +271,19 @@ return {
     --     end,
     -- },
 
+    -- {
+    --     "felipeagc/fleet-theme-nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         vim.cmd("colorscheme fleet")
+    --     end,
+    -- },
+
     {
-        "felipeagc/fleet-theme-nvim",
+        "ricardoraposo/gruvbox-minor.nvim",
         lazy = false,
         priority = 1000,
-        config = function()
-            vim.cmd("colorscheme fleet")
-        end,
+        opts = {},
     },
 }
