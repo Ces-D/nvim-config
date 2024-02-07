@@ -201,9 +201,6 @@ inoremap("jj", "<esc>")
 -- Disable Space bar since it'll be used as the leader key
 vnoremap("<space>", "<nop>")
 
--- Paste without losing the contents of the register
-xnoremap("<leader>p", '"_dP')
-
 -- Reselect the last visual selection
 xnoremap("<<", function()
     vim.cmd("normal! <<")
