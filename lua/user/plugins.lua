@@ -282,11 +282,14 @@ return {
                     },
                     file_ignore_patterns = require("user.constants")["telescope_ignore_patterns"],
                     hidden = true,
+                    path_display = { truncate = 3 },
                 },
-                buffers = {
-                    ignore_current_buffer = true,
-                    sort_lastused = true,
-                    sort_mru = true,
+                pickers = {
+                    buffers = {
+                        ignore_current_buffer = true,
+                        sort_lastused = true,
+                        sort_mru = true,
+                    },
                 },
             })
 
@@ -483,14 +486,9 @@ return {
 
     ---------- ColorScheme ----------
     {
-        "datsfilipe/min-theme.nvim",
+        "felipeagc/fleet-theme-nvim",
         config = function()
-            vim.o.background = "light"
-            require("min-theme").setup({
-                theme = "light",
-            })
-
-            vim.cmd.colorscheme("min-theme")
+            vim.cmd("colorscheme fleet")
         end,
     },
 }
