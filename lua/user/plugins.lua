@@ -268,27 +268,33 @@ return {
             },
         },
         config = function()
-            local actions = require("telescope.actions")
+            -- local actions = require("telescope.actions")
 
             require("telescope").setup({
                 defaults = {
-                    mappings = {
-                        i = {
-                            ["<C-k>"] = actions.move_selection_previous,
-                            ["<C-j>"] = actions.move_selection_next,
-                            ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-                            ["<C-x>"] = actions.delete_buffer,
-                        },
-                    },
                     file_ignore_patterns = require("user.constants")["telescope_ignore_patterns"],
                     hidden = true,
                     path_display = { truncate = 3 },
+                    prompt_prefix = "  ",
                 },
                 pickers = {
                     buffers = {
                         ignore_current_buffer = true,
                         sort_lastused = true,
                         sort_mru = true,
+                    },
+                    lsp_references = {
+                        include_declaration = true,
+                        show_line = false,
+                        trim_text = true,
+                    },
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true, -- false will only do exact matching
+                        override_generic_sorter = true, -- override the generic sorter
+                        override_file_sorter = true, -- override the file sorter
+                        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
                     },
                 },
             })
@@ -390,10 +396,12 @@ return {
         event = { "InsertEnter" },
         config = function()
             require("copilot").setup({
+                auto_refresh = true,
                 suggestion = {
+                    keymap = require("user.keymaps").copilot,
                     enabled = true,
+                    auto_trigger = true,
                 },
-                panel = { enabled = false },
             })
         end,
     },
@@ -485,10 +493,19 @@ return {
     },
 
     ---------- ColorScheme ----------
+    -- {
+    --     "felipeagc/fleet-theme-nvim",
+    --     config = function()
+    --         vim.cmd("colorscheme fleet")
+    --     end,
+    -- },
+
     {
-        "felipeagc/fleet-theme-nvim",
+        "miikanissi/modus-themes.nvim",
+        priority = 1000,
         config = function()
-            vim.cmd("colorscheme fleet")
+            vim.opt.background = "light"
+            vim.cmd("colorscheme modus")
         end,
     },
 }
