@@ -22,7 +22,9 @@ nnoremap("<leader>wq", "<cmd>wq<cr>", { silent = true })
 local M = {}
 
 -- Press leader f to format
-nnoremap("<leader>fm", ":Format<cr>")
+nnoremap("<leader>fm", function()
+    require("conform").format()
+end)
 
 -- Center buffer while navigating
 nnoremap("<C-u>", "<C-u>zz")

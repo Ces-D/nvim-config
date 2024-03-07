@@ -64,6 +64,12 @@ vim.opt.cursorline = true
 -- Always keep 8 lines above/below cursor unless at start/end of file
 vim.opt.scrolloff = 8
 
+-- Sets how neovim will display certain whitespace in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+vim.opt.list = true
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
 local plugins = {
     "2html_plugin",
     "getscript",

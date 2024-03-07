@@ -1,5 +1,3 @@
-require("user.options")
-
 -- Lazy install bootstrap snippet
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -21,4 +19,3 @@ local lazy = require("lazy")
 lazy.setup("user.plugins")
 
 require("user.keymaps")
-require("user.commands")
