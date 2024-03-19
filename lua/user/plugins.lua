@@ -84,22 +84,19 @@ return {
             { -- Autoformat
                 "stevearc/conform.nvim",
                 opts = {
-                    notify_on_error = false,
-                    format_on_save = {
-                        timeout_ms = 500,
-                        lsp_fallback = true,
-                    },
+                    notify_on_error = true,
                     formatters_by_ft = {
                         lua = { "stylua" },
                         python = { "isort", "black" },
-                        javascript = { { "eslint_d", "prettierd" }, { "rustywind" } },
-                        typescript = { { "eslint_d", "prettierd" }, { "rustywind" } },
-                        typescriptreact = { { "eslint_d", "prettierd" }, { "rustywind" } },
+                        javascript = { "eslint_d", "prettierd" },
+                        typescript = { "eslint_d", "prettierd" },
+                        typescriptreact = { "eslint_d", "prettierd", "rustywind" },
                         json = { "jq" },
                         markdown = { "mdformat" },
                         rust = { "rustfmt" },
                         toml = { "taplo" },
                         css = { "prettierd" },
+                        scss = { "prettierd" },
                     },
                 },
             },
@@ -489,6 +486,10 @@ return {
         "ramojus/mellifluous.nvim",
         config = function()
             require("mellifluous").setup({
+                color_set = "mellifluous",
+                -- color_set = "alduin",
+                -- color_set="mountain",
+                -- color_set="tender",
                 dim_inactive = true,
                 flat_background = {
                     line_numbers = false,
