@@ -184,6 +184,7 @@ return {
                             imports = {
                                 granularity = { group = "module" },
                             },
+                            procMacro = { enable = true },
                         },
                     },
                 },
@@ -209,7 +210,7 @@ return {
                     vim.lsp.buf.format({
                         filter = function(format_client)
                             -- Use Prettier to format TS/JS if it's available
-                            return format_client.name ~= "tsserver" or not null_ls.is_registered("prettier")
+                            return format_client.name ~= "tsserver"
                         end,
                     })
                 end, { desc = "LSP: Format current buffer with LSP" })
@@ -475,31 +476,32 @@ return {
     },
 
     ---------- ColorScheme ----------
-    -- {
-    --     "felipeagc/fleet-theme-nvim",
-    --     config = function()
-    --         vim.cmd("colorscheme fleet")
-    --     end,
-    -- },
-
     {
-        "ramojus/mellifluous.nvim",
+        "rebelot/kanagawa.nvim",
         config = function()
-            require("mellifluous").setup({
-                color_set = "mellifluous",
-                -- color_set = "alduin",
-                -- color_set="mountain",
-                -- color_set="tender",
-                dim_inactive = true,
-                flat_background = {
-                    line_numbers = false,
-                    floating_windows = true,
-                    file_tree = false,
-                    cursor_line_number = false,
-                },
-            })
-            vim.opt.background = "dark"
-            vim.cmd("colorscheme mellifluous")
+            require("kanagawa").setup({})
+            vim.cmd("colorscheme kanagawa-dragon")
         end,
     },
+
+    -- {
+    --     "ramojus/mellifluous.nvim",
+    --     config = function()
+    --         require("mellifluous").setup({
+    --             color_set = "mellifluous",
+    --             -- color_set = "alduin",
+    --             -- color_set="mountain",
+    --             -- color_set="tender",
+    --             dim_inactive = true,
+    --             flat_background = {
+    --                 line_numbers = false,
+    --                 floating_windows = true,
+    --                 file_tree = false,
+    --                 cursor_line_number = false,
+    --             },
+    --         })
+    --         vim.opt.background = "dark"
+    --         vim.cmd("colorscheme mellifluous")
+    --     end,
+    -- },
 }
