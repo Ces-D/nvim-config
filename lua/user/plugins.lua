@@ -374,20 +374,20 @@ return {
     },
 
     ---------- Copilot ----------
-    {
-        "zbirenbaum/copilot.lua",
-        event = { "InsertEnter" },
-        config = function()
-            require("copilot").setup({
-                auto_refresh = true,
-                suggestion = {
-                    keymap = require("user.keymaps").copilot,
-                    enabled = true,
-                    auto_trigger = true,
-                },
-            })
-        end,
-    },
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     event = { "InsertEnter" },
+    --     config = function()
+    --         require("copilot").setup({
+    --             auto_refresh = true,
+    --             suggestion = {
+    --                 keymap = require("user.keymaps").copilot,
+    --                 enabled = true,
+    --                 auto_trigger = true,
+    --             },
+    --         })
+    --     end,
+    -- },
 
     ---------- Github ----------
     {
@@ -476,12 +476,40 @@ return {
     },
 
     ---------- ColorScheme ----------
+    -- {
+    --     "rebelot/kanagawa.nvim",
+    --     config = function()
+    --         require("kanagawa").setup({})
+    --         vim.cmd("colorscheme kanagawa-wave")
+    --     end,
+    -- },
+
+    -- {
+    --     "AstroNvim/astrotheme",
+    --     config = function()
+    --         require("astrotheme").setup({})
+    --         vim.cmd("colorscheme astrotheme")
+    --     end,
+    -- },
+
     {
-        "rebelot/kanagawa.nvim",
+        "aktersnurra/no-clown-fiesta.nvim",
         config = function()
-            require("kanagawa").setup({})
-            vim.cmd("colorscheme kanagawa-wave")
+            require("no-clown-fiesta").setup({
+                transparent = true, -- Enable this to disable the bg color
+                styles = {
+                    -- You can set any of the style values specified for `:h nvim_set_hl`
+                    comments = {},
+                    functions = {},
+                    keywords = {},
+                    lsp = { underline = true },
+                    match_paren = {},
+                    type = { bold = true },
+                    variables = {},
+                },
+            })
         end,
+        --vim.cmd.colorscheme is in config.init
     },
 
     -- {
