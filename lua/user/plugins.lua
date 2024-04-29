@@ -492,44 +492,47 @@ return {
     --     end,
     -- },
 
-    {
-        "aktersnurra/no-clown-fiesta.nvim",
-        config = function()
-            require("no-clown-fiesta").setup({
-                transparent = true, -- Enable this to disable the bg color
-                styles = {
-                    -- You can set any of the style values specified for `:h nvim_set_hl`
-                    comments = {},
-                    functions = {},
-                    keywords = {},
-                    lsp = { underline = true },
-                    match_paren = {},
-                    type = { bold = true },
-                    variables = {},
-                },
-            })
-        end,
-        --vim.cmd.colorscheme is in config.init
-    },
-
     -- {
-    --     "ramojus/mellifluous.nvim",
+    --     "aktersnurra/no-clown-fiesta.nvim",
     --     config = function()
-    --         require("mellifluous").setup({
-    --             color_set = "mellifluous",
-    --             -- color_set = "alduin",
-    --             -- color_set="mountain",
-    --             -- color_set="tender",
-    --             dim_inactive = true,
-    --             flat_background = {
-    --                 line_numbers = false,
-    --                 floating_windows = true,
-    --                 file_tree = false,
-    --                 cursor_line_number = false,
+    --         require("no-clown-fiesta").setup({
+    --             transparent = true, -- Enable this to disable the bg color
+    --             styles = {
+    --                 -- You can set any of the style values specified for `:h nvim_set_hl`
+    --                 comments = {},
+    --                 functions = {},
+    --                 keywords = {},
+    --                 lsp = { underline = true },
+    --                 match_paren = {},
+    --                 type = { bold = true },
+    --                 variables = {},
     --             },
     --         })
-    --         vim.opt.background = "dark"
-    --         vim.cmd("colorscheme mellifluous")
     --     end,
+    --vim.cmd.colorscheme is in config.init
     -- },
+
+    {
+        "ramojus/mellifluous.nvim",
+        config = function()
+            require("mellifluous").setup({
+                color_set = "mellifluous",
+                -- color_set = "alduin",
+                -- color_set="mountain",
+                -- color_set="tender",
+                dim_inactive = true,
+                transparent_background = {
+                    enabled = true,
+                },
+                flat_background = {
+                    line_numbers = false,
+                    floating_windows = true,
+                    file_tree = false,
+                    cursor_line_number = false,
+                },
+            })
+            vim.opt.background = "dark"
+            vim.cmd("colorscheme mellifluous")
+        end,
+    },
 }
