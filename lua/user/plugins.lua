@@ -398,17 +398,6 @@ return {
         end,
     },
 
-    ---------- Harpoon ----------
-    {
-        "ThePrimeagen/harpoon",
-        event = { "BufEnter" },
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("harpoon"):setup({})
-        end,
-    },
-
     ---------- Comment ----------
     {
         "echasnovski/mini.comment",
@@ -476,21 +465,13 @@ return {
     },
 
     ---------- ColorScheme ----------
-    -- {
-    --     "rebelot/kanagawa.nvim",
-    --     config = function()
-    --         require("kanagawa").setup({})
-    --         vim.cmd("colorscheme kanagawa-wave")
-    --     end,
-    -- },
-
-    -- {
-    --     "AstroNvim/astrotheme",
-    --     config = function()
-    --         require("astrotheme").setup({})
-    --         vim.cmd("colorscheme astrotheme")
-    --     end,
-    -- },
+    {
+        "rebelot/kanagawa.nvim",
+        config = function()
+            require("kanagawa").setup({})
+            vim.cmd("colorscheme kanagawa-wave")
+        end,
+    },
 
     -- {
     --     "aktersnurra/no-clown-fiesta.nvim",
@@ -512,27 +493,27 @@ return {
     --vim.cmd.colorscheme is in config.init
     -- },
 
-    {
-        "ramojus/mellifluous.nvim",
-        config = function()
-            require("mellifluous").setup({
-                color_set = "mellifluous",
-                -- color_set = "alduin",
-                -- color_set="mountain",
-                -- color_set="tender",
-                dim_inactive = true,
-                transparent_background = {
-                    enabled = true,
-                },
-                flat_background = {
-                    line_numbers = false,
-                    floating_windows = true,
-                    file_tree = false,
-                    cursor_line_number = false,
-                },
-            })
-            vim.opt.background = "dark"
-            vim.cmd("colorscheme mellifluous")
-        end,
-    },
+    -- {
+    --     "ramojus/mellifluous.nvim",
+    --     config = function()
+    --         require("mellifluous").setup({
+    --             color_set = "mellifluous",
+    --             -- color_set = "alduin",
+    --             -- color_set="mountain",
+    --             -- color_set="tender",
+    --             dim_inactive = true,
+    --             transparent_background = {
+    --                 enabled = true,
+    --             },
+    --             flat_background = {
+    --                 line_numbers = false,
+    --                 floating_windows = true,
+    --                 file_tree = false,
+    --                 cursor_line_number = false,
+    --             },
+    --         })
+    --         vim.opt.background = "dark"
+    --         vim.cmd("colorscheme mellifluous")
+    --     end,
+    -- },
 }
