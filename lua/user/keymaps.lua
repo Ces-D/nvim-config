@@ -81,41 +81,9 @@ vnoremap("<C-k>", ":m '<-2<CR>gv=gv")
 -- Clear search results
 nnoremap("<leader>h", "<CMD>nohlsearch<CR>")
 
--- Map NvimTree to <leader>e
+-- Map Oil to <leader>e
 nnoremap("<leader>e", function()
     require("oil").toggle_float()
-end)
-
--- Harpoon keybinds --
--- Open harpoon ui
-nnoremap("<leader>ho", function()
-    require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
-end)
-
--- Add current file to harpoon
-nnoremap("<leader>ha", function()
-    require("harpoon"):list():append()
-end)
-
--- Quickly jump to harpooned files
-nnoremap("<leader>1", function()
-    require("harpoon"):list():select(1)
-end)
-
-nnoremap("<leader>2", function()
-    require("harpoon"):list():select(2)
-end)
-
-nnoremap("<leader>3", function()
-    require("harpoon"):list():select(3)
-end)
-
-nnoremap("<leader>4", function()
-    require("harpoon"):list():select(4)
-end)
-
-nnoremap("<leader>5", function()
-    require("harpoon"):list():select(5)
 end)
 
 -- Git keymaps --

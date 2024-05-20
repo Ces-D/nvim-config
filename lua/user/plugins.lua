@@ -399,14 +399,14 @@ return {
     },
 
     ---------- Comment ----------
-    {
-        "echasnovski/mini.comment",
-        version = "*",
-        event = { "VeryLazy" },
-        config = function()
-            require("mini.comment").setup({})
-        end,
-    },
+    -- {
+    --     "echasnovski/mini.comment",
+    --     version = "*",
+    --     event = { "VeryLazy" },
+    --     config = function()
+    --         require("mini.comment").setup({})
+    --     end,
+    -- },
 
     ---------- Surround ----------
     {
@@ -465,33 +465,6 @@ return {
     },
 
     ---------- ColorScheme ----------
-    {
-        "rebelot/kanagawa.nvim",
-        config = function()
-            require("kanagawa").setup({})
-            vim.cmd("colorscheme kanagawa-wave")
-        end,
-    },
-
-    -- {
-    --     "aktersnurra/no-clown-fiesta.nvim",
-    --     config = function()
-    --         require("no-clown-fiesta").setup({
-    --             transparent = true, -- Enable this to disable the bg color
-    --             styles = {
-    --                 -- You can set any of the style values specified for `:h nvim_set_hl`
-    --                 comments = {},
-    --                 functions = {},
-    --                 keywords = {},
-    --                 lsp = { underline = true },
-    --                 match_paren = {},
-    --                 type = { bold = true },
-    --                 variables = {},
-    --             },
-    --         })
-    --     end,
-    --vim.cmd.colorscheme is in config.init
-    -- },
 
     -- {
     --     "ramojus/mellifluous.nvim",
@@ -503,10 +476,28 @@ return {
     --             -- color_set="tender",
     --             dim_inactive = true,
     --             transparent_background = {
-    --                 enabled = true,
+    --                 enabled = false,
+    --             },
+    --             styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option
+    --                 comments = { italic = true },
+    --                 conditionals = {},
+    --                 folds = {},
+    --                 loops = {},
+    --                 functions = {},
+    --                 keywords = {},
+    --                 strings = {},
+    --                 variables = {},
+    --                 numbers = {},
+    --                 booleans = {},
+    --                 properties = {},
+    --                 types = {},
+    --                 operators = {},
+    --                 markup = {
+    --                     headings = { bold = true },
+    --                 },
     --             },
     --             flat_background = {
-    --                 line_numbers = false,
+    --                 line_numbers = true,
     --                 floating_windows = true,
     --                 file_tree = false,
     --                 cursor_line_number = false,
