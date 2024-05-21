@@ -399,14 +399,12 @@ return {
     },
 
     ---------- Comment ----------
-    -- {
-    --     "echasnovski/mini.comment",
-    --     version = "*",
-    --     event = { "VeryLazy" },
-    --     config = function()
-    --         require("mini.comment").setup({})
-    --     end,
-    -- },
+    {
+        "folke/ts-comments.nvim",
+        opts = {},
+        event = "VeryLazy",
+        enabled = vim.fn.has("nvim-0.10.0") == 1,
+    },
 
     ---------- Surround ----------
     {
@@ -458,10 +456,20 @@ return {
     ---------- Oil ----------
     {
         "stevearc/oil.nvim",
-        event = { "VeryLazy" },
+        event = "VeryLazy",
         opts = {},
         -- Optional dependencies
         dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+
+    ---------- Editor ----------
+
+    {
+        "brenoprata10/nvim-highlight-colors",
+        event = "VeryLazy",
+        config = function()
+            require("nvim-highlight-colors").setup({})
+        end,
     },
 
     ---------- ColorScheme ----------

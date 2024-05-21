@@ -52,6 +52,7 @@ vim.opt.writebackup = false
 
 -- Enable 24-bit color
 vim.opt.termguicolors = true
+vim.opt.background = "light"
 
 -- Enable the sign column to prevent the screen from jumping
 vim.opt.signcolumn = "yes"
