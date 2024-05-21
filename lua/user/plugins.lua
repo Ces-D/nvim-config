@@ -184,7 +184,42 @@ return {
                             imports = {
                                 granularity = { group = "module" },
                             },
+                            cargo = {
+                                buildScripts = { enable = true },
+                            },
                             procMacro = { enable = true },
+                            inlayHints = {
+                                bindingModeHints = {
+                                    enable = false,
+                                },
+                                chainingHints = {
+                                    enable = true,
+                                },
+                                closingBraceHints = {
+                                    enable = true,
+                                    minLines = 25,
+                                },
+                                closureReturnTypeHints = {
+                                    enable = "never",
+                                },
+                                lifetimeElisionHints = {
+                                    enable = "never",
+                                    useParameterNames = false,
+                                },
+                                maxLength = 25,
+                                parameterHints = {
+                                    enable = true,
+                                },
+                                reborrowHints = {
+                                    enable = "never",
+                                },
+                                renderColons = true,
+                                typeHints = {
+                                    enable = true,
+                                    hideClosureInitialization = false,
+                                    hideNamedConstructor = false,
+                                },
+                            },
                         },
                     },
                 },
@@ -200,10 +235,12 @@ return {
             local capabilities = vim.lsp.protocol.make_client_capabilities()
             local default_capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-            ---@diagnostic disable-next-line: unused-local
             local on_attach = function(_client, buffer_number)
                 -- Pass the current buffer to map lsp keybinds
                 map_lsp_keybinds(buffer_number)
+                if _client.name == "rust_analyzer" then
+                    vim.lsp.inlay_hint.enable(true, { bufnr = buffer_number })
+                end
 
                 -- Create a command `:Format` local to the LSP buffer
                 vim.api.nvim_buf_create_user_command(buffer_number, "Format", function(_)
