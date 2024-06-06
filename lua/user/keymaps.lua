@@ -129,6 +129,13 @@ M.map_lsp_keybinds = function(buffer_number)
 
     nnoremap("<leader>gd", vim.lsp.buf.definition, { desc = "LSP: [G]oto [D]efinition", buffer = buffer_number })
 
+    nnoremap("<leader>hh", function()
+        vim.lsp.inlay_hint.enable(
+            not vim.lsp.inlay_hint.is_enabled({ bufnr = buffer_number }),
+            { bufnr = buffer_number }
+        )
+    end, { desc = "LSP: Toggle Inlay Hints", buffer = buffer_number })
+
     -- Telescope LSP keybinds --
     nnoremap(
         "<leader>gr",

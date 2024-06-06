@@ -2,11 +2,16 @@ return {
     ---------- CMP & AutoPairs ----------
     {
         "hrsh7th/nvim-cmp",
-        event = { "BufReadPost", "BufNewFile" },
+        event = { "InsertEnter" },
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
-            "L3MON4D3/LuaSnip",
+            {
+                "L3MON4D3/LuaSnip",
+                version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+                -- install jsregexp (optional!).
+                build = "make install_jsregexp",
+            },
             "saadparwaiz1/cmp_luasnip",
             { "windwp/nvim-ts-autotag", ft = { "ts", "tsx" } },
             "windwp/nvim-autopairs",
@@ -227,8 +232,11 @@ return {
 
             -- Default handlers for LSP
             local default_handlers = {
-                ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
-                ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+                ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", max_width = 660 }),
+                ["textDocument/signatureHelp"] = vim.lsp.with(
+                    vim.lsp.handlers.signature_help,
+                    { border = "rounded", max_width = 660 }
+                ),
             }
 
             -- nvim-cmp supports additional completion capabilities
@@ -300,8 +308,8 @@ return {
                 pickers = {
                     buffers = {
                         ignore_current_buffer = true,
-                        sort_lastused = false,
-                        sort_mru = true,
+                        sort_lastused = true,
+                        sort_mru = false,
                     },
                     lsp_references = {
                         include_declaration = true,
@@ -438,8 +446,8 @@ return {
     ---------- Comment ----------
     {
         "folke/ts-comments.nvim",
-        opts = {},
         event = "VeryLazy",
+        opts = {},
         enabled = vim.fn.has("nvim-0.10.0") == 1,
     },
 
@@ -457,7 +465,7 @@ return {
     {
         "nvim-lualine/lualine.nvim",
         lazy = true,
-        event = { "BufReadPost", "BufAdd", "BufNewFile" },
+        event = { "VeryLazy" },
         config = function()
             require("lualine").setup({
                 options = {
@@ -481,11 +489,7 @@ return {
                     lualine_y = { "progress" },
                     lualine_z = { "location" },
                 },
-                extensions = {
-                    "nvim-tree",
-                    -- "toggleterm",
-                    "fzf",
-                },
+                extensions = { "fzf" },
             })
         end,
     },
@@ -511,45 +515,45 @@ return {
 
     ---------- ColorScheme ----------
 
-    -- {
-    --     "ramojus/mellifluous.nvim",
-    --     config = function()
-    --         require("mellifluous").setup({
-    --             color_set = "mellifluous",
-    --             -- color_set = "alduin",
-    --             -- color_set="mountain",
-    --             -- color_set="tender",
-    --             dim_inactive = true,
-    --             transparent_background = {
-    --                 enabled = false,
-    --             },
-    --             styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option
-    --                 comments = { italic = true },
-    --                 conditionals = {},
-    --                 folds = {},
-    --                 loops = {},
-    --                 functions = {},
-    --                 keywords = {},
-    --                 strings = {},
-    --                 variables = {},
-    --                 numbers = {},
-    --                 booleans = {},
-    --                 properties = {},
-    --                 types = {},
-    --                 operators = {},
-    --                 markup = {
-    --                     headings = { bold = true },
-    --                 },
-    --             },
-    --             flat_background = {
-    --                 line_numbers = true,
-    --                 floating_windows = true,
-    --                 file_tree = false,
-    --                 cursor_line_number = false,
-    --             },
-    --         })
-    --         vim.opt.background = "dark"
-    --         vim.cmd("colorscheme mellifluous")
-    --     end,
-    -- },
+    {
+        "ramojus/mellifluous.nvim",
+        config = function()
+            require("mellifluous").setup({
+                color_set = "mellifluous",
+                -- color_set = "alduin",
+                -- color_set = "mountain",
+                -- color_set = "tender",
+                dim_inactive = true,
+                transparent_background = {
+                    enabled = false,
+                },
+                styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option
+                    comments = { italic = true },
+                    conditionals = {},
+                    folds = {},
+                    loops = {},
+                    functions = {},
+                    keywords = {},
+                    strings = {},
+                    variables = {},
+                    numbers = {},
+                    booleans = {},
+                    properties = {},
+                    types = {},
+                    operators = {},
+                    markup = {
+                        headings = { bold = true },
+                    },
+                },
+                flat_background = {
+                    line_numbers = true,
+                    floating_windows = true,
+                    file_tree = false,
+                    cursor_line_number = false,
+                },
+            })
+            vim.opt.background = "light"
+            -- vim.cmd("colorscheme mellifluous")
+        end,
+    },
 }
