@@ -519,9 +519,9 @@ return {
         "ramojus/mellifluous.nvim",
         config = function()
             require("mellifluous").setup({
-                color_set = "mellifluous",
+                -- color_set = "mellifluous",
                 -- color_set = "alduin",
-                -- color_set = "mountain",
+                color_set = "mountain",
                 -- color_set = "tender",
                 dim_inactive = true,
                 transparent_background = {
@@ -552,7 +552,7 @@ return {
                     cursor_line_number = false,
                 },
             })
-            vim.opt.background = "light"
+            vim.opt.background = "dark"
             -- vim.cmd("colorscheme mellifluous")
         end,
     },
