@@ -77,6 +77,28 @@ return {
 
     ---------- LSP & Formatting ----------
     {
+        "stevearc/conform.nvim",
+        event = { "BufReadPost" },
+        opts = {
+            notify_on_error = true,
+            formatters_by_ft = {
+                formatters_by_ft = {
+                    lua = { "stylua" },
+                    python = { "isort", "black" },
+                    javascript = { "eslint_d", "prettierd" },
+                    typescript = { "eslint_d", "prettierd" },
+                    typescriptreact = { "eslint_d", "prettierd", "rustywind" },
+                    json = { "jq" },
+                    markdown = { "mdformat" },
+                    rust = { "rustfmt" },
+                    toml = { "taplo" },
+                    css = { "prettierd" },
+                    scss = { "prettierd" },
+                },
+            },
+        },
+    },
+    {
         "neovim/nvim-lspconfig",
         event = { "BufReadPost" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall", "Mason" },
@@ -86,34 +108,9 @@ return {
             "williamboman/mason-lspconfig.nvim",
 
             "hrsh7th/cmp-nvim-lsp",
-            { -- Autoformat
-                "stevearc/conform.nvim",
-                opts = {
-                    notify_on_error = true,
-                    formatters_by_ft = {
-                        lua = { "stylua" },
-                        python = { "isort", "black" },
-                        javascript = { "eslint_d", "prettierd" },
-                        typescript = { "eslint_d", "prettierd" },
-                        typescriptreact = { "eslint_d", "prettierd", "rustywind" },
-                        json = { "jq" },
-                        markdown = { "mdformat" },
-                        rust = { "rustfmt" },
-                        toml = { "taplo" },
-                        css = { "prettierd" },
-                        scss = { "prettierd" },
-                    },
-                },
-            },
-
-            -- Install neodev for better nvim configuration and plugin authoring via lsp configurations
-            "folke/neodev.nvim",
         },
         config = function()
             local map_lsp_keybinds = require("user.keymaps").map_lsp_keybinds -- Has to load keymaps before pluginslsp
-
-            -- Use neodev to configure lua_ls in nvim directories - must load before lspconfig
-            require("neodev").setup()
 
             -- Setup mason so it can manage 3rd party LSP servers
             require("mason").setup({
@@ -308,8 +305,8 @@ return {
                 pickers = {
                     buffers = {
                         ignore_current_buffer = true,
-                        sort_lastused = true,
-                        sort_mru = false,
+                        sort_lastused = false,
+                        sort_mru = true,
                     },
                     lsp_references = {
                         include_declaration = true,
@@ -347,7 +344,7 @@ return {
             ---@diagnostic disable: missing-fields
             require("nvim-treesitter.configs").setup({
                 ensure_installed = require("constants")["treesitter_servers"],
-                sync_install = false,
+                sync_install = true,
                 highlight = {
                     enable = true,
                 },
@@ -367,41 +364,6 @@ return {
                         node_incremental = "<c-space>",
                         scope_incremental = "<c-s>",
                         node_decremental = "<c-backspace>",
-                    },
-                },
-                textobjects = {
-                    select = {
-                        enable = true,
-                        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-                        keymaps = {
-                            -- You can use the capture groups defined in textobjects.scm
-                            ["aa"] = "@parameter.outer",
-                            ["ia"] = "@parameter.inner",
-                            ["af"] = "@function.outer",
-                            ["if"] = "@function.inner",
-                            ["ac"] = "@class.outer",
-                            ["ic"] = "@class.inner",
-                        },
-                    },
-                    move = {
-                        enable = true,
-                        set_jumps = true, -- whether to set jumps in the jumplist
-                        goto_next_start = {
-                            ["]m"] = "@function.outer",
-                            ["]]"] = "@class.outer",
-                        },
-                        goto_next_end = {
-                            ["]M"] = "@function.outer",
-                            ["]["] = "@class.outer",
-                        },
-                        goto_previous_start = {
-                            ["[m"] = "@function.outer",
-                            ["[["] = "@class.outer",
-                        },
-                        goto_previous_end = {
-                            ["[M"] = "@function.outer",
-                            ["[]"] = "@class.outer",
-                        },
                     },
                 },
             })
@@ -519,13 +481,13 @@ return {
         "ramojus/mellifluous.nvim",
         config = function()
             require("mellifluous").setup({
-                -- color_set = "mellifluous",
+                color_set = "mellifluous",
                 -- color_set = "alduin",
-                color_set = "mountain",
+                -- color_set = "mountain",
                 -- color_set = "tender",
                 dim_inactive = true,
                 transparent_background = {
-                    enabled = false,
+                    enabled = true,
                 },
                 styles = { -- see :h attr-list for options. set {} for NONE, { option = true } for option
                     comments = { italic = true },
@@ -553,7 +515,7 @@ return {
                 },
             })
             vim.opt.background = "dark"
-            -- vim.cmd("colorscheme mellifluous")
+            vim.cmd("colorscheme mellifluous")
         end,
     },
 }
