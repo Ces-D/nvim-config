@@ -43,7 +43,7 @@ vim.opt.hlsearch = true
 vim.opt.updatetime = 50
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = { "menuone", "noselect" }
+vim.opt.completeopt = { "menuone", "noselect", "menu" }
 
 -- Enable persistent undo history
 vim.opt.undofile = true
