@@ -82,14 +82,12 @@ return {
 
     {
 
-        "rockyzhang24/arctic.nvim",
-        branch = "v2",
-        dependencies = { "rktjmp/lush.nvim" },
+        "aktersnurra/no-clown-fiesta.nvim",
         lazy = false,
         priority = 1000,
         config = function()
             if vim.o.background == "dark" then
-                vim.cmd.colorscheme("arctic")
+                vim.cmd.colorscheme("no-clown-fiesta")
             else
                 vim.cmd.colorscheme("default")
             end
@@ -99,7 +97,7 @@ return {
                 callback = function(ev)
                     if vim.o.background == "dark" then
                         print("late dark")
-                        vim.cmd.colorscheme("arctic")
+                        vim.cmd.colorscheme("no-clown-fiesta")
                     else
                         vim.cmd.colorscheme("default")
                     end
