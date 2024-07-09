@@ -96,10 +96,12 @@ return {
                 pattern = { "background" },
                 callback = function(ev)
                     if vim.o.background == "dark" then
-                        print("late dark")
-                        vim.cmd.colorscheme("no-clown-fiesta")
+                        -- vim.cmd.colorscheme("lunaperche") -- builtin theme
+                        vim.cmd.colorscheme("sorbet") -- builtin theme
+                        -- vim.cmd.colorscheme("no-clown-fiesta")
                     else
-                        vim.cmd.colorscheme("default")
+                        -- vim.cmd.colorscheme("default") -- builtin theme
+                        vim.cmd.colorscheme("zellner") -- builtin theme
                     end
                     -- force a full redraw:
                     vim.cmd("mode")
