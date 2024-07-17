@@ -1,17 +1,4 @@
 return {
-    -- See `:help gitsigns` to understand what the configuration keys do
-    { -- Adds git related signs to the gutter, as well as utilities for managing changes
-        "lewis6991/gitsigns.nvim",
-        opts = {
-            signs = {
-                add = { text = "+" },
-                change = { text = "~" },
-                delete = { text = "_" },
-                topdelete = { text = "‾" },
-                changedelete = { text = "~" },
-            },
-        },
-    },
     ---------- Surround ----------
     {
         "echasnovski/mini.surround",
@@ -73,6 +60,11 @@ return {
                 update_focused_file = {
                     enable = true,
                 },
+                actions = {
+                    open_file = {
+                        quit_on_open = true,
+                    },
+                },
             })
             vim.keymap.set("n", "<leader>e", function()
                 require("nvim-tree.api").tree.toggle()
@@ -80,33 +72,61 @@ return {
         end,
     },
 
+    -- {
+    --     "aktersnurra/no-clown-fiesta.nvim",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         vim.opt.background = "light"
+    --         if vim.o.background == "dark" then
+    --             vim.cmd.colorscheme("no-clown-fiesta")
+    --         else
+    --             vim.cmd.colorscheme("default")
+    --         end
+    --
+    --         vim.api.nvim_create_autocmd({ "OptionSet" }, {
+    --             pattern = { "background" },
+    --             callback = function(ev)
+    --                 if vim.o.background == "dark" then
+    --                     -- vim.cmd.colorscheme("lunaperche") -- builtin theme
+    --                     vim.cmd.colorscheme("default") -- builtin theme
+    --                     -- vim.cmd.colorscheme("no-clown-fiesta")
+    --                 else
+    --                     -- vim.cmd.colorscheme("default") -- builtin theme
+    --                     vim.cmd.colorscheme("zellner") -- builtin theme
+    --                 end
+    --                 -- force a full redraw:
+    --                 vim.cmd("mode")
+    --             end,
+    --         })
+    --     end,
+    -- },
+
     {
-
-        "aktersnurra/no-clown-fiesta.nvim",
-        lazy = false,
+        "miikanissi/modus-themes.nvim",
         priority = 1000,
+        lazy = false,
         config = function()
-            if vim.o.background == "dark" then
-                vim.cmd.colorscheme("no-clown-fiesta")
-            else
-                vim.cmd.colorscheme("default")
-            end
-
-            vim.api.nvim_create_autocmd({ "OptionSet" }, {
-                pattern = { "background" },
-                callback = function(ev)
-                    if vim.o.background == "dark" then
-                        -- vim.cmd.colorscheme("lunaperche") -- builtin theme
-                        vim.cmd.colorscheme("sorbet") -- builtin theme
-                        -- vim.cmd.colorscheme("no-clown-fiesta")
-                    else
-                        -- vim.cmd.colorscheme("default") -- builtin theme
-                        vim.cmd.colorscheme("zellner") -- builtin theme
-                    end
-                    -- force a full redraw:
-                    vim.cmd("mode")
-                end,
+            vim.opt.background = "light"
+            -- Default options
+            require("modus-themes").setup({
+                -- Theme comes in two styles `modus_operandi` and `modus_vivendi`
+                -- `auto` will automatically set style based on background set with vim.o.background
+                style = "auto",
+                variant = "default", -- Theme comes in four variants `default`, `tinted`, `deuteranopia`, and `tritanopia`
+                transparent = false, -- Transparent background (as supported by the terminal)
+                dim_inactive = false, -- "non-current" windows are dimmed
+                hide_inactive_statusline = false, -- Hide statuslines on inactive windows. Works with the standard **StatusLine**, **LuaLine** and **mini.statusline**
+                styles = {
+                    -- Style to be applied to different syntax groups
+                    -- Value is any valid attr-list value for `:help nvim_set_hl`
+                    comments = { italic = true },
+                    keywords = { italic = true },
+                    functions = {},
+                    variables = {},
+                },
             })
+            vim.cmd.colorscheme("modus") -- modus_operandi, modus_vivendi
         end,
     },
 }
