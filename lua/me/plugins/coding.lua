@@ -284,6 +284,7 @@ return {
             local ensure_installed = vim.tbl_keys(servers or {})
 
             require("mason-lspconfig").setup({
+                ensure_installed = ensure_installed,
                 handlers = {
                     function(server_name)
                         local server = servers[server_name] or {}
@@ -532,6 +533,7 @@ return {
                     toml = { "taplo" },
                     css = { "prettierd" },
                     scss = { "prettierd" },
+                    bash = { "shfmt" },
                 },
             })
             vim.keymap.set("n", "<leader>fm", function()
