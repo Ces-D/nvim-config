@@ -73,12 +73,13 @@ return {
     },
 
     {
-        "oahlen/iceberg.nvim",
-        lazy = false,
+        "sainnhe/gruvbox-material",
         config = function()
-            vim.opt.background = "light"
-            local dark_theme = "iceberg"
-            local light_theme = "iceberg-light"
+            vim.opt.background = "dark"
+            local dark_theme = "gruvbox-material"
+            local light_theme = "gruvbox-material"
+
+            vim.g.gruvbox_material_enable_italic = true
 
             if vim.o.background == "dark" then
                 vim.cmd.colorscheme(dark_theme)
