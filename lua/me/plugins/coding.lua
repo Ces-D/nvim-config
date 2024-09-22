@@ -13,15 +13,12 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
-            "zbirenbaum/copilot-cmp",
             "onsails/lspkind.nvim",
         },
         config = function()
-            local copilot = require("copilot_cmp")
-            copilot.setup({})
-
             local lspkind = require("lspkind")
             lspkind.init({
+                mode = "symbol_text",
                 symbol_map = {
                     Copilot = "",
                 },
@@ -30,16 +27,6 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             cmp.setup({
-                formatting = {
-                    format = lspkind.cmp_format({
-                        mode = "symbol", -- show only symbol annotations
-                        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                        -- can also be a function to dynamically calculate max width such as
-                        -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-                        ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-                        show_labelDetails = true, -- show labelDetails in menu. Disabled by default
-                    }),
-                },
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
@@ -200,7 +187,7 @@ return {
                 marksman = {},
                 pyright = {},
                 tailwindcss = {},
-                tsserver = {},
+                ts_ls = {},
                 rust_analyzer = {
                     settings = {
                         ["rust-analyzer"] = {
@@ -277,6 +264,9 @@ return {
                 ensure_installed = ensure_installed,
                 handlers = {
                     function(server_name)
+                        if server_name == "tsserver" then
+                            server_name = "ts_ls"
+                        end
                         local server = servers[server_name] or {}
                         -- This handles overriding only values explicitly passed
                         -- by the server configuration above. Useful when disabling
@@ -585,6 +575,16 @@ return {
                     enable_close_on_slash = false, -- Auto close on trailing </
                 },
             })
+        end,
+    },
+
+    ---------- Surround ----------
+    {
+        "echasnovski/mini.surround",
+        version = "*",
+        event = "VeryLazy",
+        config = function()
+            require("mini.surround").setup()
         end,
     },
 }
