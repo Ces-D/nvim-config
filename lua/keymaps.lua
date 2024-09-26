@@ -22,7 +22,6 @@ nnoremap("<leader>q", "<cmd>q<cr>", { silent = true })
 
 -- Save and Quit with leader key
 nnoremap("<leader>wq", "<cmd>wq<cr>", { silent = true })
-local M = {}
 
 -- Center buffer while navigating
 nnoremap("<C-u>", "<C-u>zz")

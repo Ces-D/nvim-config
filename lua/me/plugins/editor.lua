@@ -32,7 +32,7 @@ return {
     --         })
     --     end,
     -- },
-    --
+
     ---------- Editor ----------
 
     {
@@ -65,31 +65,44 @@ return {
     },
 
     {
-        "sainnhe/gruvbox-material",
+        "sainnhe/edge",
+        lazy = false,
+        priority = 1000,
         config = function()
             vim.opt.background = "dark"
-            local dark_theme = "gruvbox-material"
-            local light_theme = "gruvbox-material"
-
-            vim.g.gruvbox_material_enable_italic = true
-
-            if vim.o.background == "dark" then
-                vim.cmd.colorscheme(dark_theme)
-            else
-                vim.cmd.colorscheme(light_theme)
-            end
-
-            vim.api.nvim_create_autocmd({ "OptionSet" }, {
-                pattern = { "background" },
-                callback = function(_)
-                    if vim.o.background == "dark" then
-                        vim.cmd.colorscheme(dark_theme)
-                    else
-                        vim.cmd.colorscheme(light_theme) -- builtin theme
-                    end
-                    vim.cmd("mode") -- force a full redraw:
-                end,
-            })
+            -- Optionally configure and load the colorscheme
+            -- directly inside the plugin declaration.
+            vim.g.edge_enable_italic = true
+            vim.cmd.colorscheme("edge")
         end,
     },
+
+    --     {
+    --         "sainnhe/gruvbox-material",
+    --         config = function()
+    --             vim.opt.background = "dark"
+    --             local dark_theme = "gruvbox-material"
+    --             local light_theme = "gruvbox-material"
+    --
+    --             vim.g.gruvbox_material_enable_italic = true
+    --
+    --             if vim.o.background == "dark" then
+    --                 vim.cmd.colorscheme(dark_theme)
+    --             else
+    --                 vim.cmd.colorscheme(light_theme)
+    --             end
+    --
+    --             vim.api.nvim_create_autocmd({ "OptionSet" }, {
+    --                 pattern = { "background" },
+    --                 callback = function(_)
+    --                     if vim.o.background == "dark" then
+    --                         vim.cmd.colorscheme(dark_theme)
+    --                     else
+    --                         vim.cmd.colorscheme(light_theme) -- builtin theme
+    --                     end
+    --                     vim.cmd("mode") -- force a full redraw:
+    --                 end,
+    --             })
+    --         end,
+    --     },
 }

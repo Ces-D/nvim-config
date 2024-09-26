@@ -62,8 +62,6 @@ return {
                 }),
                 -- sources for autocompletion
                 sources = {
-                    -- Copilot Source
-                    { name = "copilot", group_index = 2 },
                     -- Other Sources
                     { name = "nvim_lsp", group_index = 2 },
                     { name = "path", group_index = 2 },
@@ -91,7 +89,6 @@ return {
             --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
             --    function will be executed to configure the current buffer
             vim.api.nvim_create_autocmd("LspAttach", {
-                group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
                 callback = function(event)
                     -- NOTE: Remember that Lua is a real programming language, and as such it is possible
                     -- to define small helper and utility functions so you don't have to repeat yourself.
@@ -264,9 +261,6 @@ return {
                 ensure_installed = ensure_installed,
                 handlers = {
                     function(server_name)
-                        if server_name == "tsserver" then
-                            server_name = "ts_ls"
-                        end
                         local server = servers[server_name] or {}
                         -- This handles overriding only values explicitly passed
                         -- by the server configuration above. Useful when disabling
