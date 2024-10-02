@@ -63,20 +63,36 @@ return {
             end, { desc = "Toggle Tree" })
         end,
     },
-
     {
-        "sainnhe/edge",
+        "sainnhe/sonokai",
         lazy = false,
         priority = 1000,
         config = function()
             vim.opt.background = "dark"
+            -- vim.g.sonokai_style = "shusia"
+            vim.g.sonokai_better_performance = 1
+
             -- Optionally configure and load the colorscheme
             -- directly inside the plugin declaration.
+            --
             vim.g.edge_enable_italic = true
-            vim.cmd.colorscheme("edge")
+            vim.cmd.colorscheme("sonokai")
         end,
     },
 
+    -- {
+    --     "sainnhe/edge",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         vim.opt.background = "dark"
+    --         -- Optionally configure and load the colorscheme
+    --         -- directly inside the plugin declaration.
+    --         vim.g.edge_enable_italic = true
+    --         vim.cmd.colorscheme("edge")
+    --     end,
+    -- },
+    --
     --     {
     --         "sainnhe/gruvbox-material",
     --         config = function()

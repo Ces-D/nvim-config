@@ -1,7 +1,7 @@
 -- Enable relative line numbers
 vim.opt.nu = false
-vim.opt.rnu = false
-vim.opt.numberwidth = 3
+vim.opt.rnu = true
+vim.opt.numberwidth = 2
 
 -- Set tabs to 2 spaces
 vim.opt.tabstop = 2

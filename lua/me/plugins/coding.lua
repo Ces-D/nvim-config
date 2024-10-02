@@ -11,6 +11,7 @@ return {
         "hrsh7th/nvim-cmp",
         event = { "InsertEnter", "LspAttach" },
         dependencies = {
+            "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-path",
             "onsails/lspkind.nvim",
@@ -31,9 +32,6 @@ return {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
                     end,
-                },
-                view = {
-                    entries = { name = "custom", selection_order = "near_cursor" },
                 },
                 mapping = cmp.mapping.preset.insert({
                     ["<Tab>"] = cmp.mapping(function(fallback)
@@ -62,10 +60,11 @@ return {
                 }),
                 -- sources for autocompletion
                 sources = {
+                    { name = "luasnip", group_index = 1 },
                     -- Other Sources
-                    { name = "nvim_lsp", group_index = 2 },
-                    { name = "path", group_index = 2 },
-                    { name = "luasnip", group_index = 2 },
+                    { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
+                    { name = "path", max_item_count = 5, group_index = 1 },
+                    { name = "buffer", max_item_count = 3, group_index = 2 },
                 },
             })
         end,
