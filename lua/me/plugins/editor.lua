@@ -63,22 +63,6 @@ return {
             end, { desc = "Toggle Tree" })
         end,
     },
-    {
-        "sainnhe/sonokai",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            vim.opt.background = "dark"
-            -- vim.g.sonokai_style = "shusia"
-            vim.g.sonokai_better_performance = 1
-
-            -- Optionally configure and load the colorscheme
-            -- directly inside the plugin declaration.
-            --
-            vim.g.edge_enable_italic = true
-            vim.cmd.colorscheme("sonokai")
-        end,
-    },
 
     -- {
     --     "sainnhe/edge",
@@ -93,32 +77,32 @@ return {
     --     end,
     -- },
     --
-    --     {
-    --         "sainnhe/gruvbox-material",
-    --         config = function()
-    --             vim.opt.background = "dark"
-    --             local dark_theme = "gruvbox-material"
-    --             local light_theme = "gruvbox-material"
-    --
-    --             vim.g.gruvbox_material_enable_italic = true
-    --
-    --             if vim.o.background == "dark" then
-    --                 vim.cmd.colorscheme(dark_theme)
-    --             else
-    --                 vim.cmd.colorscheme(light_theme)
-    --             end
-    --
-    --             vim.api.nvim_create_autocmd({ "OptionSet" }, {
-    --                 pattern = { "background" },
-    --                 callback = function(_)
-    --                     if vim.o.background == "dark" then
-    --                         vim.cmd.colorscheme(dark_theme)
-    --                     else
-    --                         vim.cmd.colorscheme(light_theme) -- builtin theme
-    --                     end
-    --                     vim.cmd("mode") -- force a full redraw:
-    --                 end,
-    --             })
-    --         end,
-    --     },
+    {
+        "sainnhe/gruvbox-material",
+        config = function()
+            vim.opt.background = "dark"
+            local dark_theme = "gruvbox-material"
+            local light_theme = "gruvbox-material"
+
+            vim.g.gruvbox_material_enable_italic = true
+
+            if vim.o.background == "dark" then
+                vim.cmd.colorscheme(dark_theme)
+            else
+                vim.cmd.colorscheme(light_theme)
+            end
+
+            vim.api.nvim_create_autocmd({ "OptionSet" }, {
+                pattern = { "background" },
+                callback = function(_)
+                    if vim.o.background == "dark" then
+                        vim.cmd.colorscheme(dark_theme)
+                    else
+                        vim.cmd.colorscheme(light_theme) -- builtin theme
+                    end
+                    vim.cmd("mode") -- force a full redraw:
+                end,
+            })
+        end,
+    },
 }

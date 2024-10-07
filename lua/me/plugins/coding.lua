@@ -33,6 +33,9 @@ return {
                         luasnip.lsp_expand(args.body)
                     end,
                 },
+                view = {
+                    docs = { auto_open = true },
+                },
                 mapping = cmp.mapping.preset.insert({
                     ["<Tab>"] = cmp.mapping(function(fallback)
                         if cmp.visible() then
@@ -373,8 +376,13 @@ return {
                     hidden = true,
                     path_display = { truncate = 3 },
                     prompt_prefix = "  ",
+                    layout_strategy = "bottom_pane",
                     layout_config = {
                         horizontal = {
+                            width = 0.95,
+                            prompt_position = "bottom",
+                        },
+                        vertical = {
                             width = 0.95,
                         },
                     },
@@ -414,8 +422,7 @@ return {
             vim.keymap.set("n", "<leader>/", function()
                 -- You can pass additional configuration to Telescope to change the theme, layout, etc.
                 builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-                    winblend = 10,
-                    previewer = false,
+                    layout_strategy = "bottom_pane",
                 }))
             end, { desc = "[/] Fuzzily search in current buffer" })
 
