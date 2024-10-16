@@ -18,16 +18,22 @@ return {
         },
         config = function()
             local lspkind = require("lspkind")
-            lspkind.init({
-                mode = "symbol_text",
-                symbol_map = {
-                    Copilot = "",
-                },
-            })
 
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             cmp.setup({
+                formatting = {
+                    expandable_indicator = true,
+                    fields = { "abbr", "kind", "menu" },
+                    format = lspkind.cmp_format({
+                        mode = "symbol", -- show only symbol annotations
+                        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                        -- can also be a function to dynamically calculate max width such as
+                        -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+                        ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                        show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+                    }),
+                },
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
@@ -376,7 +382,7 @@ return {
                     hidden = true,
                     path_display = { truncate = 3 },
                     prompt_prefix = "  ",
-                    layout_strategy = "bottom_pane",
+                    layout_strategy = "horizontal",
                     layout_config = {
                         horizontal = {
                             width = 0.95,
@@ -421,8 +427,10 @@ return {
             -- Slightly advanced example of overriding default behavior and theme
             vim.keymap.set("n", "<leader>/", function()
                 -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-                builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-                    layout_strategy = "bottom_pane",
+                builtin.current_buffer_fuzzy_find(require("telescope.themes").get_ivy({
+                    layout_config = {
+                        height = 30,
+                    },
                 }))
             end, { desc = "[/] Fuzzily search in current buffer" })
 

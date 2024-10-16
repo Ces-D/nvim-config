@@ -64,43 +64,29 @@ return {
         end,
     },
 
-    -- {
-    --     "sainnhe/edge",
-    --     lazy = false,
-    --     priority = 1000,
-    --     config = function()
-    --         vim.opt.background = "dark"
-    --         -- Optionally configure and load the colorscheme
-    --         -- directly inside the plugin declaration.
-    --         vim.g.edge_enable_italic = true
-    --         vim.cmd.colorscheme("edge")
-    --     end,
-    -- },
-    --
     {
-        "projekt0n/github-nvim-theme",
-        name = "github-theme",
-        lazy = false, -- make sure we load this during startup if it is your main colorscheme
-        priority = 1000, -- make sure to load this before all the other start plugins
+        "Mofiqul/vscode.nvim",
         config = function()
             vim.opt.background = "dark"
-            local dark_theme = "github_dark"
-            local light_theme = "github_light"
+            require("vscode").setup({
+                -- Alternatively set style in setup
+                -- style = 'light'
 
-            require("github-theme").setup({})
+                -- Enable italic comment
+                italic_comments = true,
 
-            if vim.o.background == "dark" then
-                vim.cmd.colorscheme(dark_theme)
-            else
-                vim.cmd.colorscheme(light_theme)
-            end
+                -- Underline `@markup.link.*` variants
+                underline_links = true,
+            })
+
+            vim.cmd.colorscheme("vscode") -- builtin theme
         end,
     },
 
     -- {
     --     "sainnhe/gruvbox-material",
     --     config = function()
-    --         vim.opt.background = "dark"
+    --         vim.opt.background = "light"
     --         local dark_theme = "gruvbox-material"
     --         local light_theme = "gruvbox-material"
     --
