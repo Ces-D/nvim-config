@@ -1,7 +1,7 @@
 -- Enable relative line numbers
 vim.opt.nu = false
-vim.opt.rnu = true
-vim.opt.numberwidth = 2
+vim.opt.rnu = false
+vim.opt.numberwidth = 1
 
 -- Set tabs to 2 spaces
 vim.opt.tabstop = 2
@@ -43,7 +43,7 @@ vim.opt.hlsearch = true
 vim.opt.updatetime = 50
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = { "menuone", "noselect", "menu" }
+vim.opt.completeopt = { "menuone", "noselect", "preview" }
 
 -- Enable persistent undo history
 vim.opt.undofile = true

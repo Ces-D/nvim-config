@@ -7,6 +7,68 @@ return {
         build = "make install_jsregexp",
     },
 
+    ---------- AI ----------
+    {
+        "zbirenbaum/copilot-cmp",
+        event = "InsertEnter",
+        dependencies = {
+
+            {
+                "zbirenbaum/copilot.lua",
+                cmd = "Copilot",
+                config = function()
+                    require("copilot").setup({
+                        suggestion = { enabled = false },
+                        panel = { enabled = false },
+                    })
+                end,
+            },
+        },
+
+        config = function()
+            require("copilot_cmp").setup()
+        end,
+    },
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            "hrsh7th/nvim-cmp", -- Optional: For using slash commands and variables in the chat buffer
+            "nvim-telescope/telescope.nvim", -- Optional: For using slash commands
+        },
+        config = function()
+            require("codecompanion").setup({
+                display = {
+                    diff = {
+                        provider = "mini_diff",
+                    },
+                },
+                opts = {
+                    log_level = "DEBUG",
+                },
+            })
+
+            vim.api.nvim_set_keymap("n", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap("v", "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+            vim.api.nvim_set_keymap(
+                "n",
+                "<Leader>aa",
+                "<cmd>CodeCompanionChat Toggle<cr>",
+                { noremap = true, silent = true }
+            )
+            vim.api.nvim_set_keymap(
+                "v",
+                "<Leader>aa",
+                "<cmd>CodeCompanionChat Toggle<cr>",
+                { noremap = true, silent = true }
+            )
+            vim.api.nvim_set_keymap("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+        end,
+    },
+
+    ---------- LSP ----------
+
     {
         "hrsh7th/nvim-cmp",
         event = { "InsertEnter", "LspAttach" },
@@ -22,16 +84,23 @@ return {
             local luasnip = require("luasnip")
             local cmp = require("cmp")
             cmp.setup({
+                preselect = cmp.PreselectMode.None,
                 formatting = {
                     expandable_indicator = true,
                     fields = { "abbr", "kind", "menu" },
                     format = lspkind.cmp_format({
-                        mode = "symbol", -- show only symbol annotations
-                        maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                        mode = "text_symbol", -- show only symbol annotations
+                        -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
                         -- can also be a function to dynamically calculate max width such as
                         -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+                        maxwidth = function()
+                            return math.floor(0.45 * vim.o.columns)
+                        end,
                         ellipsis_char = "...", -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
                         show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+                        symbol_map = {
+                            Copilot = "",
+                        },
                     }),
                 },
                 snippet = {
@@ -65,14 +134,15 @@ return {
                     ["<C-d>"] = cmp.mapping.scroll_docs(-4), -- scroll down preview
                     ["<C-Space>"] = cmp.mapping.complete({}), -- show completion suggestions
                     ["<C-c>"] = cmp.mapping.abort(), -- close completion window
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- select suggestion
+                    ["<CR>"] = cmp.mapping.confirm({ select = false }), -- select suggestion
                 }),
                 -- sources for autocompletion
                 sources = {
                     { name = "luasnip", group_index = 1 },
-                    -- Other Sources
+                    { name = "copilot", group_index = 1 },
                     { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
                     { name = "path", max_item_count = 5, group_index = 1 },
+                    -- Other Sources
                     { name = "buffer", max_item_count = 3, group_index = 2 },
                 },
             })
