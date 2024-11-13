@@ -39,6 +39,22 @@ return {
         },
         config = function()
             require("codecompanion").setup({
+                copilot = function()
+                    return require("codecompanion.adapters").extend("copilot", {
+                        name = "copilot-claude", -- Give this adapter a different name to differentiate it from the default ollama adapter
+                        schema = {
+                            model = {
+                                default = "claude-3.5-sonnet",
+                            },
+                            num_ctx = {
+                                default = 16384,
+                            },
+                            num_predict = {
+                                default = -1,
+                            },
+                        },
+                    })
+                end,
                 display = {
                     diff = {
                         provider = "mini_diff",
@@ -254,6 +270,7 @@ return {
             --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
             local servers = {
                 bashls = {},
+                sqlls = {},
                 yamlls = {},
                 taplo = {},
                 cssls = {},
@@ -593,6 +610,7 @@ return {
                     bash = { "shfmt" },
                     toml = { "taplo" },
                     yaml = { "yamlfmt" },
+                    sql = { "sql_formatter" },
                 },
             })
             vim.keymap.set("n", "<leader>fm", function()

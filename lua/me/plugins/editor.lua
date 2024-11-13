@@ -36,10 +36,10 @@ return {
     ---------- Editor ----------
 
     {
-        "brenoprata10/nvim-highlight-colors",
+        "NvChad/nvim-colorizer.lua",
         event = "VeryLazy",
         config = function()
-            require("nvim-highlight-colors").setup({})
+            require("colorizer").setup({})
         end,
     },
 
@@ -64,51 +64,12 @@ return {
         end,
     },
 
-    -- {
-    --     "Mofiqul/vscode.nvim",
-    --     config = function()
-    --         vim.opt.background = "light"
-    --         require("vscode").setup({
-    --             -- Alternatively set style in setup
-    --             -- style = 'light'
-    --
-    --             -- Enable italic comment
-    --             italic_comments = true,
-    --
-    --             -- Underline `@markup.link.*` variants
-    --             underline_links = true,
-    --         })
-    --
-    --         vim.cmd.colorscheme("vscode") -- builtin theme
-    --     end,
-    -- },
-
     {
         "sainnhe/gruvbox-material",
         config = function()
-            vim.opt.background = "dark"
-            local dark_theme = "gruvbox-material"
-            local light_theme = "gruvbox-material"
-
             vim.g.gruvbox_material_enable_italic = true
-
-            if vim.o.background == "dark" then
-                vim.cmd.colorscheme(dark_theme)
-            else
-                vim.cmd.colorscheme(light_theme)
-            end
-
-            vim.api.nvim_create_autocmd({ "OptionSet" }, {
-                pattern = { "background" },
-                callback = function(_)
-                    if vim.o.background == "dark" then
-                        vim.cmd.colorscheme(dark_theme)
-                    else
-                        vim.cmd.colorscheme(light_theme) -- builtin theme
-                    end
-                    vim.cmd("mode") -- force a full redraw:
-                end,
-            })
+            vim.opt.background = "dark"
+            require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
         end,
     },
 }
