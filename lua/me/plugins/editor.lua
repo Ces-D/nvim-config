@@ -44,6 +44,24 @@ return {
     },
 
     {
+        "stevearc/aerial.nvim",
+        event = "VeryLazy",
+        config = function()
+            -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+            require("aerial").setup({
+                -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+                on_attach = function(bufnr)
+                    -- Jump forwards/backwards with '{' and '}'
+                    vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+                    vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+                end,
+            })
+            -- You probably also want to set a keymap to toggle aerial
+            vim.keymap.set("n", "<leader>a", "<cmd>AerialToggle!<CR>")
+        end,
+    },
+
+    {
         "nvim-tree/nvim-tree.lua",
         lazy = false,
         config = function()
@@ -65,11 +83,24 @@ return {
     },
 
     {
-        "sainnhe/gruvbox-material",
+        "four-symbols/four-symbols.nvim",
+        lazy = false,
+        priority = 1000,
         config = function()
-            vim.g.gruvbox_material_enable_italic = true
+            require("four-symbols").setup({
+                terminal_colors = false,
+            })
             vim.opt.background = "dark"
-            require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
+            require("me.util").set_colorscheme("four-symbols-white-tiger", "four-symbols-vermilion-bird")
         end,
     },
+
+    --     {
+    --         "sainnhe/gruvbox-material",
+    --         config = function()
+    --             vim.g.gruvbox_material_enable_italic = true
+    --             vim.opt.background = "dark"
+    --             require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
+    --         end,
+    --     },
 }
