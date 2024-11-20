@@ -65,15 +65,24 @@ return {
     },
 
     {
-        "four-symbols/four-symbols.nvim",
+        "rebelot/kanagawa.nvim",
         lazy = false,
         priority = 1000,
         config = function()
-            require("four-symbols").setup({
-                terminal_colors = false,
+            require("kanagawa").setup({
+                undercurl = true, -- enable undercurls
+                commentStyle = { italic = true },
+                functionStyle = {},
+                keywordStyle = { italic = true },
+                statementStyle = { bold = true },
+                typeStyle = {},
+                transparent = false, -- do not set background color
+                dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+                terminalColors = true, -- define vim.g.terminal_color_{0,17}
             })
-            vim.opt.background = "dark"
-            require("me.util").set_colorscheme("four-symbols-white-tiger", "four-symbols-vermilion-bird")
+
+            vim.opt.background = "light"
+            require("me.util").set_colorscheme("kanagawa-lotus", "kanagawa-dragon")
         end,
     },
 
