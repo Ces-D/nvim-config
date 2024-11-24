@@ -65,33 +65,31 @@ return {
     },
 
     {
-        "rebelot/kanagawa.nvim",
+        "four-symbols/four-symbols.nvim",
         lazy = false,
         priority = 1000,
         config = function()
-            require("kanagawa").setup({
-                undercurl = true, -- enable undercurls
-                commentStyle = { italic = true },
-                functionStyle = {},
-                keywordStyle = { italic = true },
-                statementStyle = { bold = true },
-                typeStyle = {},
-                transparent = false, -- do not set background color
-                dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-                terminalColors = true, -- define vim.g.terminal_color_{0,17}
+            require("four-symbols").setup({
+                transparent = false,
+                dim_inactive = true,
+                terminal_colors = true,
+                styles = {
+                    comments = { italic = true },
+                    functions = { bold = true },
+                },
             })
-
-            vim.opt.background = "light"
-            require("me.util").set_colorscheme("kanagawa-lotus", "kanagawa-dragon")
+            vim.opt.background = "dark"
+            require("me.util").set_colorscheme("four-symbols-white-tiger", "four-symbols-vermilion-bird")
         end,
     },
 
-    --     {
-    --         "sainnhe/gruvbox-material",
-    --         config = function()
-    --             vim.g.gruvbox_material_enable_italic = true
-    --             vim.opt.background = "dark"
-    --             require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
-    --         end,
-    --     },
+    --
+    -- {
+    --     "sainnhe/gruvbox-material",
+    --     config = function()
+    --         vim.g.gruvbox_material_enable_italic = true
+    --         vim.opt.background = "dark"
+    --         require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
+    --     end,
+    -- },
 }
