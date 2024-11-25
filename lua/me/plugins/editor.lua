@@ -65,21 +65,14 @@ return {
     },
 
     {
-        "four-symbols/four-symbols.nvim",
+        "sainnhe/edge",
         lazy = false,
         priority = 1000,
         config = function()
-            require("four-symbols").setup({
-                transparent = false,
-                dim_inactive = true,
-                terminal_colors = true,
-                styles = {
-                    comments = { italic = true },
-                    functions = { bold = true },
-                },
-            })
+            vim.g.edge_enable_italic = true
+            vim.g.edge_better_performance = 1
             vim.opt.background = "dark"
-            require("me.util").set_colorscheme("four-symbols-white-tiger", "four-symbols-vermilion-bird")
+            require("me.util").set_colorscheme("edge", "edge")
         end,
     },
 
