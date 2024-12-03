@@ -64,15 +64,28 @@ return {
         end,
     },
 
+    -- {
+    --     "sainnhe/edge",
+    --     lazy = false,
+    --     priority = 1000,
+    --     config = function()
+    --         vim.g.edge_enable_italic = true
+    --         vim.g.edge_better_performance = 1
+    --         vim.opt.background = "dark"
+    --         require("me.util").set_colorscheme("edge", "edge")
+    --     end,
+    -- },
+
     {
-        "sainnhe/edge",
-        lazy = false,
+        "ellisonleao/gruvbox.nvim",
         priority = 1000,
         config = function()
-            vim.g.edge_enable_italic = true
-            vim.g.edge_better_performance = 1
+            require("gruvbox").setup({
+                terminal_colors = false,
+            })
+
             vim.opt.background = "dark"
-            require("me.util").set_colorscheme("edge", "edge")
+            require("me.util").set_colorscheme("gruvbox", "gruvbox")
         end,
     },
 

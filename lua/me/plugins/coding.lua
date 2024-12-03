@@ -9,24 +9,53 @@ return {
 
     ---------- AI ----------
     {
-        "zbirenbaum/copilot-cmp",
+        "zbirenbaum/copilot.lua",
         event = "InsertEnter",
-        dependencies = {
-
-            {
-                "zbirenbaum/copilot.lua",
-                cmd = "Copilot",
-                config = function()
-                    require("copilot").setup({
-                        suggestion = { enabled = false },
-                        panel = { enabled = false },
-                    })
-                end,
-            },
-        },
-
         config = function()
-            require("copilot_cmp").setup()
+            require("copilot").setup({
+                panel = {
+                    enabled = false,
+                    auto_refresh = false,
+                    keymap = {
+                        jump_prev = "[[",
+                        jump_next = "]]",
+                        accept = "<CR>",
+                        refresh = "gr",
+                        open = "<M-CR>",
+                    },
+                    layout = {
+                        position = "bottom", -- | top | left | right
+                        ratio = 0.4,
+                    },
+                },
+                suggestion = {
+                    enabled = true,
+                    auto_trigger = true,
+                    hide_during_completion = true,
+                    debounce = 75,
+                    keymap = {
+                        accept = "<Tab>",
+                        accept_word = false,
+                        accept_line = false,
+                        next = "<M-]>",
+                        prev = "<M-[>",
+                        dismiss = "<C-]>",
+                    },
+                },
+                filetypes = {
+                    yaml = false,
+                    markdown = false,
+                    help = false,
+                    gitcommit = false,
+                    gitrebase = false,
+                    hgcommit = false,
+                    svn = false,
+                    cvs = false,
+                    ["."] = true,
+                },
+                copilot_node_command = "node", -- Node.js version must be > 18.x
+                server_opts_overrides = {},
+            })
         end,
     },
     {
@@ -154,12 +183,11 @@ return {
                 }),
                 -- sources for autocompletion
                 sources = {
-                    { name = "luasnip", group_index = 1 },
-                    { name = "copilot", group_index = 1 },
-                    { name = "nvim_lsp", max_item_count = 20, group_index = 1 },
-                    { name = "path", max_item_count = 5, group_index = 1 },
+                    { name = "nvim_lsp" },
+                    { name = "path" },
+                    { name = "luasnip" },
                     -- Other Sources
-                    { name = "buffer", max_item_count = 3, group_index = 2 },
+                    { name = "buffer" },
                 },
             })
         end,
@@ -285,51 +313,6 @@ return {
                 pyright = {},
                 tailwindcss = {},
                 ts_ls = {},
-                rust_analyzer = {
-                    settings = {
-                        ["rust-analyzer"] = {
-                            imports = {
-                                granularity = { group = "module" },
-                            },
-                            cargo = {
-                                buildScripts = { enable = true },
-                            },
-                            procMacro = { enable = true },
-                            inlayHints = {
-                                bindingModeHints = {
-                                    enable = false,
-                                },
-                                chainingHints = {
-                                    enable = true,
-                                },
-                                closingBraceHints = {
-                                    enable = true,
-                                    minLines = 25,
-                                },
-                                closureReturnTypeHints = {
-                                    enable = "never",
-                                },
-                                lifetimeElisionHints = {
-                                    enable = "never",
-                                    useParameterNames = false,
-                                },
-                                maxLength = 25,
-                                parameterHints = {
-                                    enable = true,
-                                },
-                                reborrowHints = {
-                                    enable = "never",
-                                },
-                                renderColons = true,
-                                typeHints = {
-                                    enable = true,
-                                    hideClosureInitialization = false,
-                                    hideNamedConstructor = false,
-                                },
-                            },
-                        },
-                    },
-                },
 
                 lua_ls = {
                     -- cmd = {...},
@@ -373,7 +356,15 @@ return {
         end,
     },
 
-    { -- Fuzzy Finder (files, lsp, etc)
+    --- Rust Specific
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^5", -- Recommended
+        lazy = false, -- This plugin is already lazy
+    },
+
+    -- Fuzzy Finder (files, lsp, etc)
+    {
         "nvim-telescope/telescope.nvim",
         event = "VimEnter",
         branch = "0.1.x",
