@@ -65,32 +65,6 @@ return {
     },
 
     -- {
-    --     "sainnhe/edge",
-    --     lazy = false,
-    --     priority = 1000,
-    --     config = function()
-    --         vim.g.edge_enable_italic = true
-    --         vim.g.edge_better_performance = 1
-    --         vim.opt.background = "dark"
-    --         require("me.util").set_colorscheme("edge", "edge")
-    --     end,
-    -- },
-
-    {
-        "ellisonleao/gruvbox.nvim",
-        priority = 1000,
-        config = function()
-            require("gruvbox").setup({
-                terminal_colors = false,
-            })
-
-            vim.opt.background = "dark"
-            require("me.util").set_colorscheme("gruvbox", "gruvbox")
-        end,
-    },
-
-    --
-    -- {
     --     "sainnhe/gruvbox-material",
     --     config = function()
     --         vim.g.gruvbox_material_enable_italic = true
@@ -98,4 +72,11 @@ return {
     --         require("me.util").set_colorscheme("gruvbox-material", "gruvbox-material")
     --     end,
     -- },
+
+    {
+        "sainnhe/edge",
+        config = function()
+            require("me.util").set_colorscheme("edge", "edge")
+        end,
+    },
 }
