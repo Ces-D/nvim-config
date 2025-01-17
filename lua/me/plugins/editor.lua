@@ -39,13 +39,33 @@ return {
         "NvChad/nvim-colorizer.lua",
         event = "VeryLazy",
         config = function()
-            require("colorizer").setup({})
+            require("colorizer").setup({
+                filetypes = {
+                    "svelte",
+                    "javascript",
+                    "typescript",
+                    "javascriptreact",
+                    "typescriptreact",
+                    "html",
+                    "css",
+                    "less",
+                    "sass",
+                    "scss",
+                    "lua",
+                    "vue",
+                    "json",
+                    "yaml",
+                    "toml",
+                    "md",
+                    "markdown",
+                },
+            })
         end,
     },
 
     {
         "nvim-tree/nvim-tree.lua",
-        lazy = false,
+        event = { "VeryLazy" },
         config = function()
             require("nvim-tree").setup({
                 update_focused_file = {
@@ -74,9 +94,19 @@ return {
     -- },
 
     {
-        "sainnhe/edge",
+        "wtfox/jellybeans.nvim",
+        priority = 1000,
         config = function()
-            require("me.util").set_colorscheme("edge", "edge")
+            require("jellybeans").setup({
+                style = "light", -- "dark" or "light"
+                transparent = false,
+                italics = true,
+                plugins = {
+                    all = false,
+                    auto = true, -- will read lazy.nvim and apply the colors for plugins that are installed
+                },
+            })
+            require("me.util").set_colorscheme("jellybeans", "jellybeans")
         end,
     },
 }

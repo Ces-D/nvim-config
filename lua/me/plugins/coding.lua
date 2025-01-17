@@ -60,6 +60,7 @@ return {
     },
     {
         "olimorris/codecompanion.nvim",
+        event = { "VeryLazy" },
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
@@ -342,6 +343,7 @@ return {
 
             require("mason-lspconfig").setup({
                 ensure_installed = ensure_installed,
+                automatic_installation = true,
                 handlers = {
                     function(server_name)
                         local server = servers[server_name] or {}
@@ -644,11 +646,11 @@ return {
     },
 
     ---------- Comment ----------
-    {
-        "folke/ts-comments.nvim",
-        event = { "BufRead *.tsx" },
-        opts = {},
-    },
+    -- {
+    --     "folke/ts-comments.nvim",
+    --     event = { "BufRead *.tsx" },
+    --     opts = {},
+    -- },
 
     ---------- Pairs ----------
     {
@@ -657,20 +659,6 @@ return {
         event = "InsertEnter",
         config = function()
             require("mini.pairs").setup({})
-        end,
-    },
-
-    {
-        "windwp/nvim-ts-autotag",
-        event = "InsertEnter *.tsx",
-        config = function()
-            require("nvim-ts-autotag").setup({
-                opts = {
-                    enable_close = true, -- Auto close tags
-                    enable_rename = true, -- Auto rename pairs of tags
-                    enable_close_on_slash = true, -- Auto close on trailing </
-                },
-            })
         end,
     },
 
