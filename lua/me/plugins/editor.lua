@@ -35,33 +35,6 @@ return {
 
     ---------- Editor ----------
 
-    {
-        "NvChad/nvim-colorizer.lua",
-        event = "VeryLazy",
-        config = function()
-            require("colorizer").setup({
-                filetypes = {
-                    "svelte",
-                    "javascript",
-                    "typescript",
-                    "javascriptreact",
-                    "typescriptreact",
-                    "html",
-                    "css",
-                    "less",
-                    "sass",
-                    "scss",
-                    "lua",
-                    "vue",
-                    "json",
-                    "yaml",
-                    "toml",
-                    "md",
-                    "markdown",
-                },
-            })
-        end,
-    },
 
     {
         "nvim-tree/nvim-tree.lua",
@@ -94,19 +67,33 @@ return {
     -- },
 
     {
-        "wtfox/jellybeans.nvim",
+        "Mofiqul/dracula.nvim",
+        lazy = false,
         priority = 1000,
         config = function()
-            require("jellybeans").setup({
-                style = "light", -- "dark" or "light"
-                transparent = false,
-                italics = true,
-                plugins = {
-                    all = false,
-                    auto = true, -- will read lazy.nvim and apply the colors for plugins that are installed
-                },
+            require("dracula").setup({
+                -- show the '~' characters after the end of buffers
+                show_end_of_buffer = true, -- default false
+                -- use transparent background
+                transparent_bg = false, -- default false
+                -- set italic comment
+                italic_comment = true, -- default false
+                -- overrides the default highlights with table see `:h synIDattr`
+                overrides = {},
+                -- You can use overrides as table like this
+                -- overrides = {
+                --   NonText = { fg = "white" }, -- set NonText fg to white
+                --   NvimTreeIndentMarker = { link = "NonText" }, -- link to NonText highlight
+                --   Nothing = {} -- clear highlight of Nothing
+                -- },
+                -- Or you can also use it like a function to get color from theme
+                -- overrides = function (colors)
+                --   return {
+                --     NonText = { fg = colors.white }, -- set NonText fg to white of theme
+                --   }
+                -- end,
             })
-            require("me.util").set_colorscheme("jellybeans", "jellybeans")
+            vim.cmd.colorscheme("dracula")
         end,
     },
 }

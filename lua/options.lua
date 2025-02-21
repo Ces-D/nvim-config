@@ -1,5 +1,5 @@
 -- Enable relative line numbers
-vim.opt.nu = false
+vim.opt.nu = true
 vim.opt.rnu = false
 vim.opt.numberwidth = 1
 

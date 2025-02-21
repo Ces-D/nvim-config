@@ -11,12 +11,17 @@ sudo apt-get upgrade
 
 # Node
 echo -e "\nUpgrading Node"
-echo -e "\nVisit this url"
-echo "https://github.com/nodesource/distributions#ubuntu-versions"
-echo -e "\nUpgrading global NPM packages"
+echo -e "\nUpdating NVM"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+nvm install node # upgrade to latest version of node and npm
 
 sudo npm -g outdated
 sudo npm -g upgrade --latest
+
+# Python
+echo -e "\nUpgrading Python"
+echo -e "\nUpdating UV"
+uv self update
 
 ## Rust
 echo -e "\nUpgrading Rust"

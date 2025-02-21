@@ -22,4 +22,12 @@ function M.set_colorscheme(light_theme, dark_theme)
     })
 end
 
+-- In this case, we create a function that lets us more easily define mappings specific
+-- for LSP related items. It sets the mode, buffer and description for us each time.
+function M.map(keys, func, desc, mode, noremap)
+    mode = mode or "n"
+    noremap = true
+    vim.keymap.set(mode, keys, func, { desc = desc, silent = true, noremap = noremap })
+end
+
 return M
