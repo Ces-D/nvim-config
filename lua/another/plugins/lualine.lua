@@ -12,20 +12,20 @@ return {
                 component_separators = "",
                 globalstatus = true,
             },
-            sections = {
-                lualine_a = { "mode" },
-                lualine_b = {
-                    {
-                        "diagnostics",
-                        source = { "nvim_diagnostic", "nvim_lsp" },
-                        symbols = { error = " ", warn = " ", hint = " ", info = " " },
-                    },
-                },
-                lualine_c = { "%=", "%f %m" },
-                lualine_x = { "encoding", "fileformat", "filetype" },
-                lualine_y = { "progress" },
-                lualine_z = { "location" },
-            },
+            -- sections = {
+            --     lualine_a = { "mode" },
+            --     lualine_b = {
+            --         {
+            --             "diagnostics",
+            --             source = { "nvim_diagnostic", "nvim_lsp" },
+            --             symbols = { error = " ", warn = " ", hint = " ", info = " " },
+            --         },
+            --     },
+            --     lualine_c = { "%=", "%f %m" },
+            --     lualine_x = { "encoding", "fileformat", "filetype" },
+            --     lualine_y = { "progress" },
+            --     lualine_z = { "location" },
+            -- },
             extensions = { "fzf" },
         },
     },

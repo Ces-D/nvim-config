@@ -1,5 +1,5 @@
 -- Enable relative line numbers
-vim.opt.nu = true
+vim.opt.nu = false
 vim.opt.rnu = false
 vim.opt.numberwidth = 1
 
@@ -64,6 +64,9 @@ vim.opt.cursorline = true
 
 -- Always keep 8 lines above/below cursor unless at start/end of file
 vim.opt.scrolloff = 8
+
+-- Default border
+vim.opt.winborder = "rounded"
 
 -- Sets how neovim will display certain whitespace in the editor.
 --  See `:help 'list'`

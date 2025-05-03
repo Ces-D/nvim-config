@@ -7,6 +7,9 @@ return {
                 update_focused_file = {
                     enable = true,
                 },
+                view = {
+                    adaptive_size = true,
+                },
                 renderer = {
                     add_trailing = true,
                     indent_markers = {

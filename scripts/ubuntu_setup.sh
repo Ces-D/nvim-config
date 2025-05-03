@@ -40,9 +40,12 @@ echo -e "\nUpgrading Alacritty"
 cargo install alacritty
 sudo cp /home/$(whoami)/.cargo/bin/alacritty /usr/local/bin
 
+echo -e "\nUpgrading MkCert"
+echo -e "\nsee - https://github.com/FiloSottile/mkcert"
+
 # Like clean, autoclean clears out the local repository of retrieved package files. The difference is that it only removes package files that can no longer be downloaded, and are largely useless.
 echo -e "\nCleaning up"
-sudo apt-get  autoclean
+sudo apt-get autoclean
 
 # is used to remove packages that were automatically installed to satisfy dependencies for some package and that are no longer needed.
 echo -e "\nRemoving unused packages"
