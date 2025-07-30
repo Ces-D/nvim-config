@@ -15,14 +15,16 @@ return {
                     svelte = { "eslint_d", "prettierd", "rustywind" },
                     html = { "prettierd" },
                     json = { "jq" },
-                    markdown = { "mdformat" },
+                    jsonc = { "jq" },
+                    markdown = { "prettierd" },
                     rust = { "rustfmt" },
                     css = { "prettierd" },
                     scss = { "prettierd" },
                     bash = { "shfmt" },
+                    sh = { "shfmt" },
                     toml = { "taplo" },
                     yaml = { "yamlfmt" },
-                    sql = { "sql_formatter" },
+                    sql = { "sqlfmt" },
                 },
             })
             require("utils").map("<leader>fm", function()

@@ -11,9 +11,10 @@ return {
                     adaptive_size = true,
                 },
                 renderer = {
+                    indent_width = 4,
                     add_trailing = true,
                     indent_markers = {
-                        enable = true,
+                        enable = false,
                         inline_arrows = true,
                         icons = {
                             corner = "└",
@@ -30,7 +31,7 @@ return {
                     },
                 },
             })
-            require("utils").map("<leader>e", "<CMD>NvimTreeToggle<CR>", "NvimTree: Toggle")
+            require("utils").map("<leader>ff", "<CMD>NvimTreeToggle<CR>", "NvimTree: Toggle")
         end,
     },
 }

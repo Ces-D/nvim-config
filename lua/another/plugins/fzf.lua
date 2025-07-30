@@ -6,8 +6,8 @@ return {
         opts = {},
         config = function()
             local map = require("utils").map
-            map("<leader>ff", function()
-                require("fzf-lua").files()
+            map("<leader>e", function()
+                require("fzf-lua").files({})
             end, "Fzf: Files")
             map("<leader>fg", function()
                 require("fzf-lua").git_status()
@@ -18,7 +18,7 @@ return {
             map("<leader>fh", function()
                 require("fzf-lua").help_tags()
             end, "Fzf: Help Tags")
-            map("<leader>/", function()
+            map("g/", function()
                 require("fzf-lua").grep()
             end, "Fzf: Grep Current Word")
             map("/", function()

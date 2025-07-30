@@ -1,6 +1,7 @@
 return {
     {
         "Bekaboo/dropbar.nvim",
+        event = "BufReadPost",
         config = function()
             local dropbar_api = require("dropbar.api")
             local map = require("utils").map
