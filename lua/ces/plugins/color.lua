@@ -41,7 +41,7 @@ return {
     --                 -- You can set any of the style values specified for `:h nvim_set_hl`
     --                 comments = { italic = true },
     --                 functions = { bold = true },
-    --                 keywords = {},
+    --                 keywords = { italic = true },
     --                 lsp = { underline = false },
     --                 match_paren = { underline = true },
     --                 type = { bold = true },
@@ -60,5 +60,30 @@ return {
         config = function()
             vim.cmd.colorscheme("iceberg")
         end,
+    },
+
+    {
+        "NvChad/nvim-colorizer.lua",
+        event = "BufEnter *.css,*.less,*.sass,*.scss,*.html",
+        opts = {
+            filetypes = {
+                -- "svelte",
+                -- "javascript",
+                -- "typescript",
+                -- "javascriptreact",
+                -- "typescriptreact",
+                "html",
+                "css",
+                "less",
+                "sass",
+                "scss",
+                -- "lua",
+                -- "json",
+                -- "yaml",
+                -- "toml",
+                -- "md",
+                -- "markdown",
+            },
+        },
     },
 }

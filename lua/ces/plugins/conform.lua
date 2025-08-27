@@ -27,7 +27,7 @@ return {
                     sql = { "sqlfmt" },
                 },
             })
-            require("utils").map("<leader>fm", function()
+            require("ces/utils").map("<leader>fm", function()
                 require("conform").format()
             end, "Format")
         end,

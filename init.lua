@@ -1,5 +1,1 @@
-require("options")
-require("another")
-require("commands")
-require("autocmds")
-require("keymaps")
+require('ces')

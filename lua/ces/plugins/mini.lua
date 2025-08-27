@@ -26,7 +26,7 @@ return {
     {
         "echasnovski/mini.surround",
         version = "*",
-        event = "VeryLazy",
+        event = "BufReadPre",
         opts = {},
     },
 }

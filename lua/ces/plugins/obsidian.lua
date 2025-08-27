@@ -8,6 +8,7 @@ return {
             "nvim-lua/plenary.nvim",
         },
         opts = {
+            legacy_commands = false,
             workspaces = {
                 {
                     name = "Tech",
@@ -16,7 +17,8 @@ return {
             },
             disable_frontmatter = true,
             completion = {
-                nvim_cmp = true,
+                blink = true,
+                nvim_cmp = false,
             },
             picker = {
                 name = "fzf-lua",
